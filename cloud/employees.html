@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Portal</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+/* Hallmark · macrostructure: workbench · nav: N6 masthead + tab strip · theme: custom (cool paper · spruce accent)
+ * pre-emit critique: P4 H4 E4 S4 R5 V4 · app-scope: employee portal, Supabase-backed */
+:root{
+  --paper:      oklch(97.5% 0.006 250);
+  --paper-2:    oklch(95% 0.008 250);
+  --paper-3:    oklch(92% 0.010 250);
+  --rule:       oklch(87.5% 0.010 250);
+  --rule-soft:  oklch(91.5% 0.008 250);
+  --neutral:    oklch(52% 0.014 250);
+  --muted:      oklch(40% 0.016 250);
+  --ink:        oklch(21% 0.020 250);
+  --accent:     oklch(44% 0.10 158);
+  --accent-soft:oklch(93% 0.030 158);
+  --accent-deep:oklch(36% 0.09 158);
+  --focus:      oklch(52% 0.15 158);
+  --warn:       oklch(52% 0.12 70);
+  --warn-soft:  oklch(94% 0.045 85);
+  --danger:     oklch(48% 0.16 27);
+  --danger-soft:oklch(94% 0.03 27);
+  --blue:       oklch(45% 0.10 245);
+  --blue-soft:  oklch(93.5% 0.025 245);
+  --font-display:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body:  "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:  "Geist Mono", ui-monospace, monospace;
+  --dur:140ms; --ease:cubic-bezier(.2,.7,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+body{font-family:var(--font-body);font-size:14px;line-height:1.55;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent-soft)}
+
+/* auth / setup card */
+.auth{max-width:440px;margin:10vh auto 0;padding:0 22px}
+.auth .card{border:1px solid var(--rule);border-radius:14px;background:var(--paper);padding:30px 30px 26px}
+.auth h1{font-family:var(--font-display);font-weight:800;font-size:23px;letter-spacing:-.02em;margin-bottom:6px}
+.auth p{color:var(--muted);font-size:13.5px;margin-bottom:16px}
+.auth .err{border:1px solid var(--danger);border-radius:8px;background:var(--danger-soft);color:var(--danger);padding:9px 13px;font-size:13px;margin-bottom:12px}
+.auth .swap{font-size:12.5px;color:var(--neutral);margin-top:14px}
+.auth .swap button{font:inherit;background:none;border:none;color:var(--accent-deep);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:12.5px}
+
+/* masthead */
+.mast{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:30}
+.mast-in{max-width:1080px;margin:0 auto;padding:0 22px}
+.mast-top{display:flex;align-items:baseline;gap:12px;padding:16px 0 4px}
+.mast-top .biz{font-family:var(--font-display);font-weight:800;font-size:21px;letter-spacing:-.02em}
+.mast-top .by{font-size:12px;color:var(--neutral);margin-left:auto;white-space:nowrap}
+.mast-tabs{display:flex;gap:2px;overflow-x:auto}
+.mast-tabs a{font-size:13.5px;font-weight:500;color:var(--neutral);text-decoration:none;white-space:nowrap;padding:9px 13px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.mast-tabs a:hover{color:var(--ink)}
+.mast-tabs a.on{color:var(--accent-deep);border-bottom-color:var(--accent);font-weight:600}
+.mast-tabs a:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;border-radius:4px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:24px 22px 70px}
+h1.page{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-.015em}
+.page-sub{color:var(--neutral);font-size:13px;margin-top:3px}
+.page-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.page-head .grow{flex:1;min-width:200px}
+h2.sect{font-family:var(--font-display);font-weight:700;font-size:15px;margin:24px 0 10px}
+.num{font-variant-numeric:tabular-nums}
+
+.btn{font:inherit;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:7px 13px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.btn:hover{background:var(--paper-2);border-color:var(--neutral)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fdfdfc}
+.btn.pri:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn.danger{color:var(--danger)}
+.btn.danger:hover{border-color:var(--danger);background:var(--danger-soft)}
+.btn.sm{padding:4px 9px;font-size:12px;border-radius:6px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.btn.ghost:hover{background:var(--paper-2);color:var(--ink)}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.stat{background:var(--paper);padding:14px 16px}
+.stat .v{font-family:var(--font-display);font-weight:800;font-size:23px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat .l{font-size:12px;color:var(--neutral);margin-top:3px}
+.stat .d{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+/* clock hero */
+.clock-hero{border:1px solid var(--rule);border-radius:12px;background:var(--paper);padding:24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.clock-hero .elapsed{font-family:var(--font-mono);font-size:34px;font-weight:500;letter-spacing:.02em;font-variant-numeric:tabular-nums;line-height:1}
+.clock-hero .lbl{font-size:12.5px;color:var(--neutral);margin-top:5px}
+.clock-hero .grow{flex:1;min-width:160px}
+.btn.clock{font-family:var(--font-display);font-weight:700;font-size:16px;padding:14px 30px;border-radius:11px}
+.btn.clock.out{background:var(--danger);border-color:var(--danger);color:#fdfdfc}
+.btn.clock.out:hover{background:oklch(40% 0.15 27);border-color:oklch(40% 0.15 27)}
+
+.tbl-wrap{border:1px solid var(--rule);border-radius:10px;overflow:auto;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--neutral);padding:9px 14px;border-bottom:1px solid var(--rule);background:var(--paper-2);white-space:nowrap}
+th.r,td.r{text-align:right}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr.rowlink{cursor:pointer;transition:background-color var(--dur) var(--ease)}
+tbody tr.rowlink:hover{background:var(--paper-2)}
+td .sub{display:block;font-size:12px;color:var(--neutral)}
+.empty{padding:34px 20px;text-align:center;color:var(--neutral);font-size:13px}
+.empty b{display:block;color:var(--muted);font-weight:600;margin-bottom:3px}
+
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:2.5px 9px;border-radius:20px;background:var(--paper-3);color:var(--muted);white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7}
+.chip.s-Done,.chip.s-Paid,.chip.s-Clockedin{background:var(--accent-soft);color:var(--accent-deep)}
+.chip.s-ToDo{background:var(--blue-soft);color:var(--blue)}
+.chip.s-InProgress,.chip.s-Pending{background:var(--warn-soft);color:var(--warn)}
+.chip.s-Blocked{background:var(--danger-soft);color:var(--danger)}
+
+.cols{display:grid;gap:16px}
+.cols.c2{grid-template-columns:1fr 1fr}
+.panel{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:16px 18px}
+.panel h3{font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.panel h3 .btn{margin-left:auto}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:6px 14px;font-size:13.5px}
+.kv dt{color:var(--neutral)}
+.kv dd{color:var(--ink);overflow-wrap:anywhere}
+.list-line{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--rule-soft);font-size:13.5px}
+.list-line:last-child{border-bottom:none}
+.list-line .when{margin-left:auto;font-size:12px;color:var(--neutral);white-space:nowrap;font-variant-numeric:tabular-nums}
+.due-red{color:var(--danger);font-weight:500}
+.due-amber{color:var(--warn);font-weight:500}
+
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px;align-items:start}
+.kcol{background:var(--paper-2);border:1px solid var(--rule-soft);border-radius:10px;min-height:110px}
+.kcol.dragover{border-color:var(--accent);background:var(--accent-soft)}
+.kcol h4{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--neutral);padding:10px 12px 6px;display:flex;gap:8px;align-items:baseline}
+.kcol h4 .n{margin-left:auto;font-family:var(--font-mono);font-size:11px}
+.kcol .kbody{padding:4px 8px 10px;display:flex;flex-direction:column;gap:7px}
+.kcard{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;cursor:grab;transition:border-color var(--dur) var(--ease)}
+.kcard:hover{border-color:var(--neutral)}
+.kcard.dragging{opacity:.45}
+.kcard b{font-weight:600;font-size:13px;display:block;margin-bottom:2px}
+.kcard .meta{font-size:12px;color:var(--neutral);display:flex;justify-content:space-between;gap:8px}
+.lockmark{font-size:10.5px;font-family:var(--font-mono);color:var(--neutral);letter-spacing:.05em;text-transform:uppercase}
+
+.modal-bg{position:fixed;inset:0;background:oklch(20% .02 250 / .45);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:48px 16px}
+.modal-bg.show{display:flex}
+.modal{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:22px;width:560px;max-width:100%;box-shadow:0 18px 50px -18px oklch(25% .03 250 / .35)}
+.modal h3{font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:16px}
+.fg{margin-bottom:12px;min-width:0}
+.fg label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px}
+input,select,textarea{font:inherit;font-size:13.5px;width:100%;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:7px 10px}
+input::placeholder{color:var(--neutral)}
+input:hover,select:hover,textarea:hover{border-color:var(--neutral)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--focus);outline-offset:-1px;border-color:var(--focus)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;align-items:center}
+.modal-actions .left{margin-right:auto}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);border-radius:9px;padding:10px 16px;font-size:13px;display:flex;align-items:center;gap:14px;z-index:80;opacity:0;pointer-events:none;transition:opacity 180ms var(--ease),transform 180ms var(--ease)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.toast button{font:inherit;font-weight:600;background:none;border:none;color:var(--accent-soft);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.hide{display:none!important}
+
+@media(max-width:760px){
+  .cols.c2,.grid2{grid-template-columns:1fr}
+  .wrap{padding:18px 14px 60px}
+  .clock-hero{padding:18px}
+  .clock-hero .elapsed{font-size:27px}
+}
+</style>
+</head>
+<body>
+<!-- auth -->
+<div id="authView" class="auth hide">
+  <div class="card">
+    <h1 id="authTitle">Team portal</h1>
+    <p id="authIntro">Sign in to clock in, see your assignments and track your pay.</p>
+    <div id="authErr"></div>
+    <div class="fg"><label for="au_email">Email</label><input id="au_email" type="email" autocomplete="username" placeholder="you@example.com"></div>
+    <div class="fg"><label for="au_pass">Password</label><input id="au_pass" type="password" autocomplete="current-password"></div>
+    <button class="btn pri" id="authBtn" onclick="doAuth()">Sign in</button>
+    <div class="swap" id="authSwap"></div>
+  </div>
+</div>
+
+<div id="app"></div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn danger left hide" id="modalDelete">Delete</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn pri" id="modalSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toastMsg"></span><button id="toastAction"></button></div>
+
+<script>
+/* ============ constants ============ */
+const ASSIGN_STATUSES=['To Do','In Progress','Blocked','Done'];
+const ASSIGN_PRIORITIES=['Low','Normal','High'];
+
+/* ============ state ============ */
+let sb=null, db=null, me=null, EID=null, authMode='signin';
+let route='today', toastTimer=null, tickTimer=null;
+
+/* ============ utils ============ */
+function uid(p){ return p+'-'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function money(n){ n=+n||0; return n?'$'+n.toLocaleString(undefined,{maximumFractionDigits:2}):'—'; }
+function fmtDate(s){ if(!s)return '—'; const d=new Date(s+'T00:00'); if(isNaN(d))return esc(s); return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:d.getFullYear()===new Date().getFullYear()?undefined:'numeric'}); }
+function fmtDT(s){ if(!s)return '—'; const d=new Date(s); if(isNaN(d))return esc(s); return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); }
+function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function today(){ return ymd(new Date()); }
+function daysUntil(s){ if(!s)return null; return Math.round((new Date(s+'T00:00')-new Date(today()+'T00:00'))/864e5); }
+function chip(s){ return '<span class="chip s-'+String(s||'').replace(/\s/g,'')+'">'+esc(s)+'</span>'; }
+function selOpts(list,cur){ return list.map(o=>'<option'+(o===cur?' selected':'')+'>'+esc(o)+'</option>').join(''); }
+function nd(v){ return v?v:null; }
+function entryHours(t){ return Math.max(0,(new Date(t.clock_out||Date.now())-new Date(t.clock_in))/36e5); }
+function fmtHours(h){ return (Math.round(h*100)/100).toFixed(2)+' h'; }
+function hms(t){ const s=Math.max(0,Math.floor((Date.now()-new Date(t.clock_in))/1000)); const p=n=>String(n).padStart(2,'0'); return p(Math.floor(s/3600))+':'+p(Math.floor(s/60)%60)+':'+p(s%60); }
+function openEntry(){ return db.entries.find(t=>!t.clock_out); }
+function clientOf(id){ return db.clients.find(c=>c.id===id); }
+function toast(msg,label,fn){
+ const t=document.getElementById('toast'),a=document.getElementById('toastAction');
+ document.getElementById('toastMsg').textContent=msg;
+ if(label){a.textContent=label;a.classList.remove('hide');a.onclick=()=>{t.classList.remove('show');fn&&fn();};}
+ else a.classList.add('hide');
+ t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),6000);
+}
+
+/* ============ supabase auth ============ */
+function configured(){ return window.CRM_CONFIG && !/PASTE-/.test(CRM_CONFIG.SUPABASE_URL) && !/PASTE-/.test(CRM_CONFIG.SUPABASE_ANON_KEY); }
+function showAuth(err){
+ document.getElementById('app').innerHTML='';
+ document.getElementById('authView').classList.remove('hide');
+ authError(err||'');
+ setAuthMode(authMode);
+}
+function authError(msg){ document.getElementById('authErr').innerHTML=msg?'<div class="err">'+esc(msg)+'</div>':''; }
+function setAuthMode(m){
+ authMode=m;
+ document.getElementById('authBtn').textContent=m==='signup'?'Create my account':'Sign in';
+ document.getElementById('authIntro').textContent=m==='signup'
+  ?'Use the work email you were given — that is how your account links to your record.'
+  :'Sign in to clock in, see your assignments and track your pay.';
+ document.getElementById('authSwap').innerHTML=m==='signup'
+  ?'Already have an account? <button onclick="setAuthMode(\'signin\')">Sign in</button>'
+  :'First time here? <button onclick="setAuthMode(\'signup\')">Create your account</button>';
+}
+async function doAuth(){
+ const email=document.getElementById('au_email').value.trim();
+ const pass=document.getElementById('au_pass').value;
+ if(!email||!pass){ authError('Enter your email and a password.'); return; }
+ if(authMode==='signup'&&pass.length<8){ authError('Pick a password of at least 8 characters.'); return; }
+ const btn=document.getElementById('authBtn'); btn.disabled=true; authError('');
+ try{
+  let session;
+  if(authMode==='signup'){
+   const {data,error}=await sb.auth.signUp({email,password:pass});
+   if(error) throw error;
+   session=data.session;
+   if(!session){ authError('One more step — confirm the email we just sent you, then sign in here.'); setAuthMode('signin'); return; }
+  } else {
+   const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
+   if(error) throw error;
+   session=data.session;
+  }
+  await boot(session);
+ }catch(e){ authError(e.message||'Sign-in failed.'); }
+ finally{ btn.disabled=false; }
+}
+async function signOut(){ if(sb) await sb.auth.signOut(); location.reload(); }
+async function boot(session){
+ me=session.user;
+ const {data:p,error}=await sb.from('profiles').select('*').eq('id',me.id).maybeSingle();
+ if(error){ showAuth('Could not load your profile: '+error.message); return; }
+ if(p&&p.role==='agency'){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>You run the show</h1><p>This is the team portal — as the agency admin your workspace is the CRM.</p>'
+   +'<a class="btn pri" href="agency.html">Open the agency CRM</a> <button class="btn" onclick="signOut()">Sign out</button>';
+  return;
+ }
+ if(p&&p.role==='client'){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>Wrong door</h1><p>This is the team portal. Your business portal is over here:</p>'
+   +'<a class="btn pri" href="index.html">Open the business portal</a> <button class="btn" onclick="signOut()">Sign out</button>';
+  return;
+ }
+ if(!p||p.role!=='employee'||!p.employee_id){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>Almost linked</h1><p>Your account ('+esc(me.email)+') was created, but it is not yet connected to a team record. '
+   +'Make sure this is the exact email you were told to use — the link happens automatically, then reload this page.</p>'
+   +'<button class="btn" onclick="location.reload()">Reload</button> <button class="btn ghost" onclick="signOut()">Sign out</button>';
+  return;
+ }
+ EID=p.employee_id;
+ if(!(await fetchMine())) return;
+ document.getElementById('authView').classList.add('hide');
+ render();
+}
+async function init(){
+ if(!configured()){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>Almost ready</h1><p>The portal is not connected yet. Open <b>config.js</b> next to this file and paste in the Supabase project URL and anon key (see SETUP.md), then reload.</p>';
+  return;
+ }
+ sb=window.supabase.createClient(CRM_CONFIG.SUPABASE_URL,CRM_CONFIG.SUPABASE_ANON_KEY);
+ const {data:{session}}=await sb.auth.getSession();
+ if(!session){ showAuth(''); return; }
+ await boot(session);
+}
+document.addEventListener('visibilitychange',async()=>{ if(document.visibilityState==='visible'&&db&&EID){ if(await fetchMine()) render(); } });
+
+/* ============ data layer ============ */
+async function fetchMine(){
+ const [emp,st,te,asn,pp,cl]=await Promise.all([
+  sb.from('employees').select('*').eq('id',EID).maybeSingle(),
+  sb.from('agency_settings').select('agency_name').limit(1),
+  sb.from('time_entries').select('*').eq('employee_id',EID).order('clock_in'),
+  sb.from('assignments').select('*').eq('employee_id',EID).order('created_at'),
+  sb.from('pay_periods').select('*').eq('employee_id',EID).order('period_start'),
+  sb.rpc('my_assignment_clients')
+ ]);
+ const bad=[emp,st,te,asn,pp,cl].find(r=>r.error);
+ if(bad){ toast('Load failed: '+bad.error.message); return false; }
+ if(!emp.data){ showAuth('Your team record was not found — check in with the agency.'); return false; }
+ db={me:emp.data,
+     agency:(st.data&&st.data[0]&&st.data[0].agency_name)||'the agency',
+     entries:te.data||[], assignments:asn.data||[], pay:pp.data||[], clients:cl.data||[]};
+ return true;
+}
+async function wr(table,rows){ const {error}=await sb.from(table).upsert(rows); if(error) toast('Save failed: '+error.message); return !error; }
+async function upd(table,patch,id){ const {error}=await sb.from(table).update(patch).eq('id',id); if(error) toast('Save failed: '+error.message); return !error; }
+async function rm(table,id){ const {error}=await sb.from(table).delete().eq('id',id); if(error) toast('Delete failed: '+error.message); return !error; }
+function timeRow(t){ return {id:t.id,employee_id:EID,clock_in:t.clock_in,clock_out:t.clock_out||null,note:t.note||''}; }
+function assignRow(a){ return {id:a.id,employee_id:EID,client_id:a.client_id||null,title:a.title||'',detail:a.detail||'',
+ due:nd(a.due),priority:a.priority||'Normal',status:a.status||'To Do',origin:'self',locked:false,
+ updated_at:new Date().toISOString()}; }
+async function setStatus(a,status){
+ a.status=status; render();
+ const {error}=await sb.rpc('set_my_assignment_status',{p_id:a.id,p_status:status});
+ if(error) toast('Save failed: '+error.message);
+}
+
+/* ============ modal ============ */
+function openModal(cfg){
+ document.getElementById('modalTitle').textContent=cfg.title;
+ document.getElementById('modalBody').innerHTML=cfg.html||buildForm(cfg.fields);
+ const del=document.getElementById('modalDelete');
+ del.classList.toggle('hide',!cfg.onDelete);
+ del.onclick=()=>{ closeModal(); cfg.onDelete(); };
+ document.getElementById('modalSave').onclick=()=>{
+  const vals={};
+  (cfg.fields||[]).forEach(f=>{ const el=document.getElementById('f_'+f.k); if(!el)return; vals[f.k]=f.type==='number'?(+el.value||0):el.value.trim(); });
+  closeModal(); cfg.onSave(vals);
+ };
+ document.getElementById('modalBg').classList.add('show');
+ const first=document.querySelector('#modalBody input,#modalBody select,#modalBody textarea'); first&&first.focus();
+}
+function buildForm(fields){
+ let html='',row=[];
+ const flush=()=>{ if(!row.length)return; html+=row.length===1?row[0]:'<div class="grid2">'+row.join('')+'</div>'; row=[]; };
+ fields.forEach(f=>{
+  const v=f.value==null?'':f.value; let inner;
+  if(f.type==='select') inner='<select id="f_'+f.k+'">'+selOpts(f.options,v)+'</select>';
+  else if(f.type==='textarea') inner='<textarea id="f_'+f.k+'" rows="3">'+esc(v)+'</textarea>';
+  else inner='<input id="f_'+f.k+'" type="'+(f.type||'text')+'" value="'+esc(v)+'"'+(f.placeholder?' placeholder="'+esc(f.placeholder)+'"':'')+'>';
+  const cell='<div class="fg"><label for="f_'+f.k+'">'+esc(f.label)+'</label>'+inner+'</div>';
+  if(f.full){ flush(); html+=cell; } else { row.push(cell); if(row.length===2)flush(); }
+ });
+ flush(); return html;
+}
+function closeModal(){ document.getElementById('modalBg').classList.remove('show'); }
+document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target.id==='modalBg')closeModal(); });
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape')closeModal();
+ if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='au_pass') doAuth();
+});
+
+/* ============ render ============ */
+function go(r){ route=r; render(); window.scrollTo(0,0); }
+function render(){
+ if(!db) return;
+ document.title=(db.me.name||'Team')+' · '+db.agency;
+ const tabs=[['today','Today'],['work','My work'],['hours','Hours'],['pay','Pay'],['settings','Settings']];
+ document.getElementById('app').innerHTML='<header class="mast"><div class="mast-in">'
+  +'<div class="mast-top"><span class="biz">'+esc(db.me.name||'Team member')+'</span>'
+  +'<span class="by">'+esc(db.me.role_title||'team')+' · '+esc(db.agency)+'</span></div>'
+  +'<nav class="mast-tabs">'+tabs.map(t=>'<a href="#" class="'+(route===t[0]?'on':'')+'" onclick="go(\''+t[0]+'\');return false">'+t[1]+'</a>').join('')+'</nav>'
+  +'</div></header><div class="wrap">'
+  +({today:renderToday,work:renderWork,hours:renderHours,pay:renderPay,settings:renderSettings}[route]||renderToday)()
+  +'</div>';
+ bindDnD();
+ startTick();
+}
+function startTick(){
+ clearInterval(tickTimer);
+ const o=openEntry(); if(!o) return;
+ tickTimer=setInterval(()=>{
+  const el=document.getElementById('elapsed'); if(!el){ clearInterval(tickTimer); return; }
+  el.textContent=hms(o);
+ },1000);
+}
+
+/* ============ clock ============ */
+async function clockIn(){
+ if(openEntry()){ toast('You are already clocked in.'); return; }
+ const t={id:uid('TE'),clock_in:new Date().toISOString(),clock_out:null,note:''};
+ db.entries.push(t); render();
+ if(!(await wr('time_entries',[timeRow(t)]))){ db.entries.pop(); render(); }
+}
+async function clockOut(){
+ const o=openEntry(); if(!o) return;
+ o.clock_out=new Date().toISOString(); render();
+ toast('Clocked out · '+fmtHours(entryHours(o)));
+ upd('time_entries',{clock_out:o.clock_out},o.id);
+}
+
+/* ============ today ============ */
+function renderToday(){
+ const o=openEntry(), t=today(), wk=ymd(new Date(Date.now()-6*864e5));
+ let todayH=0,weekH=0;
+ db.entries.forEach(x=>{ const d=ymd(new Date(x.clock_in)); if(d===t)todayH+=entryHours(x); if(d>=wk)weekH+=entryHours(x); });
+ const dueToday=db.assignments.filter(a=>a.status!=='Done'&&a.due&&daysUntil(a.due)<=0)
+  .sort((a,b)=>(a.due||'')<(b.due||'')?-1:1);
+ const open=db.assignments.filter(a=>a.status!=='Done');
+ return '<div class="page-head"><div class="grow"><h1 class="page">Today</h1><div class="page-sub">'+new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+'</div></div></div>'
+  +'<div class="clock-hero">'
+  +'<div class="grow"><div class="elapsed num" id="elapsed">'+(o?hms(o):'00:00:00')+'</div>'
+  +'<div class="lbl">'+(o?'On the clock since '+fmtDT(o.clock_in):'Off the clock')+'</div></div>'
+  +(o?'<button class="btn clock out" onclick="clockOut()">Clock out</button>'
+     :'<button class="btn clock pri" onclick="clockIn()">Clock in</button>')
+  +'</div>'
+  +'<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+fmtHours(todayH)+'</div><div class="l">Hours today</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtHours(weekH)+'</div><div class="l">Hours · last 7 days</div></div>'
+  +'<div class="stat"><div class="v num">'+dueToday.length+'</div><div class="l">Due today or overdue</div></div>'
+  +'<div class="stat"><div class="v num">'+open.length+'</div><div class="l">Open assignments</div></div>'
+  +'</div>'
+  +'<div class="cols c2" style="margin-top:16px">'
+  +'<div class="panel"><h3>Due now <button class="btn sm" onclick="go(\'work\')">My work</button></h3>'
+  +(dueToday.length?dueToday.slice(0,7).map(a=>{ const c=clientOf(a.client_id); const d=daysUntil(a.due);
+     return '<div class="list-line"><span><b>'+esc(a.title)+'</b>'+(c?' <span class="sub" style="display:inline">· '+esc(c.business_name)+'</span>':'')+'</span>'
+      +chip(a.status)+'<span class="when '+(d<0?'due-red':'due-amber')+'">'+(d<0?Math.abs(d)+'d overdue':'today')+'</span></div>'; }).join('')
+    :'<div class="empty"><b>Nothing due</b>You are clear for today.</div>')
+  +'</div>'
+  +'<div class="panel"><h3>In progress</h3>'
+  +(open.filter(a=>a.status==='In Progress').length?open.filter(a=>a.status==='In Progress').slice(0,7).map(a=>{ const c=clientOf(a.client_id);
+     return '<div class="list-line"><span><b>'+esc(a.title)+'</b>'+(c?' <span class="sub" style="display:inline">· '+esc(c.business_name)+'</span>':'')+'</span><span class="when">'+(a.due?fmtDate(a.due):'')+'</span></div>'; }).join('')
+    :'<div class="empty"><b>Nothing in progress</b>Move a card on the My work board when you start something.</div>')
+  +'</div></div>';
+}
+
+/* ============ my work ============ */
+function renderWork(){
+ return '<div class="page-head"><div class="grow"><h1 class="page">My work</h1><div class="page-sub">Your projects, one card per job to run. Drag cards as things move.</div></div>'
+  +'<button class="btn pri" onclick="openTaskModal()">+ Task</button></div>'
+  +'<div class="kanban" style="margin-bottom:20px">'+ASSIGN_STATUSES.map(st=>{
+    const cards=db.assignments.filter(a=>a.status===st);
+    return '<div class="kcol" data-stage="'+st+'"><h4>'+st+'<span class="n">'+cards.length+'</span></h4><div class="kbody">'
+     +cards.map(a=>{ const c=clientOf(a.client_id);
+      return '<div class="kcard" draggable="true" data-aid="'+a.id+'" onclick="openTaskModal(\''+a.id+'\')"><b>'+esc(a.title)+'</b>'
+       +'<div class="meta"><span>'+esc(c?c.business_name:'')+'</span><span class="lockmark">'+(a.locked?'briefed':'')+'</span></div>'
+       +'<div class="meta" style="margin-top:4px"><span>'+esc(a.priority)+'</span><span class="num '+(a.due&&daysUntil(a.due)<0&&st!=='Done'?'due-red':'')+'">'+(a.due?fmtDate(a.due):'')+'</span></div>'
+       +'</div>'; }).join('')+'</div></div>';
+  }).join('')+'</div>'
+  +(db.assignments.length?'<div class="tbl-wrap"><table><thead><tr><th>Task</th><th>Client</th><th>Status</th><th>Priority</th><th class="r">Due</th></tr></thead><tbody>'
+   +[...db.assignments].sort((a,b)=>(a.due||'9999')<(b.due||'9999')?-1:1).map(a=>{ const c=clientOf(a.client_id);
+     return '<tr class="rowlink" onclick="openTaskModal(\''+a.id+'\')">'
+      +'<td><b>'+esc(a.title)+'</b>'+(a.detail?'<span class="sub">'+esc(a.detail.slice(0,80))+'</span>':'')+'</td>'
+      +'<td>'+(c?esc(c.business_name):'—')+'</td><td>'+chip(a.status)+'</td><td>'+esc(a.priority)+'</td>'
+      +'<td class="r num '+(a.due&&a.status!=='Done'&&daysUntil(a.due)<0?'due-red':'')+'">'+fmtDate(a.due)+'</td></tr>'; }).join('')
+   +'</tbody></table></div>':'');
+}
+function bindDnD(){
+ document.querySelectorAll('.kcard[draggable]').forEach(el=>{
+  el.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',el.dataset.aid); el.classList.add('dragging'); });
+  el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+ });
+ document.querySelectorAll('.kcol').forEach(col=>{
+  col.addEventListener('dragover',e=>{ e.preventDefault(); col.classList.add('dragover'); });
+  col.addEventListener('dragleave',()=>col.classList.remove('dragover'));
+  col.addEventListener('drop',e=>{
+   e.preventDefault(); col.classList.remove('dragover');
+   const aid=e.dataTransfer.getData('text/plain');
+   const a=db.assignments.find(x=>x.id===aid);
+   if(a&&col.dataset.stage) setStatus(a,col.dataset.stage);
+  });
+ });
+}
+function openTaskModal(aid){
+ const a=aid?db.assignments.find(x=>x.id===aid):null;
+ const editable=!a||(a.origin==='self'&&!a.locked);
+ if(a&&!editable){
+  // briefed work: the brief is read-only, only status moves
+  const c=clientOf(a.client_id);
+  openModal({title:a.title,
+   html:'<dl class="kv" style="margin-bottom:14px">'
+    +'<dt>Client</dt><dd>'+(c?esc(c.business_name)+(c.location?' · '+esc(c.location):''):'—')+'</dd>'
+    +'<dt>Priority</dt><dd>'+esc(a.priority)+'</dd>'
+    +'<dt>Due</dt><dd class="num">'+fmtDate(a.due)+'</dd>'
+    +'<dt>Brief</dt><dd style="white-space:pre-wrap">'+(esc(a.detail)||'—')+'</dd>'
+    +'</dl>'
+    +'<div class="fg"><label for="f_status">Status</label><select id="f_status">'+selOpts(ASSIGN_STATUSES,a.status)+'</select></div>',
+   fields:[{k:'status'}],
+   onSave(v){ if(v.status&&v.status!==a.status) setStatus(a,v.status); }});
+  return;
+ }
+ const clientNames=['— none —'].concat(db.clients.map(c=>c.business_name));
+ openModal({title:a?'Edit task':'Add a task',
+  fields:[
+   {k:'title',label:'Task',value:a?a.title:'',full:true,placeholder:'Draft weekly report'},
+   {k:'client_id',label:'Client',type:'select',options:clientNames,value:a?(clientOf(a.client_id)||{business_name:'— none —'}).business_name:'— none —'},
+   {k:'status',label:'Status',type:'select',options:ASSIGN_STATUSES,value:a?a.status:'To Do'},
+   {k:'priority',label:'Priority',type:'select',options:ASSIGN_PRIORITIES,value:a?a.priority:'Normal'},
+   {k:'due',label:'Due',type:'date',value:a?a.due:today()},
+   {k:'detail',label:'Notes',type:'textarea',value:a?a.detail:'',full:true}
+  ],
+  onSave(v){
+   const match=db.clients.find(c=>c.business_name===v.client_id);
+   v.client_id=match?match.id:null;
+   v.title=v.title||'Untitled task';
+   let target=a;
+   if(a)Object.assign(a,v); else { target=Object.assign({id:uid('AS'),origin:'self',locked:false},v); db.assignments.push(target); }
+   render(); wr('assignments',[assignRow(target)]);
+  },
+  onDelete:a?()=>{ const i=db.assignments.indexOf(a); db.assignments.splice(i,1); render(); rm('assignments',a.id);
+   toast('Deleted task','Undo',()=>{ db.assignments.splice(i,0,a); render(); wr('assignments',[assignRow(a)]); }); }:null});
+}
+
+/* ============ hours ============ */
+function renderHours(){
+ const entries=[...db.entries].sort((a,b)=>a.clock_in<b.clock_in?1:-1);
+ const mk=today().slice(0,7);
+ const monthH=db.entries.reduce((s,t)=>s+(ymd(new Date(t.clock_in)).slice(0,7)===mk?entryHours(t):0),0);
+ return '<div class="page-head"><div class="grow"><h1 class="page">Hours</h1><div class="page-sub">'+fmtHours(monthH)+' this month. You can edit or remove an entry only while it is still open.</div></div></div>'
+  +(entries.length?'<div class="tbl-wrap"><table><thead><tr><th>Clock in</th><th>Clock out</th><th>Note</th><th class="r">Hours</th></tr></thead><tbody>'
+   +entries.map(t=>'<tr'+(t.clock_out?'':' class="rowlink" onclick="openEntryModal(\''+t.id+'\')"')+'>'
+    +'<td class="num">'+fmtDT(t.clock_in)+'</td>'
+    +'<td class="num">'+(t.clock_out?fmtDT(t.clock_out):'<span class="chip s-Clockedin">on the clock</span>')+'</td>'
+    +'<td>'+esc(t.note||'—')+'</td>'
+    +'<td class="r num">'+fmtHours(entryHours(t))+'</td></tr>').join('')
+   +'</tbody></table></div>'
+   :'<div class="tbl-wrap"><div class="empty"><b>No hours yet</b>Clock in from the Today tab to start the clock.</div></div>');
+}
+function openEntryModal(tid){
+ const t=db.entries.find(x=>x.id===tid); if(!t||t.clock_out) return;
+ openModal({title:'Open shift',
+  fields:[{k:'note',label:'Note (what you are working on)',value:t.note||'',full:true}],
+  onSave(v){ t.note=v.note; render(); upd('time_entries',{note:t.note},t.id); },
+  onDelete:()=>{ const i=db.entries.indexOf(t); db.entries.splice(i,1); render(); rm('time_entries',t.id);
+   toast('Deleted the open shift','Undo',()=>{ db.entries.splice(i,0,t); render(); wr('time_entries',[timeRow(t)]); }); }});
+}
+
+/* ============ pay ============ */
+function renderPay(){
+ const periods=[...db.pay].sort((a,b)=>(b.period_start||'')<(a.period_start||'')?-1:1);
+ const pending=periods.filter(p=>p.status!=='Paid').reduce((s,p)=>s+(+p.gross_amount||0),0);
+ const paidAll=periods.filter(p=>p.status==='Paid').reduce((s,p)=>s+(+p.gross_amount||0),0);
+ return '<div class="page-head"><div class="grow"><h1 class="page">Pay</h1><div class="page-sub">Posted by '+esc(db.agency)+' · read-only.</div></div></div>'
+  +'<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+(db.me.pay_type==='Salary'?money(db.me.pay_rate):'$'+(+db.me.pay_rate||0))+'</div><div class="l">'+(db.me.pay_type==='Salary'?'Salary per period':'Hourly rate')+'</div></div>'
+  +'<div class="stat"><div class="v num">'+money(pending)+'</div><div class="l">Pending</div></div>'
+  +'<div class="stat"><div class="v num">'+money(paidAll)+'</div><div class="l">Paid, all time</div></div>'
+  +'</div>'
+  +(periods.length?'<div class="tbl-wrap" style="margin-top:16px"><table><thead><tr><th>Period</th><th class="r">Hours</th><th class="r">Gross</th><th>Status</th><th class="r">Paid on</th></tr></thead><tbody>'
+   +periods.map(p=>'<tr><td class="num">'+fmtDate(p.period_start)+' – '+fmtDate(p.period_end)+(p.notes?'<span class="sub">'+esc(p.notes.slice(0,60))+'</span>':'')+'</td>'
+    +'<td class="r num">'+fmtHours(+p.hours)+'</td><td class="r num">'+money(p.gross_amount)+'</td>'
+    +'<td>'+chip(p.status)+'</td><td class="r num">'+fmtDate(p.date_paid)+'</td></tr>').join('')
+   +'</tbody></table></div>'
+   :'<div class="tbl-wrap" style="margin-top:16px"><div class="empty"><b>No pay periods yet</b>Your pay history appears here once a period is posted.</div></div>');
+}
+
+/* ============ settings ============ */
+function renderSettings(){
+ return '<div class="page-head"><div class="grow"><h1 class="page">Settings</h1><div class="page-sub">Signed in as '+esc(me.email)+'.</div></div></div>'
+  +'<div class="cols c2">'
+  +'<div class="panel"><h3>Your info</h3>'
+  +'<div class="fg"><label>Name</label><input id="my_name" value="'+esc(db.me.name)+'"></div>'
+  +'<div class="fg"><label>Phone</label><input id="my_phone" value="'+esc(db.me.phone)+'"></div>'
+  +'<button class="btn pri" onclick="saveMe()">Save</button></div>'
+  +'<div class="panel"><h3>Your account</h3>'
+  +'<p style="font-size:13px;color:var(--muted);margin-bottom:12px">Your hours and work save automatically. Sign in from any device with the same email and password.</p>'
+  +'<button class="btn" onclick="signOut()">Sign out</button></div>'
+  +'</div>';
+}
+async function saveMe(){
+ const name=document.getElementById('my_name').value.trim();
+ const phone=document.getElementById('my_phone').value.trim();
+ db.me.name=name||db.me.name; db.me.phone=phone; render();
+ const {error}=await sb.rpc('update_my_employee_profile',{p_name:name,p_phone:phone});
+ if(error) toast('Save failed: '+error.message); else toast('Saved');
+}
+
+init();
+</script>
+</body>
+</html>

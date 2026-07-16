@@ -1,0 +1,42 @@
+{
+  "agency": {
+    "name": "Parker — Digital Marketing",
+    "owner": "Parker",
+    "email": "prkrfwlr@gmail.com",
+    "last_updated": "2026-06-30"
+  },
+  "clients": [
+    {
+      "id": "CL-001",
+      "business_name": "Greenville Pressure Washing (fill in real name)",
+      "industry": "Pressure Washing",
+      "location": "Greenville, NC",
+      "status": "Active",
+      "services": ["Cold Email"],
+      "contact_name": "",
+      "email": "",
+      "phone": "",
+      "website": "",
+      "monthly_value": 0,
+      "start_date": "",
+      "notes": "Current client. Cold email campaign actively running. Replace placeholder name and fill contact details from desktop records.",
+      "customers": []
+    },
+    {
+      "id": "CL-002",
+      "business_name": "Prospective Pressure Washing Client",
+      "industry": "Pressure Washing",
+      "location": "",
+      "status": "Prospect",
+      "services": ["Website", "Ad Management", "CRM Access"],
+      "contact_name": "",
+      "email": "",
+      "phone": "",
+      "website": "",
+      "monthly_value": 0,
+      "start_date": "",
+      "notes": "Potential new client. Scope: full website build + managed ad campaigns + their own CRM login to manage their customers. Not yet committed.",
+      "customers": []
+    }
+  ]
+}

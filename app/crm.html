@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parker — Marketing CRM</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#1a2129; --panel2:#222b35; --line:#2d3742;
+    --text:#e6edf3; --muted:#8b97a4; --accent:#3b9eff; --accent2:#1f6fd4;
+    --green:#2ea043; --amber:#d29922; --red:#da3633; --chip:#2a3540;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+  header{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:20}
+  header h1{font-size:17px;font-weight:600;letter-spacing:.2px}
+  header .sub{color:var(--muted);font-size:12px}
+  .spacer{flex:1}
+  button{font-family:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:7px 13px;border-radius:7px;cursor:pointer;transition:.15s}
+  button:hover{border-color:var(--accent);color:#fff}
+  button.primary{background:var(--accent2);border-color:var(--accent2);color:#fff}
+  button.primary:hover{background:var(--accent)}
+  button.danger:hover{border-color:var(--red);color:#ff7b72}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .stat .n{font-size:26px;font-weight:700}
+  .stat .l{color:var(--muted);font-size:12px;margin-top:2px}
+  .bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .bar h2{font-size:15px;font-weight:600}
+  .crumb{color:var(--muted);font-size:13px;cursor:pointer}
+  .crumb:hover{color:var(--accent)}
+  input,select,textarea{font-family:inherit;font-size:13px;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:8px 10px;border-radius:7px;width:100%}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);background:var(--panel2)}
+  td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr.row:hover{background:var(--panel2);cursor:pointer}
+  .chip{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;background:var(--chip);color:var(--muted)}
+  .chip.active,.chip.Active{background:rgba(46,160,67,.15);color:#3fb950}
+  .chip.Prospect,.chip.Lead{background:rgba(210,153,34,.15);color:#e3b341}
+  .chip.Won,.chip.Customer{background:rgba(59,158,255,.15);color:#58a6ff}
+  .chip.Lost,.chip.Paused{background:rgba(218,54,51,.15);color:#ff7b72}
+  .svc{display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;background:var(--panel2);border:1px solid var(--line);margin:1px 2px 1px 0}
+  .empty{text-align:center;color:var(--muted);padding:40px}
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-start;justify-content:center;z-index:50;overflow:auto;padding:40px 16px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;width:560px;max-width:100%}
+  .modal h3{font-size:16px;margin-bottom:16px}
+  .fg{margin-bottom:13px}
+  .fg label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+  .menu{display:flex;gap:8px}
+  .hint{background:rgba(59,158,255,.08);border:1px solid rgba(59,158,255,.25);border-radius:8px;padding:11px 14px;font-size:12.5px;color:#9fc6ef;margin-bottom:18px}
+  a.link{color:var(--accent);text-decoration:none}
+  @media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Marketing CRM</h1>
+  <span class="sub" id="agencyName">Parker</span>
+  <div class="spacer"></div>
+  <div class="menu">
+    <button onclick="importJSON()">Import</button>
+    <button onclick="exportJSON()">Export JSON</button>
+    <button onclick="exportCSV()">Export CSV</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hint">
+    Your data is saved automatically in this browser. To back it up or move it to your desktop, use <b>Export JSON</b> (full backup) or <b>Export CSV</b> (open in Excel). To restore, use <b>Import</b>.
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <!-- CLIENTS VIEW -->
+  <div id="clientsView">
+    <div class="bar">
+      <h2>My Clients</h2>
+      <div class="spacer"></div>
+      <button class="primary" onclick="openClient()">+ Add Client</button>
+    </div>
+    <table>
+      <thead><tr><th>Business</th><th>Industry</th><th>Location</th><th>Status</th><th>Services</th><th>Customers</th><th>Monthly</th></tr></thead>
+      <tbody id="clientRows"></tbody>
+    </table>
+  </div>
+
+  <!-- CUSTOMERS VIEW -->
+  <div id="customersView" style="display:none">
+    <div class="bar">
+      <span class="crumb" onclick="showClients()">← My Clients</span>
+      <span style="color:var(--muted)">/</span>
+      <h2 id="custTitle"></h2>
+      <div class="spacer"></div>
+      <button onclick="openClient(currentClientId)">Edit Client</button>
+      <button class="primary" onclick="openCustomer()">+ Add Customer</button>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Contact</th><th>Stage</th><th>Job Type</th><th>Source</th><th>Quote</th><th>Last Contact</th></tr></thead>
+      <tbody id="custRows"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- CLIENT MODAL -->
+<div class="modal-bg" id="clientModal">
+  <div class="modal">
+    <h3 id="clientModalTitle">Add Client</h3>
+    <div class="grid2">
+      <div class="fg"><label>Business Name</label><input id="c_business"></div>
+      <div class="fg"><label>Industry</label><input id="c_industry" value="Pressure Washing"></div>
+      <div class="fg"><label>Location</label><input id="c_location"></div>
+      <div class="fg"><label>Status</label><select id="c_status"><option>Prospect</option><option>Active</option><option>Paused</option><option>Lost</option></select></div>
+      <div class="fg"><label>Contact Name</label><input id="c_contact"></div>
+      <div class="fg"><label>Email</label><input id="c_email"></div>
+      <div class="fg"><label>Phone</label><input id="c_phone"></div>
+      <div class="fg"><label>Website</label><input id="c_website"></div>
+      <div class="fg"><label>Monthly Value ($)</label><input id="c_value" type="number"></div>
+      <div class="fg"><label>Start Date</label><input id="c_start" type="date"></div>
+    </div>
+    <div class="fg"><label>Services (comma separated)</label><input id="c_services" placeholder="Cold Email, Website, Ad Management"></div>
+    <div class="fg"><label>Notes</label><textarea id="c_notes" rows="3"></textarea></div>
+    <div class="modal-actions">
+      <button class="danger" id="c_delete" onclick="deleteClient()">Delete</button>
+      <div class="spacer"></div>
+      <button onclick="closeModal('clientModal')">Cancel</button>
+      <button class="primary" onclick="saveClient()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER MODAL -->
+<div class="modal-bg" id="customerModal">
+  <div class="modal">
+    <h3 id="customerModalTitle">Add Customer</h3>
+    <div class="grid2">
+      <div class="fg"><label>Name</label><input id="u_name"></div>
+      <div class="fg"><label>Stage</label><select id="u_stage"><option>Lead</option><option>Quoted</option><option>Won</option><option>Customer</option><option>Lost</option></select></div>
+      <div class="fg"><label>Email</label><input id="u_email"></div>
+      <div class="fg"><label>Phone</label><input id="u_phone"></div>
+      <div class="fg"><label>Job Type</label><input id="u_job" placeholder="House Wash, Driveway, Roof..."></div>
+      <div class="fg"><label>Source</label><input id="u_source" placeholder="Cold Email, Referral, Ad..."></div>
+      <div class="fg"><label>Quote Value ($)</label><input id="u_quote" type="number"></div>
+      <div class="fg"><label>Last Contact</label><input id="u_last" type="date"></div>
+    </div>
+    <div class="fg"><label>Address</label><input id="u_address"></div>
+    <div class="fg"><label>Notes</label><textarea id="u_notes" rows="3"></textarea></div>
+    <div class="modal-actions">
+      <button class="danger" id="u_delete" onclick="deleteCustomer()">Delete</button>
+      <div class="spacer"></div>
+      <button onclick="closeModal('customerModal')">Cancel</button>
+      <button class="primary" onclick="saveCustomer()">Save</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept=".json" style="display:none">
+
+<script>
+const KEY = 'parker_marketing_crm_v1';
+let db = load();
+let currentClientId = null;
+let editClientId = null;
+let editCustomerId = null;
+
+function seed(){
+  return {
+    agency:{name:"Parker — Digital Marketing", owner:"Parker", email:"prkrfwlr@gmail.com"},
+    clients:[
+      {id:"CL-001", business_name:"Greenville Pressure Washing (rename)", industry:"Pressure Washing", location:"Greenville, NC", status:"Active", services:["Cold Email"], contact_name:"", email:"", phone:"", website:"", monthly_value:0, start_date:"", notes:"Current client — cold email campaign running. Fill in details from desktop.", customers:[]},
+      {id:"CL-002", business_name:"Prospective Pressure Washing Client", industry:"Pressure Washing", location:"", status:"Prospect", services:["Website","Ad Management","CRM Access"], contact_name:"", email:"", phone:"", website:"", monthly_value:0, start_date:"", notes:"Potential client. Website + managed ads + their own CRM login. Not committed yet.", customers:[]}
+    ]
+  };
+}
+function load(){ try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):seed(); }catch(e){ return seed(); } }
+function save(){ localStorage.setItem(KEY, JSON.stringify(db)); render(); }
+function uid(p){ return p + '-' + Date.now().toString(36) + Math.floor(Math.random()*1000); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function money(n){ n=+n||0; return n? '$'+n.toLocaleString() : '—'; }
+
+function render(){
+  document.getElementById('agencyName').textContent = db.agency.owner || 'Parker';
+  // stats
+  const clients=db.clients;
+  const active=clients.filter(c=>c.status==='Active').length;
+  const prospects=clients.filter(c=>c.status==='Prospect').length;
+  const totalCust=clients.reduce((s,c)=>s+(c.customers?c.customers.length:0),0);
+  const mrr=clients.reduce((s,c)=>s+(+c.monthly_value||0),0);
+  document.getElementById('stats').innerHTML=`
+    <div class="stat"><div class="n">${clients.length}</div><div class="l">Total Clients</div></div>
+    <div class="stat"><div class="n">${active}</div><div class="l">Active · ${prospects} prospects</div></div>
+    <div class="stat"><div class="n">${totalCust}</div><div class="l">Customers Tracked</div></div>
+    <div class="stat"><div class="n">${money(mrr)}</div><div class="l">Monthly Recurring</div></div>`;
+  // client rows
+  const cr=document.getElementById('clientRows');
+  if(!clients.length){ cr.innerHTML='<tr><td colspan="7" class="empty">No clients yet. Click “Add Client”.</td></tr>'; }
+  else cr.innerHTML=clients.map(c=>`
+    <tr class="row" onclick="showCustomers('${c.id}')">
+      <td><b>${esc(c.business_name)}</b></td>
+      <td>${esc(c.industry)}</td>
+      <td>${esc(c.location)||'—'}</td>
+      <td><span class="chip ${esc(c.status)}">${esc(c.status)}</span></td>
+      <td>${(c.services||[]).map(s=>`<span class="svc">${esc(s)}</span>`).join('')||'—'}</td>
+      <td>${c.customers?c.customers.length:0}</td>
+      <td>${money(c.monthly_value)}</td>
+    </tr>`).join('');
+  // customers view
+  if(currentClientId){
+    const c=db.clients.find(x=>x.id===currentClientId);
+    if(c){
+      document.getElementById('custTitle').textContent=c.business_name;
+      const ur=document.getElementById('custRows');
+      const list=c.customers||[];
+      if(!list.length){ ur.innerHTML='<tr><td colspan="7" class="empty">No customers yet for this client.</td></tr>'; }
+      else ur.innerHTML=list.map(u=>`
+        <tr class="row" onclick="openCustomer('${u.customer_id}')">
+          <td><b>${esc(u.name)}</b>${u.address?`<br><span style="color:var(--muted);font-size:12px">${esc(u.address)}</span>`:''}</td>
+          <td>${esc(u.email)||''}${u.phone?`<br><span style="color:var(--muted);font-size:12px">${esc(u.phone)}</span>`:''}</td>
+          <td><span class="chip ${esc(u.stage)}">${esc(u.stage)}</span></td>
+          <td>${esc(u.job_type)||'—'}</td>
+          <td>${esc(u.source)||'—'}</td>
+          <td>${money(u.quote_value)}</td>
+          <td>${esc(u.last_contact)||'—'}</td>
+        </tr>`).join('');
+    }
+  }
+}
+
+function showClients(){ currentClientId=null; document.getElementById('clientsView').style.display=''; document.getElementById('customersView').style.display='none'; render(); }
+function showCustomers(id){ currentClientId=id; document.getElementById('clientsView').style.display='none'; document.getElementById('customersView').style.display=''; render(); }
+
+// CLIENT modal
+function openClient(id){
+  editClientId=id||null;
+  const m=document.getElementById('clientModal');
+  const c = id ? db.clients.find(x=>x.id===id) : {industry:'Pressure Washing',status:'Prospect',services:[]};
+  document.getElementById('clientModalTitle').textContent=id?'Edit Client':'Add Client';
+  c_business.value=c.business_name||''; c_industry.value=c.industry||''; c_location.value=c.location||'';
+  c_status.value=c.status||'Prospect'; c_contact.value=c.contact_name||''; c_email.value=c.email||'';
+  c_phone.value=c.phone||''; c_website.value=c.website||''; c_value.value=c.monthly_value||'';
+  c_start.value=c.start_date||''; c_services.value=(c.services||[]).join(', '); c_notes.value=c.notes||'';
+  document.getElementById('c_delete').style.display=id?'':'none';
+  m.classList.add('show');
+}
+function saveClient(){
+  const data={
+    business_name:c_business.value.trim()||'Untitled', industry:c_industry.value.trim(), location:c_location.value.trim(),
+    status:c_status.value, contact_name:c_contact.value.trim(), email:c_email.value.trim(), phone:c_phone.value.trim(),
+    website:c_website.value.trim(), monthly_value:+c_value.value||0, start_date:c_start.value,
+    services:c_services.value.split(',').map(s=>s.trim()).filter(Boolean), notes:c_notes.value.trim()
+  };
+  if(editClientId){ const c=db.clients.find(x=>x.id===editClientId); Object.assign(c,data); }
+  else { data.id=uid('CL'); data.customers=[]; db.clients.push(data); }
+  closeModal('clientModal'); save();
+}
+function deleteClient(){
+  if(!editClientId) return;
+  if(confirm('Delete this client and all its customers?')){
+    db.clients=db.clients.filter(x=>x.id!==editClientId);
+    closeModal('clientModal'); if(currentClientId===editClientId) showClients(); save();
+  }
+}
+
+// CUSTOMER modal
+function openCustomer(cid){
+  if(event) event.stopPropagation && event.stopPropagation();
+  editCustomerId=cid||null;
+  const client=db.clients.find(x=>x.id===currentClientId);
+  const u = cid ? (client.customers||[]).find(x=>x.customer_id===cid) : {stage:'Lead'};
+  document.getElementById('customerModalTitle').textContent=cid?'Edit Customer':'Add Customer';
+  u_name.value=u.name||''; u_stage.value=u.stage||'Lead'; u_email.value=u.email||''; u_phone.value=u.phone||'';
+  u_job.value=u.job_type||''; u_source.value=u.source||''; u_quote.value=u.quote_value||''; u_last.value=u.last_contact||'';
+  u_address.value=u.address||''; u_notes.value=u.notes||'';
+  document.getElementById('u_delete').style.display=cid?'':'none';
+  document.getElementById('customerModal').classList.add('show');
+}
+function saveCustomer(){
+  const client=db.clients.find(x=>x.id===currentClientId);
+  if(!client.customers) client.customers=[];
+  const data={
+    name:u_name.value.trim()||'Unnamed', stage:u_stage.value, email:u_email.value.trim(), phone:u_phone.value.trim(),
+    job_type:u_job.value.trim(), source:u_source.value.trim(), quote_value:+u_quote.value||0,
+    last_contact:u_last.value, address:u_address.value.trim(), notes:u_notes.value.trim()
+  };
+  if(editCustomerId){ const u=client.customers.find(x=>x.customer_id===editCustomerId); Object.assign(u,data); }
+  else { data.customer_id=uid('CU'); client.customers.push(data); }
+  closeModal('customerModal'); save();
+}
+function deleteCustomer(){
+  if(!editCustomerId) return;
+  const client=db.clients.find(x=>x.id===currentClientId);
+  client.customers=client.customers.filter(x=>x.customer_id!==editCustomerId);
+  closeModal('customerModal'); save();
+}
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+// IMPORT / EXPORT
+function download(name, text, type){
+  const b=new Blob([text],{type}); const a=document.createElement('a');
+  a.href=URL.createObjectURL(b); a.download=name; a.click(); URL.revokeObjectURL(a.href);
+}
+function exportJSON(){ download('crm-backup-'+new Date().toISOString().slice(0,10)+'.json', JSON.stringify(db,null,2), 'application/json'); }
+function exportCSV(){
+  let rows=[['client_id','client_name','customer_id','name','email','phone','address','stage','source','job_type','quote_value','last_contact','notes']];
+  db.clients.forEach(c=>{
+    if(!c.customers||!c.customers.length){ rows.push([c.id,c.business_name,'','','','','','','','','','','']); }
+    c.customers&&c.customers.forEach(u=>rows.push([c.id,c.business_name,u.customer_id,u.name,u.email,u.phone,u.address,u.stage,u.source,u.job_type,u.quote_value,u.last_contact,u.notes]));
+  });
+  const csv=rows.map(r=>r.map(v=>{v=v==null?'':String(v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(',')).join('\n');
+  download('crm-customers-'+new Date().toISOString().slice(0,10)+'.csv', csv, 'text/csv');
+}
+function importJSON(){ document.getElementById('fileInput').click(); }
+document.getElementById('fileInput').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ const d=JSON.parse(r.result); if(d.clients){ db=d; save(); alert('Imported '+d.clients.length+' clients.'); } else alert('Not a valid CRM file.'); }catch(err){ alert('Could not read file: '+err.message); } };
+  r.readAsText(f); e.target.value='';
+});
+
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('show'); }));
+render();
+</script>
+</body>
+</html>

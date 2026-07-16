@@ -1,0 +1,2 @@
+client_id,customer_id,name,email,phone,address,stage,source,job_type,quote_value,last_contact,notes
+CL-001,CU-0001,(example customer — delete me),,,,Lead,Cold Email,House Wash,0,,This row shows the format. Each of your clients tracks their own customers here.

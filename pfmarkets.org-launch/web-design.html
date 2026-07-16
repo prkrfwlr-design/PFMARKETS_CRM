@@ -1,0 +1,425 @@
+<!doctype html>
+<!--
+  PFMarkets — Web Design service page.
+  PLACEHOLDERS TO REPLACE BEFORE LAUNCH: (864) 000-0000 / +18640000000 phone,
+  https://pfmarkets.com canonical/OG/JSON-LD domain, /og.jpg image.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>$297 Web Design for Exterior Cleaning Companies | PFMarkets</title>
+<meta name="description" content="Fast, mobile-first websites for exterior cleaning companies, static builds that load instantly, 3-field quote forms, click-to-call, built to book jobs, not just look nice.">
+<link rel="canonical" href="https://pfmarkets.com/web-design.html"><!-- PLACEHOLDER: confirm real domain -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="$297 Web Design for Exterior Cleaning Companies, PFMarkets">
+<meta property="og:description" content="Fast, mobile-first sites built to book jobs, static builds, 3-field forms, click-to-call.">
+<meta property="og:url" content="https://pfmarkets.com/web-design.html"><!-- PLACEHOLDER -->
+<meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Website Design and Development",
+  "name": "Web Design for Exterior Cleaning Companies", "offers": { "@type": "Offer", "price": "297", "priceCurrency": "USD" },
+  "description": "Fast, mobile-first, conversion-focused websites for exterior cleaning companies — static builds, 3-field quote forms, click-to-call, and booking integration.",
+  "provider": { "@type": "ProfessionalService", "@id": "https://pfmarkets.com/#business", "name": "PFMarkets", "telephone": "+1-864-000-0000" },
+  "url": "https://pfmarkets.com/web-design.html"
+}
+</script>
+
+<style>
+/* page-specific styles only */
+
+.reveal-io {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal-io.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+.svc-hero .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+
+.proof-strip { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-lg); }
+.proof-badge {
+  display: flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-pill); padding: var(--space-xs) var(--space-md);
+}
+.proof-badge::before { content: "✓"; color: var(--color-accent); font-weight: 700; }
+
+.deliv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+@media (max-width: 60rem) { .deliv-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.faq { display: grid; gap: var(--space-md); max-width: 44rem; }
+.faq details { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-lg); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: var(--text-md); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.5rem; line-height: 1; color: var(--color-accent); flex: none; transition: transform var(--dur-short) var(--ease-out); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p.faq__a { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; }
+
+.cross-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* speed-as-money stat row */
+.stat-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-lg); }
+.stat { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-lg); }
+.stat__num { font-family: var(--font-display); font-weight: 800; font-size: var(--text-xl); color: var(--color-accent); }
+.stat__ctx { margin-top: var(--space-xs); color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.5; }
+@media (max-width: 60rem) { .stat-row { grid-template-columns: minmax(0,1fr); } }
+
+/* ---- signature animation: speed gauge — needle sweeps from slow to fast, page-load bar fills, 8s loop ---- */
+.speed-demo {
+  position: relative;
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: clamp(var(--space-lg), 3vw, var(--space-xl));
+  box-shadow: 0 24px 60px -28px var(--color-shadow);
+  min-height: 20rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.speed-demo__label { position: absolute; top: var(--space-lg); left: var(--space-lg); font-size: 0.75rem; color: var(--color-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.speed-demo__gauge { width: 160px; height: 90px; position: relative; }
+.speed-demo__gauge svg { width: 100%; height: 100%; overflow: visible; }
+.speed-demo__track { stroke: var(--color-rule); stroke-width: 10; fill: none; stroke-linecap: round; }
+.speed-demo__fill { stroke: var(--color-accent); stroke-width: 10; fill: none; stroke-linecap: round; stroke-dasharray: 126; stroke-dashoffset: 126; animation: speed-fill 8s var(--ease-out) infinite; }
+.speed-demo__needle { transform-origin: 80px 80px; animation: speed-needle 8s var(--ease-out) infinite; }
+.speed-demo__num {
+  text-align: center; margin-top: var(--space-md);
+  font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg); color: var(--color-ink);
+}
+.speed-demo__num span { color: var(--color-accent); }
+@keyframes speed-fill { 0%, 10% { stroke-dashoffset: 126; } 60%, 100% { stroke-dashoffset: 6; } }
+@keyframes speed-needle { 0%, 10% { transform: rotate(-90deg); } 60%, 100% { transform: rotate(80deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .speed-demo__fill, .speed-demo__needle { animation: none; }
+  .speed-demo__fill { stroke-dashoffset: 6; }
+  .speed-demo__needle { transform: rotate(80deg); }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+      <a class="link-quiet" href="results.html">Results</a>
+      <a class="link-quiet" href="pricing.html">Pricing</a>
+      <a class="link-quiet" href="about.html">About</a>
+    </nav>
+    <div class="nav__right">
+      <!-- PHONE PLACEHOLDER — replace number in href and text -->
+      <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+      <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero svc-hero wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <h1>A website that loads before they <span class="serif-word serif-word--accent">bounce</span>.</h1>
+        <p class="hero__lede">
+          Fast, mobile-first, click-to-call, quote form above the fold. Your
+          site's one job is turning a visitor into a quote request before they
+          hit the back button, not winning a design award. I build it for a
+          flat $297, one time. Not a typo.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="#how-it-works">See how it works</a>
+        </div>
+        <p class="hero__note">This page is the demo: static, fast, and built the same way I'd build yours.</p>
+      </div>
+      <figure class="speed-demo" role="img" aria-label="Animated demo: a speed gauge needle sweeping from slow to fast as a page-load bar fills.">
+        <span class="speed-demo__label">Page load</span>
+        <div>
+          <div class="speed-demo__gauge">
+            <svg viewBox="0 0 160 90">
+              <path class="speed-demo__track" d="M10,80 A70,70 0 0 1 150,80"/>
+              <path class="speed-demo__fill" d="M10,80 A70,70 0 0 1 150,80"/>
+              <line class="speed-demo__needle" x1="80" y1="80" x2="80" y2="24" stroke="var(--color-ink)" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="speed-demo__num"><span>0.3s</span> to first paint</p>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ======================= PROOF STRIP ======================= -->
+  <div class="wrap reveal-io">
+    <div class="proof-strip">
+      <span class="proof-badge">$297 flat, one time, no five-figure agency quote</span>
+      <span class="proof-badge">Run by an exterior cleaning operator, not an agency</span>
+      <span class="proof-badge">Static builds, no WordPress plugin bloat</span>
+      <!-- CASE STUDY SLOT: add real client load-time / conversion numbers when available -->
+      <span class="proof-badge">Real numbers when we have them, never invented ones</span>
+    </div>
+  </div>
+
+  <!-- ======================= PAIN ACKNOWLEDGMENT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>Your website is probably a <span class="serif-word">tax</span></h2>
+      <p>Slow WordPress theme, a plugin update that broke something six months
+         ago, a contact form buried under three scrolls, no phone number
+         until the footer. Most exterior cleaning sites don't lose leads.
+         They leak them before anyone even sees the phone number.</p>
+    </div>
+    <p style="max-width:40rem;color:var(--color-ink-2);">
+      Every second your page takes to load is money. A one-second delay costs
+      roughly 7% of conversions industry-wide, on an exterior cleaning site that's
+      quote requests that never got submitted, not just a slower scroll.
+    </p>
+  </section>
+
+  <!-- ======================= SPEED STATS ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>Speed is <span class="serif-word">money</span>, not a nice-to-have</h2>
+        <p>This isn't a hunch, it's some of the most consistent data in web conversion research.</p>
+      </div>
+      <div class="stat-row">
+        <div class="stat reveal-io" style="--i:0">
+          <div class="stat__num">~7%</div>
+          <p class="stat__ctx">drop in conversions for every 1-second delay in page load.</p>
+        </div>
+        <div class="stat reveal-io" style="--i:1">
+          <div class="stat__num">2×</div>
+          <p class="stat__ctx">the conversion rate for sites that pass Core Web Vitals vs. those that don't.</p>
+        </div>
+        <div class="stat reveal-io" style="--i:2">
+          <div class="stat__num">48%</div>
+          <p class="stat__ctx">of mobile sites pass all three Core Web Vitals, a fast site is still an edge, not table stakes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= WHAT WE ACTUALLY DO ======================= -->
+  <section class="section wrap">
+    <div class="section__head reveal-io">
+      <h2>What we actually build</h2>
+      <p>No page builder, no plugin stack, no monthly hosting fees you didn't ask for.</p>
+    </div>
+    <div class="deliv-grid">
+      <div class="svc reveal-io" style="--i:0">
+        <h3>Static, hand-built site</h3>
+        <p>No WordPress, no database, no plugin that breaks on update day.
+           Just fast-loading pages hosted on a CDN.</p>
+      </div>
+      <div class="svc reveal-io" style="--i:1">
+        <h3>3-field quote form, above the fold</h3>
+        <p>Name, phone, and one qualifier, nothing that makes a homeowner
+           quit halfway through on their phone in a parking lot.</p>
+      </div>
+      <div class="svc reveal-io" style="--i:2">
+        <h3>Click-to-call everywhere</h3>
+        <p>The phone number isn't hiding in a footer, it's in the header,
+           it's tappable, and it works the same on mobile as on desktop.</p>
+      </div>
+      <div class="svc reveal-io" style="--i:3">
+        <h3>Booking integration, if you want it</h3>
+        <p>Calendar booking built in for customers who'd rather self-serve
+           than wait for a callback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= HOW IT WORKS ======================= -->
+  <section class="section section--band" id="how-it-works">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>How it works</h2>
+        <p>Four steps from first call to a live site.</p>
+      </div>
+      <ol class="steps">
+        <li class="reveal-io" style="--i:0">
+          <span class="stage" aria-hidden="true">01</span>
+          <h3>Content and structure</h3>
+          <p>We map out the pages you actually need, services, service
+             area, and the offer that gets someone to fill out the form.</p>
+          <p class="steps__meta">Takes: 3–5 days</p>
+        </li>
+        <li class="reveal-io" style="--i:1">
+          <span class="stage" aria-hidden="true">02</span>
+          <h3>Build it, fast by default</h3>
+          <p>Static pages, optimized images, no bloated frameworks, speed
+             is a build requirement, not an afterthought.</p>
+          <p class="steps__meta">Takes: 1–2 weeks</p>
+        </li>
+        <li class="reveal-io" style="--i:2">
+          <span class="stage" aria-hidden="true">03</span>
+          <h3>Launch and speed-test</h3>
+          <p>We check load time and mobile usability before it goes live,
+             not after you notice something's slow.</p>
+          <p class="steps__meta">Deliverable: live, tested site</p>
+        </li>
+        <li class="reveal-io" style="--i:3">
+          <span class="stage" aria-hidden="true">04</span>
+          <h3>Maintain and update</h3>
+          <p>Content changes, new service-area pages, and fixes handled , 
+             you don't need to touch a CMS to update your own site.</p>
+          <p class="steps__meta">Cadence: as needed</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section class="section wrap">
+    <div class="section__head reveal-io">
+      <h2>Fair questions, straight answers</h2>
+    </div>
+    <div class="faq">
+      <details class="reveal-io" style="--i:0">
+        <summary>Seriously, $297? What's the catch?</summary>
+        <p class="faq__a">No catch. It's a flat one-time build. I can do it at
+           that price because the sites are static, fast, and built on a
+           system I've already refined, no bloated agency process to pay for.
+           And if you book ads or SEO with me, the site can be your free
+           plus-one instead. It's also included free in The Works bundle.</p>
+      </details>
+      <details class="reveal-io" style="--i:0">
+        <summary>Do I need to host it myself?</summary>
+        <p class="faq__a">No, I handle hosting on a fast CDN as part of the
+           build. You own the domain; I manage where it points.</p>
+      </details>
+      <details class="reveal-io" style="--i:1">
+        <summary>Can you update my current site instead of rebuilding it?</summary>
+        <p class="faq__a">Depends what it's built on. If it's a slow
+           WordPress site, a rebuild is usually faster and cheaper long-term
+           than untangling years of plugins. We'll tell you honestly which
+           makes sense after we look at it.</p>
+      </details>
+      <details class="reveal-io" style="--i:2">
+        <summary>Does this include SEO?</summary>
+        <p class="faq__a">The build itself is SEO-friendly by default, fast,
+           structured, mobile-first. Ongoing local SEO and Google Business
+           Profile work is a separate service if you want the deeper push.</p>
+      </details>
+      <details class="reveal-io" style="--i:3">
+        <summary>How fast is "fast," really?</summary>
+        <p class="faq__a">We're targeting sub-second first paint and passing
+           Core Web Vitals, the same bar Google uses to decide whether your
+           site is fast enough to reward with ranking.</p>
+      </details>
+      <details class="reveal-io" style="--i:4">
+        <summary>What if I need online booking or payments later?</summary>
+        <p class="faq__a">We build the site to add those in without a
+           rebuild, booking widgets and payment links slot in as your
+           business needs them.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ======================= CROSS-LINKS ======================= -->
+  <section class="section section--band">
+    <div class="wrap reveal-io">
+      <div class="section__head">
+        <h2>Pairs well with</h2>
+        <p>A fast site still needs traffic and a reason to rank.</p>
+      </div>
+      <div class="cross-links">
+        <a class="btn btn--outline" href="seo-gbp.html">SEO &amp; Google Business Profile</a>
+        <a class="btn btn--outline" href="meta-ads.html">Meta Ads Management</a>
+        <a class="btn btn--outline" href="creative-design.html">Ad Creative &amp; Design</a>
+        <a class="btn btn--outline" href="soft-washing.html">Cleaning services marketing</a>
+        <a class="btn btn--outline" href="window-cleaning.html">Lawn care marketing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CLOSING CTA ======================= -->
+  <section class="close-cta wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Want to know how slow your site really <span class="serif-word">is</span>?</h2>
+        <p>A free audit of your current site's speed, mobile usability, and where visitors are dropping off.</p>
+        <ul class="expect">
+          <li>We test your load time and mobile experience</li>
+          <li>You get a plain-language list of what's costing you leads</li>
+          <li>If we're not the right fit, we'll say so</li>
+        </ul>
+      </div>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="results.html">Results</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+"use strict";
+const nav = document.getElementById("site-nav");
+let navTick = false;
+function onScroll() {
+  if (navTick) return;
+  navTick = true;
+  requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+}
+addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+(function revealOnScroll() {
+  const els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach((el) => io.observe(el));
+})();
+</script>
+</body>
+</html>

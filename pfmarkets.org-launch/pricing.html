@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pricing | PFMarkets</title>
+  <meta name="description" content="Meta ads, SEO and GBP, and email marketing for exterior cleaning companies. Bundle all three as The Works for $897/mo and get a free website and CRM.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    /* ---------- pricing cards ---------- */
+    .price-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-lg); align-items: stretch; }
+    .price-card {
+      background: var(--color-paper);
+      border: var(--rule-hair) solid var(--color-rule);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      display: grid;
+      gap: var(--space-md);
+      align-content: start;
+      position: relative;
+    }
+    .price-card__badge {
+      position: absolute;
+      top: -14px; left: var(--space-xl);
+      background: var(--color-accent);
+      color: var(--color-accent-ink);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+    .price-card__for { font-size: var(--text-sm); color: var(--color-muted); }
+    .price-card__price { font-family: var(--font-display); font-weight: 800; font-size: var(--text-2xl); letter-spacing: -0.03em; margin-top: var(--space-xs); }
+    .price-card__price span { font-size: 0.9rem; font-weight: 500; color: var(--color-muted); }
+    .price-card__note { font-size: 0.8125rem; color: var(--color-muted); }
+    .price-card__list { list-style: none; margin: var(--space-sm) 0 0; padding: 0; display: grid; gap: var(--space-xs); }
+    .price-card__list li { display: flex; gap: var(--space-xs); align-items: baseline; font-size: var(--text-sm); color: var(--color-ink-2); }
+    .price-card__list li::before { content: "✓"; color: var(--color-accent); font-weight: 700; flex: none; }
+    .price-card .btn { margin-top: var(--space-md); width: 100%; }
+    @media (max-width: 60rem) {
+      .price-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    /* ---------- The Works anchor ---------- */
+    .works {
+      margin-top: var(--space-xl);
+      background: var(--color-paper-2);
+      border: 2px solid var(--color-accent);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      position: relative;
+      box-shadow: 0 28px 64px -28px var(--color-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+    .works__badge {
+      position: absolute;
+      top: -16px; left: var(--space-2xl);
+      background: var(--color-accent);
+      color: var(--color-accent-ink);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+    .works__name { font-size: var(--text-sm); color: var(--color-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .works h3 { margin-top: var(--space-xs); font-size: var(--text-xl); }
+    .works__math {
+      margin-top: var(--space-md);
+      font-size: var(--text-sm);
+      color: var(--color-ink-2);
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .works__math del { color: var(--color-muted); }
+    .works__price { font-family: var(--font-display); font-weight: 800; font-size: var(--text-3xl); letter-spacing: -0.03em; color: var(--color-ink); }
+    .works__price span { font-size: 1rem; font-weight: 500; color: var(--color-muted); }
+    .works__value {
+      margin-top: var(--space-sm);
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      background: var(--color-accent-dim);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+    }
+    .works__list { list-style: none; margin: var(--space-lg) 0 0; padding: 0; display: grid; gap: var(--space-xs); }
+    .works__list li { display: flex; gap: var(--space-xs); align-items: baseline; font-size: var(--text-sm); color: var(--color-ink-2); }
+    .works__list li::before { content: "✓"; color: var(--color-accent); font-weight: 700; flex: none; }
+    .works__list li.is-free { color: var(--color-ink); font-weight: 600; }
+    .works__cta { display: grid; gap: var(--space-sm); text-align: center; }
+    @media (max-width: 60rem) {
+      .works { grid-template-columns: minmax(0, 1fr); padding: var(--space-xl); }
+    }
+
+    /* ---------- CRM add-on row ---------- */
+    .crm-row {
+      margin-top: var(--space-lg);
+      border: var(--rule-hair) solid var(--color-rule);
+      border-radius: var(--radius-lg);
+      background: var(--color-paper);
+      padding: var(--space-xl);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+    .crm-row p { color: var(--color-ink-2); margin-top: var(--space-xs); max-width: 42rem; }
+    .crm-row .price-card__price { margin: 0; }
+    @media (max-width: 60rem) { .crm-row { grid-template-columns: minmax(0, 1fr); } }
+
+    /* ---------- one-time website strip ---------- */
+    .onetime {
+      border: var(--rule-hair) solid var(--color-rule-2);
+      border-radius: var(--radius-lg);
+      background: var(--color-paper-2);
+      padding: var(--space-xl);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-lg);
+      align-items: center;
+      margin-top: var(--space-lg);
+    }
+    .onetime p { color: var(--color-ink-2); margin-top: var(--space-xs); max-width: 42rem; }
+    @media (max-width: 60rem) { .onetime { grid-template-columns: minmax(0, 1fr); } }
+
+    /* ---------- plus-one section ---------- */
+    .plusone {
+      background: var(--color-ink);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+    .plusone h2, .plusone p { color: var(--color-paper); }
+    .plusone p { opacity: 0.85; margin-top: var(--space-sm); max-width: 34rem; }
+    .plusone__options { list-style: none; margin: var(--space-lg) 0 0; padding: 0; display: grid; gap: var(--space-xs); }
+    .plusone__options li { color: var(--color-paper); opacity: 0.9; font-size: var(--text-sm); display: flex; gap: var(--space-xs); align-items: baseline; }
+    .plusone__options li::before { content: "→"; color: var(--color-brand); flex: none; }
+    .plusone__cta { text-align: center; }
+    .plusone .btn--fill { background: var(--color-brand); color: var(--color-ink); }
+    @media (max-width: 60rem) { .plusone { grid-template-columns: minmax(0, 1fr); text-align: left; } }
+
+    /* ---------- FAQ accordions ---------- */
+    .faq { border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-md); margin-bottom: var(--space-sm); background: var(--color-paper); overflow: hidden; }
+    .faq summary {
+      cursor: pointer;
+      list-style: none;
+      padding: var(--space-md) var(--space-lg);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      font-size: 1.4rem;
+      line-height: 1;
+      color: var(--color-accent);
+      transition: transform var(--dur-short) var(--ease-out);
+      flex: none;
+    }
+    .faq[open] summary::after { transform: rotate(45deg); }
+    .faq__body { padding: 0 var(--space-lg) var(--space-lg); color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.6; }
+
+    /* ---------- scroll reveal ---------- */
+    .sr { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .sr.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .sr { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+        <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <!-- PHONE PLACEHOLDER — replace number in href and text -->
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero wrap">
+      <div class="hero__grid">
+        <div class="hero__copy" style="max-width: 40rem;">
+          <h1 class="reveal" style="--i:0">Pricing that's actually <span class="serif-word serif-word--accent">simple</span>.</h1>
+          <p class="hero__lede reveal" style="--i:1; max-width:40rem;">
+            I set these prices myself, and I run them the same way for every exterior cleaning
+            company I work with. No mystery invoice, no "call us for a quote" runaround. Everything
+            is month-to-month, so you're never locked into anything you don't want.
+          </p>
+          <div class="hero__ctas reveal" style="--i:2">
+            <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+            <a class="btn btn--outline" href="#plans">See what's included</a>
+          </div>
+          <p class="hero__note reveal" style="--i:3">
+            No setup fees hidden in the fine print. Cancel with 30 days' notice, no exit interview required.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PLANS ======================= -->
+    <section class="section wrap" id="plans">
+      <div class="section__head">
+        <h2>Pick what your business needs</h2>
+        <p>Most owners start with one thing, usually ads, sometimes SEO, and add the rest once
+           it's paying for itself. I'm not going to push a package you don't need.</p>
+      </div>
+
+      <div class="price-grid">
+
+        <article class="price-card sr">
+          <p class="price-card__for">Meta Ads Management</p>
+          <p class="price-card__price">$597<span>/mo + ad spend</span></p>
+          <p class="price-card__note">Ad spend is billed separately, straight to your Meta account. I never mark it up.</p>
+          <ul class="price-card__list">
+            <li>Campaign build and weekly optimization</li>
+            <li>3 native creative crops refreshed every 2 to 3 weeks</li>
+            <li>Lead tracking to the call, not the click</li>
+            <li>Monthly plain-English report, no dashboard homework</li>
+          </ul>
+          <a class="btn btn--outline" href="free-audit.html">Get a free audit</a>
+        </article>
+
+        <article class="price-card sr">
+          <p class="price-card__for">SEO &amp; GBP Optimization</p>
+          <p class="price-card__price">$397<span>/mo</span></p>
+          <p class="price-card__note">Slower to build than ads, cheaper to keep once it's built.</p>
+          <ul class="price-card__list">
+            <li>Google Business Profile setup, categories, and photo cadence</li>
+            <li>Review request system and response management</li>
+            <li>Service-area pages and on-page SEO</li>
+            <li>Local pack ranking tracked and reported monthly</li>
+          </ul>
+          <a class="btn btn--outline" href="free-audit.html">Get a free audit</a>
+        </article>
+
+        <article class="price-card sr">
+          <p class="price-card__for">Email Marketing</p>
+          <p class="price-card__price">$197<span>/mo</span></p>
+          <p class="price-card__note">Turns past customers into repeat bookings, without you lifting a finger.</p>
+          <ul class="price-card__list">
+            <li>Seasonal reminder campaigns, like gutters before fall</li>
+            <li>Review request follow-ups</li>
+            <li>Referral pushes to your best customers</li>
+            <li>Win-back campaigns for customers who've gone quiet</li>
+          </ul>
+          <a class="btn btn--outline" href="free-audit.html">Get a free audit</a>
+        </article>
+
+      </div>
+
+      <!-- ======================= THE WORKS (ANCHOR) ======================= -->
+      <div class="works sr">
+        <span class="works__badge">The best deal, hands down</span>
+        <div>
+          <p class="works__name">The bundle</p>
+          <h3>The <span class="serif-word serif-word--accent">Works</span></h3>
+          <p class="works__math">
+            <del>$1,191/mo</del> if you bought Meta ads, SEO/GBP, and email marketing separately.
+          </p>
+          <p class="works__price">$897<span>/mo</span></p>
+          <span class="works__value">Over $1,220/mo of value for $897</span>
+          <ul class="works__list">
+            <li>Everything in Meta Ads Management</li>
+            <li>Everything in SEO &amp; GBP Optimization</li>
+            <li>Everything in Email Marketing</li>
+            <li class="is-free">Free website build included ($297 value)</li>
+            <li class="is-free">Free CRM access included ($29/mo value)</li>
+            <li>One point of contact for everything, no finger-pointing between vendors</li>
+          </ul>
+        </div>
+        <div class="works__cta">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <p class="price-card__note">Still month-to-month. Still cancel anytime.</p>
+        </div>
+      </div>
+
+      <!-- ======================= CRM ADD-ON ======================= -->
+      <div class="crm-row sr">
+        <div>
+          <h3>CRM access <span style="color:var(--color-muted); font-weight:500;">,  your client portal</span></h3>
+          <p>Log in and see your leads, your jobs, and your reports in one place. No digging through
+             text threads or waiting on an email to know what's happening with your account. Free
+             for life with The Works.</p>
+        </div>
+        <div>
+          <p class="price-card__price">$29<span>/mo</span></p>
+        </div>
+      </div>
+
+      <!-- ======================= WEBSITE ONE-TIME ======================= -->
+      <div class="onetime sr">
+        <div>
+          <h3>Need a new website too?</h3>
+          <p>One-time build, not a subscription. Fast, mobile-first, click-to-call, and a quote
+             form that doesn't make someone hunt for it. Free automatically if you're on The Works.</p>
+        </div>
+        <div>
+          <p class="price-card__price" style="margin:0;">$297<span> one-time</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PICK YOUR PLUS-ONE ======================= -->
+    <section class="section wrap">
+      <div class="plusone sr">
+        <div>
+          <h2>Book one service, pick a <span class="serif-word">plus-one</span>.</h2>
+          <p>Sign up for any one paid service and try a second one on me, free.
+             It's my way of proving the other services work before you pay for them.
+             Keep whatever earns its spot.</p>
+          <ul class="plusone__options">
+            <li>A free month of Meta ad management</li>
+            <li>A free Google Business Profile optimization</li>
+            <li>A free website, the same $297 build</li>
+          </ul>
+        </div>
+        <div class="plusone__cta">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PRICING FAQ ======================= -->
+    <section class="section wrap">
+      <div class="section__head sr">
+        <h2>Pricing <span class="serif-word">questions</span></h2>
+      </div>
+      <details class="faq sr">
+        <summary>Why is The Works cheaper than buying two services separately?</summary>
+        <div class="faq__body">Because everything works better together and costs me less to run
+           as one system. Ads plus SEO plus email on the same account share creative, data, and
+           setup. I pass that efficiency on, and clients on The Works stay longer, which is worth
+           more to me than the margin.</div>
+      </details>
+      <details class="faq sr">
+        <summary>What's the CRM and do I need it?</summary>
+        <div class="faq__body">It's your client portal: every lead, job, and report in one place
+           instead of scattered texts and spreadsheets. It's $29 a month as an add-on, included
+           free in The Works. You don't need it to work with me, but most clients end up living
+           in it.</div>
+      </details>
+      <details class="faq sr">
+        <summary>Am I locked into anything?</summary>
+        <div class="faq__body">No. Everything is month-to-month, including The Works. The $297
+           website is yours, you own it either way.</div>
+      </details>
+      <details class="faq sr">
+        <summary>How does the free plus-one actually work?</summary>
+        <div class="faq__body">Book any one paid service and pick a second one free: a month of
+           ad management, a GBP optimization, or a website. If the freebie earns its keep, you
+           can keep it at the normal rate. If not, drop it, no hard feelings.</div>
+      </details>
+      <details class="faq sr">
+        <summary>Does ad spend come out of the management fee?</summary>
+        <div class="faq__body">No, ad spend goes straight to Meta from your card and you see it.
+           My fee covers strategy, creative, building, and managing. Most of my clients run $500
+           to $2,000 a month in spend, and I'll tell you honestly what your market needs.</div>
+      </details>
+    </section>
+
+  </main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var nav = document.getElementById("site-nav");
+  if (nav) {
+    var tick = false;
+    var onScroll = function () {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); tick = false; });
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  var els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

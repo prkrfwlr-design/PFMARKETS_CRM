@@ -1,0 +1,457 @@
+<!doctype html>
+<!--
+  PFMarkets — SEO & Google Business Profile service page.
+  PLACEHOLDERS TO REPLACE BEFORE LAUNCH: (864) 000-0000 / +18640000000 phone,
+  https://pfmarkets.com canonical/OG/JSON-LD domain, /og.jpg image.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SEO &amp; Google Business Profile Optimization | PFMarkets</title>
+<meta name="description" content="Google Business Profile and local SEO for pressure washing, soft washing, and window cleaning companies. $397/mo, reviews, categories, photos, service-area pages, and schema.">
+<link rel="canonical" href="https://pfmarkets.com/seo-gbp.html"><!-- PLACEHOLDER: confirm real domain -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="SEO &amp; Google Business Profile Optimization, PFMarkets">
+<meta property="og:description" content="Local SEO and GBP work built to compound for exterior cleaning companies. Reviews, categories, photos, service-area pages, schema.">
+<meta property="og:url" content="https://pfmarkets.com/seo-gbp.html"><!-- PLACEHOLDER -->
+<meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Local SEO and Google Business Profile Optimization",
+  "name": "SEO & Google Business Profile Optimization for Exterior Cleaning Companies",
+  "description": "Local search optimization for pressure washing, soft washing, and window cleaning companies. Google Business Profile management, review generation, service-area pages, citations, and LocalBusiness schema, $397/mo.",
+  "provider": { "@type": "ProfessionalService", "@id": "https://pfmarkets.com/#business", "name": "PFMarkets", "telephone": "+1-864-000-0000" },
+  "url": "https://pfmarkets.com/seo-gbp.html",
+  "offers": { "@type": "Offer", "price": "397", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "397", "priceCurrency": "USD", "unitText": "MONTH" } }
+}
+</script>
+
+<style>
+/* page-specific styles only */
+
+.reveal-io {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal-io.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+.svc-hero .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+
+.proof-strip { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-lg); }
+.proof-badge {
+  display: flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-pill); padding: var(--space-xs) var(--space-md);
+}
+.proof-badge::before { content: "✓"; color: var(--color-accent); font-weight: 700; }
+
+.deliv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+@media (max-width: 60rem) { .deliv-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.faq { display: grid; gap: var(--space-md); max-width: 44rem; }
+.faq details { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-lg); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: var(--text-md); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.5rem; line-height: 1; color: var(--color-accent); flex: none; transition: transform var(--dur-short) var(--ease-out); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p.faq__a { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; }
+
+.cross-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* honest timeline callout */
+.timeline-note {
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  max-width: 40rem;
+}
+.timeline-note p { color: var(--color-ink-2); }
+.timeline-note strong { color: var(--color-ink); }
+
+/* ---- plus-one callout ---- */
+.plus-one {
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.plus-one p { color: var(--color-ink-2); max-width: 42rem; }
+.plus-one strong { color: var(--color-ink); }
+
+/* ---- signature animation: map pin ranking climb — pin rises through 3 map-pack slots, 10s loop ---- */
+.rank-demo {
+  position: relative;
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: clamp(var(--space-lg), 3vw, var(--space-xl));
+  box-shadow: 0 24px 60px -28px var(--color-shadow);
+  min-height: 20rem;
+  overflow: hidden;
+}
+.rank-demo__label { font-size: 0.75rem; color: var(--color-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.rank-demo__list { margin-top: var(--space-lg); display: grid; gap: var(--space-sm); }
+.rank-demo__row {
+  display: flex; align-items: center; gap: var(--space-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  padding: var(--space-sm) var(--space-md);
+  position: relative;
+}
+.rank-demo__num { font-family: var(--font-display); font-weight: 700; color: var(--color-muted); width: 1.4em; flex: none; }
+.rank-demo__bar { height: 8px; border-radius: var(--radius-pill); background: var(--color-rule); flex: 1; overflow: hidden; }
+.rank-demo__bar i { display: block; height: 100%; background: var(--color-rule-2); width: 40%; }
+.rank-demo__row--you { border-color: var(--color-accent); animation: rank-climb 10s var(--ease-out) infinite; }
+.rank-demo__row--you .rank-demo__num { color: var(--color-accent); }
+.rank-demo__row--you .rank-demo__bar i { background: var(--color-accent); width: 88%; }
+.rank-demo__pin {
+  position: absolute; right: var(--space-md); width: 10px; height: 10px; border-radius: 50%;
+  background: var(--color-accent); box-shadow: 0 0 10px var(--color-accent-dim);
+  opacity: 0; animation: rank-pin 10s var(--ease-out) infinite;
+}
+@keyframes rank-climb {
+  0%, 15% { transform: translateY(84px); }
+  35%, 100% { transform: translateY(0); }
+}
+@keyframes rank-pin {
+  0%, 30% { opacity: 0; }
+  40%, 90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rank-demo__row--you, .rank-demo__pin { animation: none; }
+  .rank-demo__row--you { transform: none; }
+  .rank-demo__pin { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+      <a class="link-quiet" href="results.html">Results</a>
+      <a class="link-quiet" href="pricing.html">Pricing</a>
+      <a class="link-quiet" href="about.html">About</a>
+    </nav>
+    <div class="nav__right">
+      <!-- PHONE PLACEHOLDER — replace number in href and text -->
+      <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero svc-hero wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <h1>Your Google profile is the new <span class="serif-word serif-word--accent">storefront</span>.</h1>
+        <p class="hero__lede">
+          Most homeowners never make it to your website. They search, see the
+          map pack, check your reviews, and call whoever's on top. I get your
+          Google Business Profile, and the pages behind it, into that spot.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="#how-it-works">See how it works</a>
+        </div>
+        <p class="hero__note">This one's a slow build, not a light switch. I'll be upfront about the timeline.</p>
+      </div>
+      <figure class="rank-demo" role="img" aria-label="Animated demo: a business listing climbing from third place to first in the local map pack.">
+        <span class="rank-demo__label">Local map pack</span>
+        <div class="rank-demo__list">
+          <div class="rank-demo__row"><span class="rank-demo__num">1</span><span class="rank-demo__bar"><i></i></span></div>
+          <div class="rank-demo__row"><span class="rank-demo__num">2</span><span class="rank-demo__bar"><i></i></span></div>
+          <div class="rank-demo__row rank-demo__row--you"><span class="rank-demo__num">3</span><span class="rank-demo__bar"><i></i></span><span class="rank-demo__pin"></span></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ======================= PROOF STRIP ======================= -->
+  <div class="wrap reveal-io">
+    <div class="proof-strip">
+      <span class="proof-badge">Run by me, an exterior cleaning operator, not an agency</span>
+      <span class="proof-badge">Honest about timelines, no overnight promises</span>
+      <!-- CASE STUDY SLOT: add real client ranking/review numbers when available -->
+      <span class="proof-badge">Real numbers when I have them, never invented ones</span>
+    </div>
+  </div>
+
+  <!-- ======================= PAIN ACKNOWLEDGMENT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>"We're doing SEO for you," <span class="serif-word">sure</span></h2>
+      <p>SEO has a bad name in this industry because most agencies sell it as
+         a subscription and never show you the work. Three months in, you
+         still don't know what changed.</p>
+    </div>
+    <p style="max-width:40rem;color:var(--color-ink-2);">
+      I don't sell SEO as a mystery box. You'll see the exact profile
+      changes, the review requests going out, the pages getting built, and a
+      straight answer on when you should expect movement.
+    </p>
+  </section>
+
+  <!-- ======================= WHAT WE ACTUALLY DO ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>What I actually do</h2>
+        <p>The fundamentals, done right, then compounded month over month.</p>
+      </div>
+      <div class="deliv-grid">
+        <div class="svc reveal-io" style="--i:0">
+          <h3>Google Business Profile, fully built out</h3>
+          <p>Correct categories, service list, business description, and a
+             steady drip of new photos: the profile that shows up in the
+             map pack, not a half-filled placeholder.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:1">
+          <h3>Review generation system</h3>
+          <p>A simple, repeatable way to ask every happy customer for a
+             review, because review count and recency are two of the biggest
+             local ranking factors, and most companies just forget to ask.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:2">
+          <h3>Service-area pages</h3>
+          <p>Individual pages for each city or neighborhood you actually work
+             in, so you show up for "pressure washing near [town]," not just
+             your home base.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:3">
+          <h3>Citations, LocalBusiness schema, and your client portal</h3>
+          <p>Your business listed consistently across the directories Google
+             checks, structured data that tells search engines who you are,
+             and rank tracking visible any time in your client portal (a
+             $29/mo add-on, included free if you're on The Works).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PLUS-ONE CALLOUT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="plus-one">
+      <p><strong>Pick your plus-one:</strong> book SEO/GBP with me and choose
+         one more service on the house, a free month of ad management, a
+         second GBP optimization for another location, or a website. Try a
+         second service before you commit to it.</p>
+      <a class="btn btn--outline" href="pricing.html">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ======================= HOW IT WORKS ======================= -->
+  <section class="section wrap" id="how-it-works">
+    <div class="section__head reveal-io">
+      <h2>How it works</h2>
+      <p>Four steps, and a timeline I won't sugarcoat.</p>
+    </div>
+    <ol class="steps">
+      <li class="reveal-io" style="--i:0">
+        <span class="stage" aria-hidden="true">01</span>
+        <h3>I audit your profile and site</h3>
+        <p>I check categories, NAP consistency, review count, and site
+           structure: the stuff that's usually half-broken and quietly
+           costing you rank.</p>
+        <p class="steps__meta">Takes: 3–5 days</p>
+      </li>
+      <li class="reveal-io" style="--i:1">
+        <span class="stage" aria-hidden="true">02</span>
+        <h3>I fix the fundamentals</h3>
+        <p>Categories, business description, schema markup, and any citation
+           inconsistencies get cleaned up first: the foundation everything
+           else sits on.</p>
+        <p class="steps__meta">Takes: 1–2 weeks</p>
+      </li>
+      <li class="reveal-io" style="--i:2">
+        <span class="stage" aria-hidden="true">03</span>
+        <h3>I build the review and photo cadence</h3>
+        <p>A repeatable ask-for-a-review flow, plus a steady stream of job
+           photos going onto the profile.</p>
+        <p class="steps__meta">Cadence: ongoing, monthly</p>
+      </li>
+      <li class="reveal-io" style="--i:3">
+        <span class="stage" aria-hidden="true">04</span>
+        <h3>I compound with service-area pages</h3>
+        <p>New pages and citations added monthly, so your footprint keeps
+           growing instead of sitting flat after the initial fix.</p>
+        <p class="steps__meta">Cadence: ongoing, monthly</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ======================= HONEST TIMELINE ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="timeline-note">
+      <p><strong>The honest version of the timeline:</strong> SEO and GBP work
+         compounds slowly. Most owners start seeing real movement in
+         rankings and calls around 3 to 6 months in, not week one. If you
+         need leads tomorrow, that's what Meta ads are for. This is what
+         keeps working after the ad budget stops.</p>
+    </div>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>Fair questions, straight answers</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal-io" style="--i:0">
+          <summary>How long until I see ranking movement?</summary>
+          <p class="faq__a">Most businesses see meaningful map-pack movement
+             around 3 to 6 months in, depending on how competitive your
+             market is. Anyone promising page-one rankings in two weeks is
+             either lying or gaming something that'll get you penalized.</p>
+        </details>
+        <details class="reveal-io" style="--i:1">
+          <summary>Do I still need ads while this builds?</summary>
+          <p class="faq__a">Usually, yes, at least at the start. SEO and ads
+             solve different timelines. I'm upfront that this isn't a
+             replacement for paid leads in month one.</p>
+        </details>
+        <details class="reveal-io" style="--i:2">
+          <summary>What's the review generation system, exactly?</summary>
+          <p class="faq__a">A simple text or email flow triggered after a job
+             wraps, asking the customer for a review with a direct link. No
+             gimmicks, no buying reviews, just making it easy for happy
+             customers to actually leave one.</p>
+        </details>
+        <details class="reveal-io" style="--i:3">
+          <summary>Will this work in a competitive market?</summary>
+          <p class="faq__a">It'll help in any market, but a saturated one
+             takes longer and more consistent work. I'll tell you honestly
+             where you stand after the audit instead of promising a number.</p>
+        </details>
+        <details class="reveal-io" style="--i:4">
+          <summary>What if my GBP is already suspended or restricted?</summary>
+          <p class="faq__a">I've dealt with it before. It's a slower fix, a
+             reinstatement request plus cleanup, but it's usually fixable.
+             I'll tell you the real odds before you pay for anything.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CROSS-LINKS ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>Pairs well with</h2>
+      <p>Local rank means nothing if the site or the offer behind it doesn't convert.</p>
+    </div>
+    <div class="cross-links">
+      <a class="btn btn--outline" href="web-design.html">Web Design</a>
+      <a class="btn btn--outline" href="meta-ads.html">Meta Ads Management</a>
+      <a class="btn btn--outline" href="creative-design.html">Ad Creative &amp; Design</a>
+      <a class="btn btn--outline" href="email-marketing.html">Email Marketing</a>
+      <a class="btn btn--outline" href="pressure-washing.html">Pressure washing marketing</a>
+      <a class="btn btn--outline" href="window-cleaning.html">Window cleaning marketing</a>
+    </div>
+  </section>
+
+  <!-- ======================= CLOSING CTA ======================= -->
+  <section class="close-cta wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Want an honest read on your <span class="serif-word">profile</span>?</h2>
+        <p>A free audit of your Google Business Profile and local search presence: what's broken, what's working, what it'll take.</p>
+        <ul class="expect">
+          <li>I check your profile, reviews, and site structure</li>
+          <li>You get a straight answer on the timeline for your market</li>
+          <li>If I'm not the right fit, I'll say so</li>
+        </ul>
+      </div>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var nav = document.getElementById("site-nav");
+  if (nav) {
+    var tick = false;
+    var onScroll = function () {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); tick = false; });
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  var els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

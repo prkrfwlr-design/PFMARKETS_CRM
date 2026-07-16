@@ -1,0 +1,317 @@
+<!doctype html>
+<!--
+  PFMarkets — Soft Washing industry page
+  TARGET KEYWORDS: soft wash marketing, roof cleaning ads, house washing leads,
+  local SEO for soft washing companies. NOTE: location keywords removed by request —
+  re-add "<service> + <city/region>" once a service area is settled (title/meta/JSON-LD).
+  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH:
+    · (864) 000-0000 and +18640000000 — phone number
+    · https://pfmarkets.com — canonical / JSON-LD URLs
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Marketing for Soft Washing Companies | PFMarkets</title>
+  <meta name="description" content="Lead-generation ads, local SEO, and websites built for soft washing companies. I teach homeowners why their roof needs a soft wash, not a pressure blast.">
+  <link rel="canonical" href="https://pfmarkets.com/soft-washing.html"><!-- PLACEHOLDER: confirm real domain -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Soft Washing Marketing",
+    "provider": { "@type": "ProfessionalService", "name": "PFMarkets", "url": "https://pfmarkets.com/", "telephone": "+1-864-000-0000" },
+    "description": "Lead-generation advertising, local SEO, and websites built for soft washing and exterior cleaning companies.",
+    "url": "https://pfmarkets.com/soft-washing.html"
+  }
+  </script>
+  <!-- JSON-LD placeholder: telephone and all pfmarkets.com URLs must be replaced with real values.
+       areaServed removed by request — re-add once a public service area is settled. -->
+
+  <style>
+    .reveal-io { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .reveal-io.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+    /* signature scene: algae/mildew fading off a roof line, illustrative only */
+    .scene { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-lg); padding: var(--space-lg); box-shadow: 0 24px 60px -28px var(--color-shadow); }
+    .scene__label { font-size: 0.8125rem; font-weight: 600; color: var(--color-muted); margin-bottom: var(--space-sm); }
+    .fade { position: relative; height: clamp(9rem, 20vw, 12rem); border-radius: var(--radius-md); overflow: hidden; background: var(--color-paper-3); }
+    .fade__roof { position: absolute; inset: 0; background: linear-gradient(180deg, var(--color-paper-3) 0%, var(--color-paper-3) 55%, var(--color-accent-dim) 55%, var(--color-accent-dim) 100%); }
+    .fade__spot { position: absolute; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--color-ink-2); opacity: 0.22; filter: blur(1px); animation: fade-out 6s var(--ease-out) infinite; }
+    .fade__spot--a { top: 22%; left: 18%; animation-delay: 0s; }
+    .fade__spot--b { top: 30%; left: 42%; animation-delay: 0.6s; }
+    .fade__spot--c { top: 18%; left: 66%; animation-delay: 1.2s; }
+    .fade__spot--d { top: 34%; left: 82%; animation-delay: 1.8s; }
+    .fade__tag { position: absolute; bottom: var(--space-sm); left: var(--space-sm); font-size: 0.75rem; font-weight: 600; color: var(--color-ink-2); background: var(--color-paper); border-radius: var(--radius-pill); padding: var(--space-2xs) var(--space-sm); }
+    .fade__tag--after { left: auto; right: var(--space-sm); color: var(--color-accent); }
+    @keyframes fade-out { 0%, 20% { opacity: 0.22; transform: scale(1); } 60% { opacity: 0; transform: scale(0.4); } 100% { opacity: 0; transform: scale(0.4); } }
+    @media (prefers-reduced-motion: reduce) { .fade__spot { animation: none; opacity: 0.12; } }
+
+    .econ-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-lg); }
+    .econ-card { padding: var(--space-lg) 0 0; border-top: var(--rule-hair) solid var(--color-rule); }
+    .econ-card h3 { margin-bottom: var(--space-xs); }
+    .econ-card p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
+    @media (max-width: 60rem) { .econ-grid { grid-template-columns: minmax(0,1fr); } }
+
+    .faq { display: grid; gap: var(--space-sm); max-width: 44rem; }
+    .faq details { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); }
+    .faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: var(--space-md); align-items: center; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--color-accent); font-size: 1.25rem; flex: none; transition: transform var(--dur-short) var(--ease-out); }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq p { margin-top: var(--space-sm); color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.6; }
+
+    .also-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-md); }
+    .also-links a { font-size: var(--text-sm); }
+
+    .plus-one { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-xl); display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center; justify-content: space-between; }
+    .plus-one p { color: var(--color-ink-2); font-size: var(--text-sm); max-width: 34rem; }
+    .plus-one h3 { margin-bottom: var(--space-xs); }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+        <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero wrap">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1>Most homeowners don't know their roof needs a soft <span class="serif-word serif-word--accent">wash</span>, not a blast.</h1>
+          <p class="hero__lede">
+            That's the whole marketing problem in one sentence. I build campaigns that teach the
+            homeowner what's actually wrong with their siding and roof, then hand them your number.
+            Education first, sale second.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+            <a class="btn btn--outline" href="industries.html">See other trades</a>
+          </div>
+          <p class="hero__note">Run by an operator who's had to explain the difference between soft washing and pressure washing to a customer on the phone, more than once.</p>
+        </div>
+        <figure class="scene reveal-io">
+          <p class="scene__label">What the transformation shows</p>
+          <div class="fade" role="img" aria-label="Animated scene showing algae and mildew spots fading off a roof, illustrating a soft wash result">
+            <div class="fade__roof"></div>
+            <div class="fade__spot fade__spot--a"></div>
+            <div class="fade__spot fade__spot--b"></div>
+            <div class="fade__spot fade__spot--c"></div>
+            <div class="fade__spot fade__spot--d"></div>
+            <span class="fade__tag">Before</span>
+            <span class="fade__tag fade__tag--after">After</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= ECONOMICS ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>How I think about <span class="serif-word serif-word--accent">your</span> economics</h2>
+          <p>Soft washing is a higher-ticket, education-first sale. The marketing has to sell the "why," not just the after photo.</p>
+        </div>
+        <div class="econ-grid">
+          <div class="econ-card reveal-io">
+            <h3>You're selling awareness first</h3>
+            <p>Most people have never heard the term "soft washing." Some think pressure washing
+               and soft washing are the same thing, right up until a high-pressure crew cracks
+               their siding. The ad's job is to close that gap before it asks for the sale.</p>
+          </div>
+          <div class="econ-card reveal-io">
+            <h3>Higher ticket, fewer jobs needed</h3>
+            <p>A full house or roof wash runs bigger than a driveway job. That changes the math:
+               fewer leads can hit the same revenue target, so lead quality matters more than
+               lead volume.</p>
+          </div>
+          <div class="econ-card reveal-io">
+            <h3>Algae and mildew season is predictable</h3>
+            <p>Humid Southeast summers bring the green and black streaks that make this an easy
+               sell. I shift budget up ahead of that window instead of waiting for the phone to
+               start ringing on its own.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= SERVICES THAT FIT ======================= -->
+    <section class="section wrap">
+      <div class="section__head reveal-io">
+        <h2>What I'd run for a soft washing <span class="serif-word serif-word--accent">crew</span></h2>
+        <p>Not every service fits every trade. Here's what actually moves the needle for soft washing.</p>
+      </div>
+      <div class="svc-list">
+        <div class="svc reveal-io">
+          <h3>Education-first ads</h3>
+          <p>Campaigns that open with "here's what's actually growing on your roof," not a price.
+             Homeowners who understand the problem convert at a much higher rate than ones who
+             just saw a discount.</p>
+          <p class="svc__for"><strong>Good for:</strong> higher-ticket house and roof washes</p>
+        </div>
+        <div class="svc reveal-io">
+          <h3>Local SEO</h3>
+          <p>Google Business Profile optimized for "roof cleaning," "soft wash near me," and
+             algae/mildew search terms, plus review generation after every job.</p>
+          <p class="svc__for"><strong>Good for:</strong> leads without ad spend</p>
+        </div>
+        <div class="svc reveal-io">
+          <h3>Website that books</h3>
+          <p>A fast site that explains soft wash versus pressure wash in plain language, with your
+             before/after gallery front and center and a 3-field quote form.</p>
+          <p class="svc__for"><strong>Good for:</strong> turning clicks into jobs</p>
+        </div>
+        <div class="svc reveal-io">
+          <h3>Social content</h3>
+          <p>Before/after posts still do the heaviest lifting here. I keep them steady, paired with
+             short "why not pressure wash" explainers that build trust before anyone calls.</p>
+          <p class="svc__for"><strong>Good for:</strong> reputation and referrals</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PLUS-ONE ======================= -->
+    <section class="section wrap">
+      <div class="plus-one reveal-io">
+        <div>
+          <h3>Pick your plus-one</h3>
+          <p>Book any one paid service and choose a second one free: a month of ad management, a
+             GBP optimization, or a website. Consider it a second service on me, so you can see
+             the whole system work before you pay for more of it.</p>
+        </div>
+        <a class="btn btn--outline" href="pricing.html">See the offer</a>
+      </div>
+    </section>
+
+    <!-- ======================= FAQ ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>Quick <span class="serif-word serif-word--accent">questions</span></h2>
+        </div>
+        <div class="faq reveal-io">
+          <details>
+            <summary>Do people actually search for "soft washing"?</summary>
+            <p>Some do, most don't yet. That's why I write ads and GBP content around the symptoms
+               homeowners already recognize: green streaks, black stains, a roof that looks dirty
+               no matter how much it rains. The term follows once they've clicked.</p>
+          </details>
+          <details>
+            <summary>How do I show the value of a higher-ticket service in an ad?</summary>
+            <p>Before/after still carries the weight, but I pair it with a short line about why
+               high pressure would have damaged the surface. That contrast is what justifies the
+               price to someone who's never bought this before.</p>
+          </details>
+          <details>
+            <summary>Is there a seasonal push I should be budgeting for?</summary>
+            <p>Yes. Algae and mildew growth ramps up through humid stretches. I move budget ahead
+               of that window instead of reacting after the calls start coming in on their own.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= OTHER TRADES ======================= -->
+    <section class="also" aria-label="Other industries">
+      <div class="wrap">
+        <div>
+          <p><strong>Not a soft washing business?</strong> Same discipline, different economics
+             for these sibling trades.</p>
+          <div class="also-links">
+            <a class="link-quiet" href="pressure-washing.html">Pressure washing →</a>
+            <a class="link-quiet" href="window-cleaning.html">Window cleaning →</a>
+          </div>
+        </div>
+        <a class="btn btn--outline" href="industries.html">See all industries</a>
+      </div>
+    </section>
+
+    <!-- ======================= CLOSING CTA ======================= -->
+    <section class="close-cta wrap">
+      <div class="close-cta__box reveal-io">
+        <div>
+          <h2>Ready to teach homeowners why soft washing wins?</h2>
+          <p>Free audit of your ads, GBP, and site, built around soft washing specifically.</p>
+        </div>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  (function revealOnScroll() {
+    const els = document.querySelectorAll(".reveal-io");
+    if (!els.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el, i) => { el.style.transitionDelay = ((i % 6) * 60) + "ms"; io.observe(el); });
+  })();
+  </script>
+</body>
+</html>

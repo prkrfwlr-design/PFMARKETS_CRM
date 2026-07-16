@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get a Free Audit · PFMarkets</title>
+  <meta name="description" content="A free 48-hour Loom video audit of your ads, Google Business Profile, and website, recorded by me personally. No pressure, no sales call required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .audit-hero { padding-block: calc(68px + var(--space-2xl)) var(--space-2xl); }
+    .audit-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+    .audit-copy { max-width: 32rem; }
+    .audit-copy__lede { margin-top: var(--space-lg); font-size: var(--text-md); line-height: 1.55; color: var(--color-ink-2); }
+    .audit-getlist { list-style: none; margin: var(--space-xl) 0 0; padding: 0; display: grid; gap: var(--space-md); }
+    .audit-getlist li { display: flex; gap: var(--space-sm); align-items: flex-start; }
+    .audit-getlist i {
+      flex: none; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-accent-dim); color: var(--color-accent);
+      display: grid; place-items: center; font-style: normal; font-weight: 700; font-size: 0.8125rem;
+      margin-top: 2px;
+    }
+    .audit-getlist strong { display: block; color: var(--color-ink); font-weight: 600; }
+    .audit-getlist span { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.5; }
+    @media (max-width: 60rem) { .audit-grid { grid-template-columns: minmax(0, 1fr); } }
+
+    /* ---------- standalone form card (reuses .qual__* / .field / .choice classes from site.css) ---------- */
+    .qual--page {
+      position: relative;
+      background: var(--color-paper);
+      border: var(--rule-hair) solid var(--color-rule);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 24px 60px -28px var(--color-shadow);
+      padding: 0;
+    }
+    .qual--page .qual__inner { padding: clamp(var(--space-lg), 3vw, var(--space-xl)); }
+    .qual--page p.zero-pressure { margin-top: var(--space-md); font-size: 0.8125rem; color: var(--color-muted); text-align: center; }
+    .audit-success { display: none; text-align: center; padding: var(--space-lg) 0; }
+    .audit-success.is-visible { display: block; }
+    .audit-success__icon {
+      width: 56px; height: 56px; margin: 0 auto var(--space-md);
+      border-radius: 50%; background: var(--color-accent-dim); color: var(--color-accent);
+      display: grid; place-items: center; font-size: 1.5rem; font-weight: 700;
+    }
+    .audit-success p { color: var(--color-ink-2); margin-top: var(--space-sm); }
+
+    /* ---------- scroll reveal ---------- */
+    .sr { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .sr.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .sr { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <!-- PHONE PLACEHOLDER — replace number in href and text -->
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO + FORM ======================= -->
+    <section class="audit-hero wrap">
+      <div class="audit-grid">
+        <div class="audit-copy">
+          <h1 class="reveal" style="--i:0">A free look at what's actually <span class="serif-word serif-word--accent">happening</span>.</h1>
+          <p class="audit-copy__lede reveal" style="--i:1">
+            I'll record a personal, 48-hour video walking through your ads (if you're running
+            any), your Google Business Profile, and your website: what's working, what's costing
+            you jobs, and what I'd fix first. No call required to get it.
+          </p>
+
+          <ul class="audit-getlist reveal" style="--i:2">
+            <li>
+              <i aria-hidden="true">1</i>
+              <div><strong>I look at your stuff myself</strong><span>Not an automated report. I actually open your ads manager, your GBP listing, and your site.</span></div>
+            </li>
+            <li>
+              <i aria-hidden="true">2</i>
+              <div><strong>A Loom video, not a PDF</strong><span>15 to 20 minutes, screen-recorded, walking through exactly what I see and what I'd change.</span></div>
+            </li>
+            <li>
+              <i aria-hidden="true">3</i>
+              <div><strong>In your inbox within 48 hours</strong><span>No "hop on a call to see it." The video is yours whether you ever talk to me again or not.</span></div>
+            </li>
+          </ul>
+
+          <p class="hero__note reveal" style="--i:3">
+            Zero pressure. If I'm not a fit, the video will say so, and you'll still walk away
+            knowing more about your marketing than you did before. Book any service off the back
+            of it and you can pick a plus-one service free for a month too.
+          </p>
+        </div>
+
+        <div class="qual qual--page reveal" style="--i:2">
+          <div class="qual__inner">
+
+            <div class="qual__progress" id="audit-progress">
+              <span class="qual__progress-label" id="audit-progress-label">Step 1 of 3 · about 90 seconds</span>
+              <div class="qual__bar" role="progressbar" aria-labelledby="audit-progress-label"
+                   aria-valuemin="0" aria-valuemax="100" aria-valuenow="33"><i id="audit-bar-fill"></i></div>
+            </div>
+
+            <form id="audit-form" novalidate>
+
+              <!-- STEP 1 · name + phone -->
+              <fieldset data-step="1">
+                <legend>Let's start with the basics</legend>
+                <div class="field">
+                  <label for="a-name">Your name</label>
+                  <input type="text" id="a-name" name="contact_name" required autocomplete="name" placeholder="First and last">
+                  <p class="hint" data-hint></p>
+                </div>
+                <div class="field">
+                  <label for="a-phone">Phone number</label>
+                  <input type="tel" id="a-phone" name="phone" required autocomplete="tel" placeholder="(864) 555-0134">
+                  <p class="hint" data-hint>I'll text or call, whichever you'd rather. Tell me on the call.</p>
+                </div>
+              </fieldset>
+
+              <!-- STEP 2 · business type + area -->
+              <fieldset data-step="2" hidden>
+                <legend>Tell us about the business</legend>
+                <div class="field">
+                  <label for="a-biztype">What kind of business?</label>
+                  <select id="a-biztype" name="business_type" required>
+                    <option value="" selected disabled>Choose one</option>
+                    <option>Pressure washing</option>
+                    <option>Soft washing</option>
+                    <option>Window cleaning</option>
+                    <option>Other exterior cleaning</option>
+                  </select>
+                  <p class="hint" data-hint></p>
+                </div>
+                <div class="field">
+                  <label for="a-area">Service area</label>
+                  <input type="text" id="a-area" name="service_area" required placeholder="Your city + how far you'll drive">
+                  <p class="hint" data-hint></p>
+                </div>
+              </fieldset>
+
+              <!-- STEP 3 · bottleneck -->
+              <fieldset data-step="3" hidden>
+                <legend>One more thing</legend>
+                <div class="field">
+                  <label id="a-lbl-bottleneck">What's the biggest bottleneck right now?</label>
+                  <div class="choices" role="radiogroup" aria-labelledby="a-lbl-bottleneck">
+                    <label class="choice"><input type="radio" name="bottleneck" value="Not enough leads" required> Not enough leads coming in</label>
+                    <label class="choice"><input type="radio" name="bottleneck" value="Leads don't book"> Leads come in but don't book</label>
+                    <label class="choice"><input type="radio" name="bottleneck" value="Reviews / reputation"> Reviews and reputation</label>
+                    <label class="choice"><input type="radio" name="bottleneck" value="Not sure"> Honestly not sure, that's kind of why I'm here</label>
+                  </div>
+                  <p class="hint" data-hint></p>
+                </div>
+              </fieldset>
+
+              <div class="form-error" id="audit-form-error" role="alert"></div>
+
+              <div class="qual__nav">
+                <button type="button" class="btn btn--outline btn--back" id="audit-back" hidden>Back</button>
+                <button type="button" class="btn btn--fill" id="audit-next">Next</button>
+                <button type="submit" class="btn btn--fill" id="audit-submit" hidden>Send my audit request</button>
+              </div>
+            </form>
+
+            <!-- success state — shown client-side once the form validates on the final step -->
+            <div class="audit-success" id="audit-success" aria-live="polite">
+              <div class="audit-success__icon" aria-hidden="true">✓</div>
+              <h2>You're on the list.</h2>
+              <p>I'll record your video and have it in your inbox within 48 hours. No call, no
+                 follow-up sales sequence, just the video.</p>
+              <p style="margin-top: var(--space-lg);">
+                <a class="btn btn--outline" href="index.html">Back to home</a>
+              </p>
+            </div>
+
+            <!--
+              FORM BACKEND: wire to Supabase leads table, same as index.html.
+              Expected columns: contact_name, phone, business_type, service_area, bottleneck,
+              source (default 'pfmarkets.com/free-audit'), plus id/created_at.
+              On submit: insert the row, then call showSuccess() only after a confirmed insert —
+              this stub currently calls showSuccess() directly with no network request.
+            -->
+            <p class="zero-pressure">No spam. No 14-day trial. Just the video.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <!-- PHONE PLACEHOLDER — same number as header -->
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- multi-step form (vanilla, no libraries) ---------- */
+  const form = document.getElementById("audit-form");
+  const steps = [...form.querySelectorAll("fieldset[data-step]")];
+  const TOTAL = steps.length;
+  let current = 0;
+
+  const backBtn = document.getElementById("audit-back");
+  const nextBtn = document.getElementById("audit-next");
+  const submitBtn = document.getElementById("audit-submit");
+  const barFill = document.getElementById("audit-bar-fill");
+  const progressLabel = document.getElementById("audit-progress-label");
+  const progressBar = document.querySelector("#audit-progress .qual__bar");
+  const formError = document.getElementById("audit-form-error");
+  const success = document.getElementById("audit-success");
+  const progressWrap = document.getElementById("audit-progress");
+
+  const stepTimes = ["about 90 seconds", "about a minute left", "last one"];
+
+  function showStep(i) {
+    current = i;
+    steps.forEach((fs, idx) => { fs.hidden = idx !== i; });
+    backBtn.hidden = i === 0;
+    nextBtn.hidden = i === TOTAL - 1;
+    submitBtn.hidden = i !== TOTAL - 1;
+    const pct = Math.round(((i + 1) / TOTAL) * 100);
+    progressLabel.textContent = `Step ${i + 1} of ${TOTAL} · ${stepTimes[i]}`;
+    progressBar.setAttribute("aria-valuenow", String(pct));
+    barFill.style.transform = `scaleX(${pct / 100})`;
+    const first = steps[i].querySelector("input, select");
+    if (first) first.focus({ preventScroll: true });
+  }
+
+  function setFieldError(el, msg) {
+    el.setAttribute("aria-invalid", "true");
+    const hint = el.closest(".field")?.querySelector("[data-hint]");
+    if (hint) { hint.dataset.orig = hint.dataset.orig ?? hint.textContent; hint.textContent = msg; hint.classList.add("is-error"); }
+  }
+  function clearFieldError(el) {
+    el.removeAttribute("aria-invalid");
+    const hint = el.closest(".field")?.querySelector("[data-hint]");
+    if (hint && hint.classList.contains("is-error")) {
+      hint.textContent = hint.dataset.orig ?? "";
+      hint.classList.remove("is-error");
+    }
+  }
+  form.addEventListener("input", (e) => clearFieldError(e.target));
+
+  function validateStep(i) {
+    const fs = steps[i];
+    let ok = true;
+    const groups = new Set([...fs.querySelectorAll("input[type=radio][required]")].map((r) => r.name));
+    for (const name of groups) {
+      const group = fs.querySelectorAll(`input[name="${name}"]`);
+      if (![...group].some((r) => r.checked)) {
+        ok = false;
+        const hint = group[0].closest(".field").querySelector("[data-hint]");
+        if (hint) { hint.dataset.orig = hint.dataset.orig ?? hint.textContent; hint.textContent = "Pick one to continue."; hint.classList.add("is-error"); }
+      }
+    }
+    for (const el of fs.querySelectorAll("input[required]:not([type=radio]), select[required]")) {
+      if (el.closest("[hidden]")) continue;
+      if (!el.value.trim()) { setFieldError(el, "This one's required."); ok = false; continue; }
+      if (el.type === "tel" && el.value.trim().replace(/\D/g, "").length < 10) {
+        setFieldError(el, "That doesn't look like a full phone number."); ok = false;
+      }
+    }
+    return ok;
+  }
+
+  nextBtn.addEventListener("click", () => { if (validateStep(current)) showStep(current + 1); });
+  backBtn.addEventListener("click", () => showStep(current - 1));
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!validateStep(current)) return;
+
+    formError.classList.remove("is-visible");
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    const row = {
+      contact_name:  data.contact_name.trim(),
+      phone:         data.phone.trim(),
+      business_type: data.business_type,
+      service_area:  data.service_area.trim(),
+      bottleneck:    data.bottleneck,
+      source:        "pfmarkets.com/free-audit",
+    };
+    // FORM BACKEND: this is where the Supabase insert into `leads` happens (see comment above).
+    // No network call is made here yet, this stub shows the success state directly.
+    console.log("Free-audit lead (stub, not sent anywhere yet):", row);
+
+    form.hidden = true;
+    progressWrap.hidden = true;
+    success.classList.add("is-visible");
+  });
+
+  /* ---------- scroll reveal ---------- */
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const els = document.querySelectorAll(".sr");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = (i % 6) * 60 + "ms";
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach((el) => io.observe(el));
+  } else {
+    document.querySelectorAll(".sr").forEach((el) => el.classList.add("is-visible"));
+  }
+  </script>
+</body>
+</html>

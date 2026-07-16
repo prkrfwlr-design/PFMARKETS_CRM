@@ -1,0 +1,368 @@
+<!doctype html>
+<!--
+  PFMarkets — Services overview hub.
+  PLACEHOLDERS TO REPLACE BEFORE LAUNCH: (864) 000-0000 / +18640000000 phone,
+  https://pfmarkets.com canonical/OG/JSON-LD domain, /og.jpg image.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Services, Marketing for Exterior Cleaning Companies | PFMarkets</title>
+<meta name="description" content="Five things an exterior cleaning company actually needs: Meta ads, ad creative, local SEO and Google Business Profile, email marketing, and a $297 website built to book jobs.">
+<link rel="canonical" href="https://pfmarkets.com/services.html"><!-- PLACEHOLDER: confirm real domain -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Services, Marketing for Exterior Cleaning Companies, PFMarkets">
+<meta property="og:description" content="Meta ads, ad creative, local SEO, and websites built to book jobs, pick what you need.">
+<meta property="og:url" content="https://pfmarkets.com/services.html"><!-- PLACEHOLDER -->
+<meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Marketing Services for Exterior Cleaning Companies",
+  "name": "PFMarkets Services",
+  "description": "Marketing services for exterior cleaning companies: Meta Ads Management, Ad Creative & Design, SEO & Google Business Profile Optimization, and Web Design.",
+  "provider": { "@type": "ProfessionalService", "@id": "https://pfmarkets.com/#business", "name": "PFMarkets", "telephone": "+1-864-000-0000" },
+  "url": "https://pfmarkets.com/services.html",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "PFMarkets services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Meta Ads Management", "url": "https://pfmarkets.com/meta-ads.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ad Creative & Design", "url": "https://pfmarkets.com/creative-design.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO & Google Business Profile Optimization", "url": "https://pfmarkets.com/seo-gbp.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design", "url": "https://pfmarkets.com/web-design.html" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Email Marketing", "url": "https://pfmarkets.com/email-marketing.html" } }
+    ]
+  }
+}
+</script>
+
+<style>
+/* page-specific styles only */
+
+.reveal-io {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal-io.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+.proof-strip { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-lg); }
+.proof-badge {
+  display: flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-pill); padding: var(--space-xs) var(--space-md);
+}
+.proof-badge::before { content: "✓"; color: var(--color-accent); font-weight: 700; }
+
+/* ---- rich services grid (hub cards, each links out) ---- */
+.services-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+.svc-card {
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+}
+.svc-card p { color: var(--color-ink-2); }
+.svc-card__for { font-size: var(--text-sm); color: var(--color-muted); margin-top: var(--space-xs); }
+.svc-card__for strong { color: var(--color-ink-2); font-weight: 600; }
+.svc-card__more { margin-top: var(--space-sm); font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); display: flex; align-items: center; gap: 0.35ch; }
+.svc-card__more::after { content: "→"; transition: transform var(--dur-short) var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .svc-card:hover { transform: translateY(-2px); border-color: var(--color-ink-2); box-shadow: 0 20px 40px -24px var(--color-shadow); }
+  .svc-card:hover .svc-card__more::after { transform: translateX(3px); }
+}
+.svc-card:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+@media (max-width: 60rem) { .services-grid { grid-template-columns: minmax(0, 1fr); } .svc-card { padding: var(--space-lg); } }
+
+/* ---- decision helper ---- */
+.decide { display: grid; gap: var(--space-md); }
+.decide__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-lg);
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+.decide__row p { color: var(--color-ink-2); margin-top: var(--space-2xs); font-size: var(--text-sm); }
+.decide__row h3 { margin: 0; }
+@media (max-width: 45rem) {
+  .decide__row { grid-template-columns: minmax(0, 1fr); justify-items: start; gap: var(--space-md); }
+}
+
+/* cross-links */
+.cross-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+</style>
+</head>
+<body>
+
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+      <a class="link-quiet" href="results.html">Results</a>
+      <a class="link-quiet" href="pricing.html">Pricing</a>
+      <a class="link-quiet" href="about.html">About</a>
+    </nav>
+    <div class="nav__right">
+      <!-- PHONE PLACEHOLDER — replace number in href and text -->
+      <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+      <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero wrap">
+    <div class="hero__grid" style="grid-template-columns: minmax(0,1fr);">
+      <div class="hero__copy" style="max-width: 42rem;">
+        <h1>Five things that actually fill a <span class="serif-word serif-word--accent">schedule</span>.</h1>
+        <p class="hero__lede" style="max-width:40rem;">
+          I built these for exterior cleaning companies: pressure washing,
+          soft washing, window cleaning. No "brand strategy" line item on
+          the invoice. Pick what your business is missing, or answer one
+          question below and I'll point you at it.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="#decide">Not sure which? Start here</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PROOF STRIP ======================= -->
+  <div class="wrap reveal-io">
+    <div class="proof-strip">
+      <span class="proof-badge">Run by an exterior cleaning operator, not an agency</span>
+      <span class="proof-badge">Month-to-month across every service, cancel anytime</span>
+      <!-- CASE STUDY SLOT: add real client results when available -->
+      <span class="proof-badge">Real numbers when we have them, never invented ones</span>
+    </div>
+  </div>
+
+  <!-- ======================= SERVICES GRID ======================= -->
+  <section class="section wrap">
+    <div class="section__head reveal-io">
+      <h2>What we run</h2>
+      <p>Each one stands alone. Most clients end up running two or three together.</p>
+    </div>
+    <div class="services-grid">
+      <a class="svc-card reveal-io" style="--i:0" href="meta-ads.html">
+        <h3>Meta Ads Management</h3>
+        <p>Facebook and Instagram campaigns aimed at homeowners in your
+           service area, with creative refreshed every 2 weeks and reporting
+           in booked jobs, not clicks.</p>
+        <p class="svc-card__for"><strong>Good for:</strong> filling next week's schedule</p>
+        <span class="svc-card__more">See how it works</span>
+      </a>
+      <a class="svc-card reveal-io" style="--i:1" href="creative-design.html">
+        <h3>Ad Creative &amp; Design</h3>
+        <p>Native UGC-style clips and statics, 3 crops per concept, hooks
+           built for the first 2 seconds, the creative that makes ads worth
+           running in the first place.</p>
+        <p class="svc-card__for"><strong>Good for:</strong> ads that stop the scroll</p>
+        <span class="svc-card__more">See how it works</span>
+      </a>
+      <a class="svc-card reveal-io" style="--i:2" href="seo-gbp.html">
+        <h3>SEO &amp; Google Business Profile</h3>
+        <p>Reviews, categories, photos, service-area pages, and schema.
+           The slow-compounding work that keeps leads coming after the ad
+           budget stops.</p>
+        <p class="svc-card__for"><strong>Good for:</strong> leads without ad spend</p>
+        <span class="svc-card__more">See how it works</span>
+      </a>
+      <a class="svc-card reveal-io" style="--i:3" href="web-design.html">
+        <h3>Web Design</h3>
+        <p>Fast, mobile-first, static sites with a 3-field quote form and
+           click-to-call above the fold, built to book the job, not win an
+           award.</p>
+        <p class="svc-card__for"><strong>Good for:</strong> turning clicks into jobs</p>
+        <span class="svc-card__more">See how it works</span>
+      </a>
+      <a class="svc-card reveal-io" style="--i:4" href="email-marketing.html">
+        <h3>Email Marketing</h3>
+        <p>Your past customers are your cheapest jobs. Seasonal reminders,
+           review requests, referral pushes, and win-backs that turn
+           one-time washes into a repeat route.</p>
+        <p class="svc-card__for"><strong>Good for:</strong> repeat bookings on autopilot</p>
+        <span class="svc-card__more">See how it works</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ======================= DECISION HELPER ======================= -->
+  <section class="section section--band" id="decide">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>Which one do you <span class="serif-word">need</span>?</h2>
+        <p>Match your biggest bottleneck to the service built for it.</p>
+      </div>
+      <div class="decide">
+        <div class="decide__row reveal-io" style="--i:0">
+          <div>
+            <h3>"Not enough leads coming in."</h3>
+            <p>You need more people finding you and reaching out, that's an ads problem.</p>
+          </div>
+          <a class="btn btn--outline" href="meta-ads.html">Meta Ads Management</a>
+        </div>
+        <div class="decide__row reveal-io" style="--i:1">
+          <div>
+            <h3>"I'm running ads but they're not working."</h3>
+            <p>Before you blame targeting, check the creative, most underperforming ads are a creative problem.</p>
+          </div>
+          <a class="btn btn--outline" href="creative-design.html">Ad Creative &amp; Design</a>
+        </div>
+        <div class="decide__row reveal-io" style="--i:2">
+          <div>
+            <h3>"People search for us and can't find us."</h3>
+            <p>That's a Google Business Profile and local SEO problem, one that compounds over time.</p>
+          </div>
+          <a class="btn btn--outline" href="seo-gbp.html">SEO &amp; Google Business Profile</a>
+        </div>
+        <div class="decide__row reveal-io" style="--i:3">
+          <div>
+            <h3>"Leads come in but don't book."</h3>
+            <p>They're probably hitting a slow site or a form with too many fields, that's a website problem.</p>
+          </div>
+          <a class="btn btn--outline" href="web-design.html">Web Design</a>
+        </div>
+        <div class="decide__row reveal-io" style="--i:4">
+          <div>
+            <h3>"Customers book once and I never hear from them again."</h3>
+            <p>A house needs washing every year and storefront glass needs it every month. If nobody reminds them, somebody else washes it.</p>
+          </div>
+          <a class="btn btn--outline" href="email-marketing.html">Email Marketing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PLUS-ONE OFFER ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Book one, pick a <span class="serif-word">plus-one</span>.</h2>
+        <p>Sign up for any one paid service and try a second one on me:
+           a free month of ad management, a free Google Business Profile
+           optimization, or a free website. You keep it if it works.
+           No strings attached if it doesn't.</p>
+      </div>
+      <a class="btn btn--fill" href="pricing.html">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ======================= CROSS TO INDUSTRIES ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>By trade</h2>
+      <p>Each of these works the same way, tuned to how your specific trade actually gets booked.</p>
+    </div>
+    <div class="cross-links">
+      <a class="btn btn--outline" href="pressure-washing.html">Pressure washing</a>
+      <a class="btn btn--outline" href="soft-washing.html">Soft washing</a>
+      <a class="btn btn--outline" href="window-cleaning.html">Window cleaning</a>
+    </div>
+  </section>
+
+  <!-- ======================= CLOSING CTA ======================= -->
+  <section class="close-cta wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Still not sure? <span class="serif-word">Ask</span> me.</h2>
+        <p>Tell me what's happening in your business and I'll tell you honestly which service (if any) fixes it.</p>
+        <ul class="expect">
+          <li>Two-minute questionnaire</li>
+          <li>A straight answer, not a sales pitch</li>
+          <li>If I'm not the right fit, I'll say so</li>
+        </ul>
+      </div>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var nav = document.getElementById("site-nav");
+  if (nav) {
+    var tick = false;
+    var onScroll = function () {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); tick = false; });
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  var els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

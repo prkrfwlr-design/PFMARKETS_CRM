@@ -1,0 +1,284 @@
+<!doctype html>
+<!--
+  PFMarkets — Results page
+  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH:
+    · (864) 000-0000 and +18640000000 — phone number
+    · https://pfmarkets.com — canonical URL
+    · CASE STUDY SLOT comments — real client numbers only, never invented
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Results, Measured in Booked Jobs | PFMarkets</title>
+  <meta name="description" content="How PFMarkets measures results: booked jobs over clicks, what we track weekly, and an honest breakdown of a campaign's anatomy. Real numbers or nothing.">
+  <link rel="canonical" href="https://pfmarkets.com/results.html"><!-- PLACEHOLDER: confirm real domain -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .reveal-io { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .reveal-io.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+    .track-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-lg); }
+    .track-card { padding: var(--space-lg) 0 0; border-top: var(--rule-hair) solid var(--color-rule); }
+    .track-card h3 { margin-bottom: var(--space-xs); }
+    .track-card p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
+    @media (max-width: 60rem) { .track-grid { grid-template-columns: minmax(0,1fr); } }
+
+    .anatomy { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-md); }
+    .anatomy li { display: grid; grid-template-columns: 3rem minmax(0,1fr); gap: var(--space-md); align-items: start; }
+    .anatomy .num { font-family: var(--font-serif); color: var(--color-accent); font-size: var(--text-lg); line-height: 1.3; }
+    .anatomy h3 { margin-bottom: var(--space-2xs); }
+    .anatomy p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero wrap">
+      <div class="hero__grid">
+        <div class="hero__copy" style="max-width:38rem;">
+          <h1>We measure the thing that pays your crew: <span class="serif-word serif-word--accent">jobs</span>.</h1>
+          <p class="hero__lede">
+            Not impressions. Not reach. Not a "brand awareness lift." Booked jobs, cost per lead,
+            and whether the phone actually rings, that's the whole scoreboard.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+            <a class="btn btn--outline" href="process.html">See how we work</a>
+          </div>
+          <p class="hero__note">We're an early-stage agency. We'd rather show you our real methodology than fake a track record.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= MEASUREMENT PHILOSOPHY ======================= -->
+    <section class="section section--tight wrap">
+      <div class="operator">
+        <div class="operator__copy" style="grid-column: 1 / -1; max-width: 44rem;">
+          <h2>Booked jobs, not clicks</h2>
+          <p>
+            A click doesn't pay anyone. A "reach" number doesn't fill next week's schedule. We built
+            PFCleans on this same standard before we started running ads for other people: the only
+            number that matters is whether the calendar has more jobs on it than it did last month.
+          </p>
+          <p>
+            That means we track calls, form fills, and, where the platform allows it, the actual
+            booked-job event, not just the ad click that led to it. If a campaign gets a hundred
+            clicks and zero booked jobs, that's a failing campaign no matter what the cost-per-click
+            says.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= WHAT WE TRACK ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>What we actually <span class="serif-word serif-word--accent">track</span></h2>
+          <p>Every account gets the same core numbers, whether you're running $500/mo or $5,000/mo.</p>
+        </div>
+        <div class="track-grid">
+          <div class="track-card reveal-io">
+            <h3>Cost per lead</h3>
+            <p>What it costs to generate one qualified contact, not a bot fill, not a wrong-number
+               call.</p>
+          </div>
+          <div class="track-card reveal-io">
+            <h3>Lead-to-booked rate</h3>
+            <p>How many of those leads actually turn into a job on your calendar. This is where
+               most agencies stop looking, we don't.</p>
+          </div>
+          <div class="track-card reveal-io">
+            <h3>Call answer rate</h3>
+            <p>If leads are calling and no one's picking up, that's a business problem an ad budget
+               can't fix. We'll tell you when we see it.</p>
+          </div>
+          <div class="track-card reveal-io">
+            <h3>Map-pack and search ranking</h3>
+            <p>Where you show up for the searches that actually lead to a booked job in your service
+               area, tracked over time, not a one-time snapshot.</p>
+          </div>
+          <div class="track-card reveal-io">
+            <h3>Review velocity</h3>
+            <p>New reviews per month, because review count and recency both move local ranking and
+               who picks up the phone to call you first.</p>
+          </div>
+          <div class="track-card reveal-io">
+            <h3>Ad creative fatigue</h3>
+            <p>When cost per lead starts climbing on a specific ad, that's the signal to refresh , 
+               not a reason to panic and pause the whole campaign.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= ANATOMY OF A CAMPAIGN ======================= -->
+    <section class="section wrap">
+      <div class="section__head reveal-io">
+        <h2>Anatomy of a <span class="serif-word serif-word--accent">campaign</span></h2>
+        <p>What actually goes into a lead-gen campaign before it's called "live."</p>
+      </div>
+      <ol class="anatomy">
+        <li class="reveal-io">
+          <span class="num">01</span>
+          <div>
+            <h3>Targeting the service area, not the county</h3>
+            <p>Radius set to where you actually take jobs, not a default 25-mile ring that wastes
+               half your budget on towns you don't service.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="num">02</span>
+          <div>
+            <h3>Creative built around one job type at a time</h3>
+            <p>An ad selling driveway washing and an ad selling gutter cleaning don't share a hook.
+               We build them separately so each one speaks to a specific homeowner problem.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="num">03</span>
+          <div>
+            <h3>A landing experience that matches the ad's promise</h3>
+            <p>If the ad says "same-week driveway cleaning," the page it lands on says the same
+               thing in the first line, not a generic homepage.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="num">04</span>
+          <div>
+            <h3>Tracking wired before spend starts</h3>
+            <p>Call tracking and conversion events go live before the first dollar spends, not
+               added after week two once we've already lost the data.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="num">05</span>
+          <div>
+            <h3>A weekly look at what's actually converting</h3>
+            <p>Budget moves toward what's booking jobs. Nothing runs untouched for a month "to
+               gather data" while it quietly burns spend.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ======================= CASE STUDY SLOTS ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>Real numbers or <span class="serif-word serif-word--accent">nothing</span></h2>
+          <p>We're not going to publish a rounded-up percentage to fill this section. As client
+             results come in, with permission, real numbers go here.</p>
+        </div>
+        <div class="results__grid">
+          <!-- CASE STUDY SLOT: add real numbers when available -->
+          <article class="metric reveal-io">
+            <div class="metric__value">,  (metric to confirm)<br>e.g. booked jobs in first 90 days</div>
+            <p class="metric__ctx">Client, trade, and service area go here, with permission.</p>
+            <div class="slot">Ad-platform screenshot (1200×750)</div>
+          </article>
+          <!-- CASE STUDY SLOT: add real numbers when available -->
+          <article class="metric reveal-io">
+            <div class="metric__value">,  (metric to confirm)<br>e.g. cost per qualified lead</div>
+            <p class="metric__ctx">Client, trade, and service area go here, with permission.</p>
+            <div class="slot">Ad-platform screenshot (1200×750)</div>
+          </article>
+          <!-- CASE STUDY SLOT: add real numbers when available -->
+          <article class="metric reveal-io">
+            <div class="metric__value">,  (metric to confirm)<br>e.g. map-pack ranking change</div>
+            <p class="metric__ctx">Client, trade, and service area go here, with permission.</p>
+            <div class="slot">Search-ranking screenshot (1200×750)</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= CLOSING CTA ======================= -->
+    <section class="close-cta wrap">
+      <div class="close-cta__box reveal-io">
+        <div>
+          <h2>Want to see this methodology applied to your numbers?</h2>
+          <p>The free audit uses the same tracking standard as this page, no guessing.</p>
+        </div>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  (function revealOnScroll() {
+    const els = document.querySelectorAll(".reveal-io");
+    if (!els.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el, i) => { el.style.transitionDelay = ((i % 6) * 60) + "ms"; io.observe(el); });
+  })();
+  </script>
+</body>
+</html>

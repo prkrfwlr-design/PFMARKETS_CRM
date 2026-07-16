@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact | PFMarkets</title>
-  <meta name="description" content="Reach PFMarkets by phone, email, or a quick message. Based in Upstate South Carolina, working with exterior cleaning companies remotely nationwide.">
+  <meta name="description" content="Book a call with PFMarkets or send a quick message. Based in Upstate South Carolina, working with exterior cleaning companies remotely nationwide.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/site.css">
@@ -85,8 +85,6 @@
         <a class="link-quiet" href="about.html">About</a>
       </nav>
       <div class="nav__right">
-        <!-- PHONE PLACEHOLDER — replace number in href and text -->
-        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
         <a class="btn btn--outline nav__login" href="/app/">Client login</a>
         <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
       </div>
@@ -100,15 +98,14 @@
         <div class="contact-info">
           <h1 class="reveal" style="--i:0">Talk to an actual <span class="serif-word serif-word--accent">person</span>.</h1>
           <p class="contact-info__lede reveal" style="--i:1">
-            No ticket system, no chatbot pretending to be a human. Call, email, or send a quick
-            message below, you'll hear back from someone who actually works here.
+            No ticket system, no chatbot pretending to be a human. Book a call, email, or send a
+            quick message below, you'll hear back from someone who actually works here.
           </p>
 
           <ul class="contact-methods reveal" style="--i:2">
             <li>
-              <span class="label">Call or text</span>
-              <!-- PHONE PLACEHOLDER — replace number in href and text -->
-              <a href="tel:+18640000000">(864) 000-0000</a>
+              <span class="label">Book a call</span>
+      <a href="https://calendly.com/prkrfwlr/new-meeting">Book a call</a>
             </li>
             <li>
               <span class="label">Email</span>
@@ -175,8 +172,7 @@
            is a phone that <span class="serif-word">rings</span>.</p>
       </div>
       <div class="foot__links">
-        <!-- PHONE PLACEHOLDER — same number as header -->
-        <a href="tel:+18640000000">(864) 000-0000</a>
+      <a href="https://calendly.com/prkrfwlr/new-meeting">Book a call</a>
         <a href="/app/">Client login</a>
         <a href="services.html">Services</a>
         <a href="results.html">Results</a>
@@ -235,7 +231,7 @@
       contact_name:    data.contact_name.trim(),
       contact_method:  data.contact_method.trim(),
       message:         data.message.trim(),
-      source:          "pfmarkets.com/contact",
+      source:          "pfmarkets.org/contact",
     };
     // FORM BACKEND: this is where the Supabase insert into `leads` happens (see comment above).
     // No network call is made here yet — this stub shows the success state directly.

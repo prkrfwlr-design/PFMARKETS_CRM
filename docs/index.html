@@ -17,7 +17,7 @@
   CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH (search for each):
     · SUPABASE_URL, SUPABASE_ANON_KEY, CALENDLY_URL — in the CONFIG block at the top of the <script>
     · (864) 000-0000 and +18640000000 — phone number (header, footer, JSON-LD)
-    · https://pfmarkets.com — canonical / OG / JSON-LD URL (confirm the real domain)
+    · https://pfmarkets.org — canonical / OG / JSON-LD URL (confirm the real domain)
     · /og.jpg — 1200×630 Open Graph image
     · Trust-bar logo slots, results metric cards, and the operator photo slot — real assets only
 -->
@@ -27,18 +27,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Marketing for Exterior Cleaning Companies | PFMarkets</title>
   <meta name="description" content="PFMarkets runs lead generation for pressure washing, exterior cleaning, and window cleaning companies, paid ads, local SEO, and websites built to book jobs. Run by an exterior cleaning operator, not a pitch deck.">
-  <link rel="canonical" href="https://pfmarkets.com/"><!-- PLACEHOLDER: confirm real domain -->
+  <link rel="canonical" href="https://pfmarkets.org/"><!-- PLACEHOLDER: confirm real domain -->
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Marketing for Exterior Cleaning Companies | PFMarkets">
   <meta property="og:description" content="More booked jobs, not just more clicks. Lead-gen ads, local SEO, and websites for exterior cleaning companies.">
-  <meta property="og:url" content="https://pfmarkets.com/"><!-- PLACEHOLDER: confirm real domain -->
-  <meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER: supply 1200×630 image -->
+  <meta property="og:url" content="https://pfmarkets.org/"><!-- PLACEHOLDER: confirm real domain -->
+  <meta property="og:image" content="https://pfmarkets.org/og.jpg"><!-- PLACEHOLDER: supply 1200×630 image -->
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Marketing for Exterior Cleaning Companies | PFMarkets">
   <meta name="twitter:description" content="More booked jobs, not just more clicks. Lead-gen ads, local SEO, and websites for exterior cleaning companies.">
-  <meta name="twitter:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+  <meta name="twitter:image" content="https://pfmarkets.org/og.jpg"><!-- PLACEHOLDER -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,11 +50,11 @@
     "@graph": [
       {
         "@type": "ProfessionalService",
-        "@id": "https://pfmarkets.com/#business",
+        "@id": "https://pfmarkets.org/#business",
         "name": "PFMarkets",
         "description": "Marketing agency for exterior cleaning businesses — lead-generation ads, local SEO, websites, and social content for pressure washing, exterior cleaning, and window cleaning companies.",
-        "url": "https://pfmarkets.com/",
-        "telephone": "+1-864-000-0000",
+        "url": "https://pfmarkets.org/",
+        
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Marketing services for exterior cleaning businesses",
@@ -68,15 +68,14 @@
       },
       {
         "@type": "Organization",
-        "@id": "https://pfmarkets.com/#org",
+        "@id": "https://pfmarkets.org/#org",
         "name": "PFMarkets",
-        "url": "https://pfmarkets.com/",
-        "telephone": "+1-864-000-0000"
+        "url": "https://pfmarkets.org/"
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pfmarkets.com/" }
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pfmarkets.org/" }
         ]
       }
     ]
@@ -978,8 +977,6 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
         <a class="link-quiet" href="about.html">About</a>
       </nav>
       <div class="nav__right">
-        <!-- PHONE PLACEHOLDER — replace number in href and text -->
-        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
         <a class="btn btn--outline nav__login" href="/app/">Client login</a>
         <button class="btn btn--fill" data-open-qual>Book a call</button>
       </div>
@@ -1271,8 +1268,7 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
            is a phone that <span class="serif-word">rings</span>.</p>
       </div>
       <div class="foot__links">
-        <!-- PHONE PLACEHOLDER — same number as header -->
-        <a href="tel:+18640000000">(864) 000-0000</a>
+      <a href="https://calendly.com/prkrfwlr/new-meeting">Book a call</a>
         <a href="/app/">Client login</a>
         <a href="services.html">Services</a>
         <a href="industries.html">Industries</a>
@@ -1443,7 +1439,7 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
   const CONFIG = {
     SUPABASE_URL:      "SUPABASE_URL",      // e.g. "https://abcdefgh.supabase.co"
     SUPABASE_ANON_KEY: "SUPABASE_ANON_KEY", // the public anon key (safe to ship; RLS enforces access)
-    CALENDLY_URL:      "CALENDLY_URL",      // e.g. "https://calendly.com/pfmarkets/growth-plan"
+    CALENDLY_URL:      "https://calendly.com/prkrfwlr/new-meeting",      // e.g. "https://calendly.com/pfmarkets/growth-plan"
   };
   /* Supabase `leads` table, columns this page inserts (create the table to match):
        business_name    text        not null
@@ -1646,7 +1642,7 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
       contact_name:   data.contact_name.trim(),
       email:          data.email.trim(),
       phone:          data.phone.trim(),
-      source:         "pfmarkets.com",
+      source:         "pfmarkets.org",
     };
 
     try {

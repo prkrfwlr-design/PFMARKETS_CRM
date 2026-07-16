@@ -103,10 +103,10 @@ td .sub{display:block;font-size:12px;color:var(--neutral)}
 
 .chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:2.5px 9px;border-radius:20px;background:var(--paper-3);color:var(--muted);white-space:nowrap}
 .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7}
-.chip.s-Won,.chip.s-Accepted,.chip.s-Completed,.chip.s-Paid{background:var(--accent-soft);color:var(--accent-deep)}
-.chip.s-New,.chip.s-Scheduled,.chip.s-Sent{background:var(--blue-soft);color:var(--blue)}
-.chip.s-Contacted,.chip.s-Quoted{background:var(--warn-soft);color:var(--warn)}
-.chip.s-Lost,.chip.s-Declined,.chip.s-Canceled{background:var(--danger-soft);color:var(--danger)}
+.chip.s-Won,.chip.s-Accepted,.chip.s-Completed,.chip.s-Paid,.chip.s-ClosedWon,.chip.s-Active,.chip.s-Done{background:var(--accent-soft);color:var(--accent-deep)}
+.chip.s-New,.chip.s-Scheduled,.chip.s-Sent,.chip.s-Lead,.chip.s-Replied{background:var(--blue-soft);color:var(--blue)}
+.chip.s-Contacted,.chip.s-Quoted,.chip.s-NeedsFollow-up,.chip.s-Paused,.chip.s-Draft{background:var(--warn-soft);color:var(--warn)}
+.chip.s-Lost,.chip.s-Declined,.chip.s-Canceled,.chip.s-ClosedLost{background:var(--danger-soft);color:var(--danger)}
 
 .cols{display:grid;gap:16px}
 .cols.c2{grid-template-columns:1fr 1fr}
@@ -166,6 +166,21 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--focus);outline-o
 .chart-box{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px 16px 8px}
 .chart-box h3{font-family:var(--font-display);font-size:13.5px;font-weight:700;margin-bottom:6px}
 .hide{display:none!important}
+
+.status-group{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;margin-bottom:12px;background:var(--paper)}
+.status-group h4{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.status-group h4 .n{font-family:var(--font-mono);font-size:11px;color:var(--neutral);font-weight:500}
+.status-group.win{background:var(--accent-soft);border-color:var(--accent)}
+.status-group.win h4{color:var(--accent-deep)}
+.next-touch{border:1px solid var(--warn);background:var(--warn-soft);border-radius:10px;padding:12px 14px;margin-bottom:20px}
+.next-touch h4{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:8px;color:var(--warn)}
+.pitch{border:1px solid var(--rule);border-radius:12px;background:var(--paper);padding:26px 28px;max-width:620px}
+.pitch h2{font-family:var(--font-display);font-weight:800;font-size:20px;letter-spacing:-.015em;margin-bottom:10px}
+.pitch ul{margin:14px 0 18px 20px}
+.pitch li{margin-bottom:7px;font-size:13.5px;color:var(--muted)}
+.pitch .price{font-family:var(--font-display);font-weight:800;font-size:26px;margin:14px 0 4px}
+.pitch .price span{font-size:13px;font-weight:500;color:var(--neutral)}
+.pitch .actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 
 @media(max-width:760px){
   .cols.c2,.grid2{grid-template-columns:1fr}
@@ -321,20 +336,24 @@ document.addEventListener('visibilitychange',async()=>{ if(document.visibilitySt
 
 /* ============ data layer ============ */
 async function fetchMine(){
- const [biz,st,ld,jb,qt,ad]=await Promise.all([
+ const [biz,st,ld,jb,qt,ad,ec,ect]=await Promise.all([
   sb.from('clients').select('*').eq('id',CID).maybeSingle(),
   sb.from('agency_settings').select('agency_name').limit(1),
   sb.from('leads').select('*').eq('client_id',CID),
   sb.from('jobs').select('*').eq('client_id',CID),
   sb.from('quotes').select('*').eq('client_id',CID),
-  sb.from('ads').select('*').eq('client_id',CID)
+  sb.from('ads').select('*').eq('client_id',CID),
+  sb.from('email_campaigns').select('*'),
+  sb.from('email_contacts').select('*')
  ]);
- const bad=[biz,st,ld,jb,qt,ad].find(r=>r.error);
+ const bad=[biz,st,ld,jb,qt,ad,ec,ect].find(r=>r.error);
  if(bad){ toast('Load failed: '+bad.error.message); return false; }
  if(!biz.data){ showAuth('Your business record was not found — ask your marketing partner.'); return false; }
  db={business:{name:biz.data.business_name,industry:biz.data.industry,location:biz.data.location,
-      accent:biz.data.accent||'#2e6b4f',agency:(st.data&&st.data[0]&&st.data[0].agency_name)||'your marketing partner'},
-     leads:ld.data||[], jobs:jb.data||[], quotes:qt.data||[], ads:ad.data||[]};
+      accent:biz.data.accent||'#2e6b4f',agency:(st.data&&st.data[0]&&st.data[0].agency_name)||'your marketing partner',
+      emailEnabled:!!biz.data.email_marketing_enabled},
+     leads:ld.data||[], jobs:jb.data||[], quotes:qt.data||[], ads:ad.data||[],
+     emailCampaigns:ec.data||[], emailContacts:ect.data||[]};
  return true;
 }
 async function wr(table,rows){ const {error}=await sb.from(table).upsert(rows); if(error) toast('Save failed: '+error.message); return !error; }
@@ -391,13 +410,13 @@ function render(){
  if(!calCursor) calCursor=monthStart(new Date());
  document.documentElement.style.setProperty('--accent',db.business.accent||'#2e6b4f');
  document.title=(db.business.name||'Business')+' · Portal';
- const tabs=[['today','Today'],['leads','Leads'],['schedule','Schedule'],['quotes','Quotes'],['results','Marketing results'],['settings','Settings']];
+ const tabs=[['today','Today'],['leads','Leads'],['schedule','Schedule'],['quotes','Quotes'],['results','Marketing results'],['email','Email Campaigns'],['settings','Settings']];
  document.getElementById('app').innerHTML='<header class="mast"><div class="mast-in">'
   +'<div class="mast-top"><span class="biz">'+esc(db.business.name||'Your business')+'</span>'
   +'<span class="by">marketing by '+esc(db.business.agency)+'</span></div>'
   +'<nav class="mast-tabs">'+tabs.map(t=>'<a href="#" class="'+(route===t[0]?'on':'')+'" onclick="go(\''+t[0]+'\');return false">'+t[1]+'</a>').join('')+'</nav>'
   +'</div></header><div class="wrap">'
-  +({today:renderToday,leads:renderLeads,schedule:renderSchedule,quotes:renderQuotes,results:renderResults,settings:renderSettings}[route]||renderToday)()
+  +({today:renderToday,leads:renderLeads,schedule:renderSchedule,quotes:renderQuotes,results:renderResults,email:renderEmailCampaigns,settings:renderSettings}[route]||renderToday)()
   +'</div>';
  bindDnD();
 }
@@ -567,6 +586,80 @@ function barChart(series,prefix){
    +'<text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle" font-size="10" fill="var(--neutral)">'+esc(s.label)+'</text>';
  });
  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="bar chart">'+bars+'</svg>';
+}
+
+/* ============ email campaigns ============ */
+const CONTACT_STATUSES=['Lead','Contacted','Replied','Needs Follow-up','Closed Won','Closed Lost'];
+function pct(a,b){ return b>0?(a/b*100):null; }
+function fmtPct(v){ return v==null?'—':v.toFixed(1)+'%'; }
+function renderEmailCampaigns(){
+ if(!db.business.emailEnabled) return renderEmailPitch();
+ const camps=[...db.emailCampaigns].sort((a,b)=>(b.created_at||'')<(a.created_at||'')?-1:1);
+ if(!camps.length) return '<div class="page-head"><div class="grow"><h1 class="page">Email Campaigns</h1>'
+  +'<div class="page-sub">Reaching out to your past customers by email.</div></div></div>'
+  +'<div class="tbl-wrap"><div class="empty"><b>Nothing here yet</b>Your campaigns will show up here once we launch.</div></div>';
+ const contacts=db.emailContacts||[];
+ const totSent=camps.reduce((s,c)=>s+(+c.emails_sent||0),0);
+ const totOpens=camps.reduce((s,c)=>s+(+c.opens||0),0);
+ const totReplies=camps.reduce((s,c)=>s+(+c.replies||0),0);
+ const totMeetings=camps.reduce((s,c)=>s+(+c.meetings_booked||0),0);
+ const t=today();
+ const nextUp=contacts.filter(c=>c.status==='Needs Follow-up'||(c.next_touch&&c.next_touch<=t&&!['Closed Won','Closed Lost'].includes(c.status)));
+ let html='<div class="page-head"><div class="grow"><h1 class="page">Email Campaigns</h1>'
+  +'<div class="page-sub">Reaching out to your past customers by email, managed by '+esc(db.business.agency)+'.</div></div></div>';
+ html+='<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+totSent.toLocaleString()+'</div><div class="l">Emails sent</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtPct(pct(totOpens,totSent))+'</div><div class="l">Open rate</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtPct(pct(totReplies,totSent))+'</div><div class="l">Reply rate</div></div>'
+  +'<div class="stat"><div class="v num">'+totMeetings.toLocaleString()+'</div><div class="l">Meetings booked</div></div>'
+  +'</div>';
+ html+='<h2 class="sect">Campaigns</h2><div class="cols" style="grid-template-columns:1fr">'
+  +camps.map(c=>{
+   const sent=+c.emails_sent||0, opens=+c.opens||0, replies=+c.replies||0, meetings=+c.meetings_booked||0;
+   return '<div class="panel"><h3>'+esc(c.name||'Untitled campaign')+chip(c.status)+'</h3>'
+    +'<div class="stat-row">'
+    +'<div class="stat"><div class="v num">'+sent.toLocaleString()+'</div><div class="l">Sent</div></div>'
+    +'<div class="stat"><div class="v num">'+opens.toLocaleString()+'</div><div class="l">Opens</div><div class="d">'+fmtPct(pct(opens,sent))+' open rate</div></div>'
+    +'<div class="stat"><div class="v num">'+replies.toLocaleString()+'</div><div class="l">Replies</div><div class="d">'+fmtPct(pct(replies,sent))+' reply rate</div></div>'
+    +'<div class="stat"><div class="v num">'+meetings.toLocaleString()+'</div><div class="l">Meetings booked</div></div>'
+    +'</div>'
+    +(c.started_at?'<div class="page-sub" style="margin-top:8px">Started '+fmtDate(c.started_at)+'</div>':'')
+    +(c.notes?'<div class="page-sub" style="margin-top:4px">'+esc(c.notes)+'</div>':'')
+    +'</div>';
+  }).join('')+'</div>';
+ if(nextUp.length){
+  html+='<div class="next-touch"><h4>Being reached out to next</h4>'
+   +nextUp.map(c=>'<div class="list-line"><span><b>'+esc(c.name||'Unnamed')+'</b>'+(c.company?' · '+esc(c.company):'')+'</span>'+chip(c.status)+'<span class="when">'+(c.last_contacted?'last contacted '+fmtDate(c.last_contacted):'not yet contacted')+'</span></div>').join('')
+   +'</div>';
+ }
+ html+='<h2 class="sect">Pipeline</h2>';
+ CONTACT_STATUSES.forEach(st=>{
+  const group=contacts.filter(c=>c.status===st);
+  const isWin=st==='Closed Won';
+  html+='<div class="status-group'+(isWin?' win':'')+'"><h4>'+(isWin?'Closed jobs':esc(st))+'<span class="n">'+group.length+'</span></h4>'
+   +(group.length?group.map(c=>'<div class="list-line"><span><b>'+esc(c.name||'Unnamed')+'</b>'+(c.company?' · '+esc(c.company):'')+'</span><span class="when">'+(c.last_contacted?fmtDate(c.last_contacted):'—')+'</span></div>').join('')
+    :'<div class="empty">Nobody here yet.</div>')
+   +'</div>';
+ });
+ return html;
+}
+function renderEmailPitch(){
+ const subject=encodeURIComponent('Email marketing for '+(db.business.name||'my business'));
+ return '<div class="page-head"><div class="grow"><h1 class="page">Email Campaigns</h1>'
+  +'<div class="page-sub">Not switched on yet.</div></div></div>'
+  +'<div class="pitch"><h2>Email marketing isn\'t switched on for your account yet</h2>'
+  +'<p style="color:var(--muted);font-size:13.5px">Hey, it\'s Parker. Here\'s the short version of what this does: I email your past customers on a regular schedule so you stay top of mind without lifting a finger:</p>'
+  +'<ul>'
+  +'<li>Seasonal reminders so customers come back when the timing is right, not whenever they happen to remember you</li>'
+  +'<li>Review requests sent right after a job so the good feedback actually gets asked for</li>'
+  +'<li>Referral pushes that turn happy customers into new leads</li>'
+  +'<li>Win-back emails for anyone who hasn\'t booked in a while, turning past customers into repeat bookings</li>'
+  +'</ul>'
+  +'<div class="price">$197<span>/mo</span></div>'
+  +'<div class="actions">'
+  +'<a class="btn" href="https://pfmarkets.org/email-marketing.html" target="_blank" rel="noopener">Learn more</a>'
+  +'<a class="btn pri" href="mailto:hello@pfmarkets.org?subject='+subject+'">Ask about adding it</a>'
+  +'</div></div>';
 }
 
 /* ============ settings ============ */

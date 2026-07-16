@@ -1,0 +1,410 @@
+<!doctype html>
+<!--
+  PFMarkets — Email Marketing service page.
+  PLACEHOLDERS TO REPLACE BEFORE LAUNCH: (864) 000-0000 / +18640000000 phone,
+  https://pfmarkets.com canonical/OG/JSON-LD domain, /og.jpg image.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Email Marketing for Exterior Cleaning Companies | PFMarkets</title>
+<meta name="description" content="Turn past customers into repeat bookings. Seasonal reminders, review requests, referral pushes, and win-back emails for pressure washing, soft washing, and window cleaning companies. $197/mo.">
+<link rel="canonical" href="https://pfmarkets.com/email-marketing.html"><!-- PLACEHOLDER: confirm real domain -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Email Marketing for Exterior Cleaning Companies, PFMarkets">
+<meta property="og:description" content="Your past customers are your cheapest jobs. Seasonal reminders, review requests, and win-backs that keep the route full.">
+<meta property="og:url" content="https://pfmarkets.com/email-marketing.html"><!-- PLACEHOLDER -->
+<meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Email Marketing",
+  "name": "Email Marketing for Exterior Cleaning Companies",
+  "description": "Repeat-booking email systems for exterior cleaning companies: seasonal reminders, review requests, referral campaigns, and win-backs.",
+  "provider": { "@type": "ProfessionalService", "@id": "https://pfmarkets.com/#business", "name": "PFMarkets", "telephone": "+1-864-000-0000" },
+  "offers": { "@type": "Offer", "price": "197", "priceCurrency": "USD" },
+  "url": "https://pfmarkets.com/email-marketing.html"
+}
+</script>
+
+<style>
+/* page-specific styles only */
+
+.reveal-io {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal-io.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+.svc-hero .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+
+.proof-strip { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-lg); }
+.proof-badge {
+  display: flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-pill); padding: var(--space-xs) var(--space-md);
+}
+.proof-badge::before { content: "✓"; color: var(--color-accent); font-weight: 700; }
+
+.deliv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+.deliv {
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-lg); padding: var(--space-lg);
+}
+.deliv h3 { margin: 0 0 var(--space-xs); }
+.deliv p { color: var(--color-ink-2); }
+@media (max-width: 60rem) { .deliv-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.faq { display: grid; gap: var(--space-md); max-width: 44rem; }
+.faq details { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-lg); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: var(--text-md); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.5rem; line-height: 1; color: var(--color-accent); flex: none; transition: transform var(--dur-short) var(--ease-out); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p.faq__a { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; }
+
+.cross-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* ---- signature animation: repeat loop — an email flies out, a calendar slot fills, then it loops. 8s ---- */
+.repeat-demo {
+  position: relative; background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-lg);
+  padding: clamp(var(--space-lg), 3vw, var(--space-xl));
+  box-shadow: 0 24px 60px -28px var(--color-shadow);
+  min-height: 20rem; display: grid; place-items: center; overflow: hidden;
+}
+.repeat-demo__label { position: absolute; top: var(--space-lg); left: var(--space-lg); font-size: 0.75rem; color: var(--color-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.repeat-demo svg { width: min(260px, 80%); overflow: visible; }
+.rd-envelope { animation: rd-fly 8s var(--ease-out) infinite; }
+.rd-cell { fill: var(--color-paper-2); stroke: var(--color-rule); }
+.rd-cell--book { fill: var(--color-accent); stroke: var(--color-accent); opacity: 0; }
+.rd-cell--book.b1 { animation: rd-book 8s infinite 0s; }
+.rd-cell--book.b2 { animation: rd-book 8s infinite 0.25s; }
+.rd-cell--book.b3 { animation: rd-book 8s infinite 0.5s; }
+.rd-caption { font-family: var(--font-display); font-weight: 800; font-size: var(--text-md); text-align: center; margin-top: var(--space-md); }
+.rd-caption span { color: var(--color-accent); }
+@keyframes rd-fly {
+  0%, 8%   { transform: translate(0, 0); opacity: 0; }
+  12%      { opacity: 1; }
+  38%      { transform: translate(150px, -8px); opacity: 1; }
+  44%, 100%{ transform: translate(150px, -8px); opacity: 0; }
+}
+@keyframes rd-book {
+  0%, 44% { opacity: 0; transform: scale(0.4); }
+  50%     { opacity: 1; transform: scale(1); }
+  88%     { opacity: 1; }
+  96%, 100% { opacity: 0; transform: scale(0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rd-envelope { animation: none; opacity: 1; transform: translate(150px,-8px); }
+  .rd-cell--book { animation: none; opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+      <a class="link-quiet" href="results.html">Results</a>
+      <a class="link-quiet" href="pricing.html">Pricing</a>
+      <a class="link-quiet" href="about.html">About</a>
+    </nav>
+    <div class="nav__right">
+      <!-- PHONE PLACEHOLDER — replace number in href and text -->
+      <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+      <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero svc-hero wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <h1>Your past customers are your cheapest <span class="serif-word serif-word--accent">jobs</span>.</h1>
+        <p class="hero__lede">
+          You already paid to win them once. A house needs washing every year
+          and storefront glass needs it every month, but if nobody reminds
+          them, somebody else's flyer does. I build the emails that keep your
+          old customers booking, for $197 a month.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="#what-you-get">See what's included</a>
+        </div>
+        <p class="hero__note">Works off the customer list you already have, even if it's a pile of invoices.</p>
+      </div>
+      <figure class="repeat-demo" role="img" aria-label="Animated demo: an email flies from an inbox to a calendar and booking slots fill in.">
+        <span class="repeat-demo__label">Repeat bookings</span>
+        <div>
+          <svg viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+            <g class="rd-envelope">
+              <rect x="10" y="45" width="52" height="34" rx="6" fill="var(--color-paper-2)" stroke="var(--color-accent)" stroke-width="2"/>
+              <path d="M12 49 L36 66 L60 49" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round"/>
+            </g>
+            <g>
+              <rect class="rd-cell" x="170" y="20" width="24" height="20" rx="5"/>
+              <rect class="rd-cell" x="200" y="20" width="24" height="20" rx="5"/>
+              <rect class="rd-cell" x="230" y="20" width="24" height="20" rx="5"/>
+              <rect class="rd-cell rd-cell--book b1" x="170" y="46" width="24" height="20" rx="5"/>
+              <rect class="rd-cell" x="200" y="46" width="24" height="20" rx="5"/>
+              <rect class="rd-cell rd-cell--book b2" x="230" y="46" width="24" height="20" rx="5"/>
+              <rect class="rd-cell" x="170" y="72" width="24" height="20" rx="5"/>
+              <rect class="rd-cell rd-cell--book b3" x="200" y="72" width="24" height="20" rx="5"/>
+              <rect class="rd-cell" x="230" y="72" width="24" height="20" rx="5"/>
+            </g>
+          </svg>
+          <p class="rd-caption">One email. <span>Three jobs back on the route.</span></p>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ======================= PROOF STRIP ======================= -->
+  <div class="wrap reveal-io">
+    <div class="proof-strip">
+      <span class="proof-badge">$197/mo flat, month-to-month, cancel anytime</span>
+      <span class="proof-badge">Run by an exterior cleaning operator, not an agency</span>
+      <!-- CASE STUDY SLOT: add real repeat-booking numbers when available -->
+      <span class="proof-badge">Included free in The Works bundle</span>
+    </div>
+  </div>
+
+  <!-- ======================= PAIN ACKNOWLEDGMENT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>The leak nobody <span class="serif-word">notices</span></h2>
+      <p>Most exterior cleaning companies spend all their money chasing new
+         customers and zero keeping the ones they already won. The customer
+         you washed last spring doesn't remember your name. Not because you
+         did a bad job. Because a year is a long time and nobody wrote to them.</p>
+    </div>
+    <p style="max-width:40rem;color:var(--color-ink-2);">
+      Winning a new customer costs ad spend. Re-booking an old one costs an
+      email. If you've been in business more than a year, your customer list
+      is the highest-margin marketing channel you own, and it's probably
+      sitting in a shoebox of invoices.
+    </p>
+  </section>
+
+  <!-- ======================= DELIVERABLES ======================= -->
+  <section class="section section--band" id="what-you-get">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>What I actually <span class="serif-word">send</span></h2>
+        <p>Four campaign types, written in your voice, on a calendar that matches your season.</p>
+      </div>
+      <div class="deliv-grid">
+        <div class="deliv reveal-io" style="--i:0">
+          <h3>Seasonal reminders</h3>
+          <p>"It's been a year since we washed your siding" hits different when
+             the pollen is visibly yellow. Timed to your region's algae, pollen,
+             and gutter seasons so the reminder lands right when the problem shows.</p>
+        </div>
+        <div class="deliv reveal-io" style="--i:1">
+          <h3>Review requests</h3>
+          <p>Sent right after the job while the driveway still looks brand new.
+             More reviews feed your Google Business Profile, which feeds your
+             map ranking, which feeds you jobs without ad spend.</p>
+        </div>
+        <div class="deliv reveal-io" style="--i:2">
+          <h3>Referral pushes</h3>
+          <p>Your happiest customers know ten neighbors with dirty driveways.
+             A simple give-get referral offer turns one clean house into a
+             street of them. Route density is profit.</p>
+        </div>
+        <div class="deliv reveal-io" style="--i:3">
+          <h3>Win-backs</h3>
+          <p>Customers who booked once and went quiet get a short, honest
+             nudge with a reason to come back. These are the cheapest jobs
+             you'll book all year.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= HOW IT WORKS ======================= -->
+  <section class="section wrap">
+    <div class="section__head reveal-io">
+      <h2>How it <span class="serif-word">works</span></h2>
+    </div>
+    <ol class="steps">
+      <li class="reveal-io" style="--i:0">
+        <h3>I get your list in shape</h3>
+        <p>Send me whatever you have: a spreadsheet, your invoice software
+           export, even photos of paper invoices. I clean it up and load it.</p>
+      </li>
+      <li class="reveal-io" style="--i:1">
+        <h3>We map your season</h3>
+        <p>Fifteen minutes on the phone about when your work spikes and dies.
+           The email calendar gets built around your actual year, not a template.</p>
+      </li>
+      <li class="reveal-io" style="--i:2">
+        <h3>Emails go out in your voice</h3>
+        <p>You approve the first batch so the tone sounds like you, then it
+           runs. Every email is written to book a job, not win a newsletter award.</p>
+      </li>
+      <li class="reveal-io" style="--i:3">
+        <h3>You see what booked</h3>
+        <p>Reporting is in jobs and reviews, not open rates. If a campaign
+           isn't producing, I change it or tell you why we should kill it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ======================= PLUS-ONE ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Book this, pick a <span class="serif-word">plus-one</span>.</h2>
+        <p>Sign up for email marketing and try a second service on me: a free
+           month of ad management, a free Google Business Profile optimization,
+           or a free website. Keep whatever works.</p>
+      </div>
+      <a class="btn btn--outline" href="pricing.html">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section class="section wrap">
+    <div class="section__head reveal-io">
+      <h2>Fair questions, straight answers</h2>
+    </div>
+    <div class="faq">
+      <details class="reveal-io" style="--i:0">
+        <summary>I don't really have a customer list. Can this still work?</summary>
+        <p class="faq__a">If you've done jobs, you have a list, it's just not
+           organized yet. Invoices, texts, Venmo history, job addresses. Part
+           of my setup is digging it out and turning it into something usable.
+           If you truly have nothing, start with ads first and this becomes
+           step two.</p>
+      </details>
+      <details class="reveal-io" style="--i:1">
+        <summary>Isn't email dead? My customers are on Facebook.</summary>
+        <p class="faq__a">Dead for spam, alive for reminders. A homeowner who
+           already paid you opens an email from you. This isn't cold email to
+           strangers, it's a note from the company that cleaned their house
+           last year, and that's exactly why it books jobs.</p>
+      </details>
+      <details class="reveal-io" style="--i:2">
+        <summary>How is this different from the cold outreach agencies pitch?</summary>
+        <p class="faq__a">Cold outreach is chasing strangers. This is the
+           opposite: warming up people who already trust you. Different list,
+           different tone, different (much higher) booking rate.</p>
+      </details>
+      <details class="reveal-io" style="--i:3">
+        <summary>What does it cost and what am I locked into?</summary>
+        <p class="faq__a">$197 a month, month-to-month, cancel anytime. It's
+           also included free in The Works bundle if you're running ads and
+           SEO with me anyway.</p>
+      </details>
+      <details class="reveal-io" style="--i:4">
+        <summary>Will you write it or do I have to?</summary>
+        <p class="faq__a">I write everything. You approve the first round so
+           it sounds like you and not like a robot, then it runs without you
+           touching it.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ======================= CROSS-LINKS ======================= -->
+  <section class="section section--band">
+    <div class="wrap reveal-io">
+      <div class="section__head">
+        <h2>Pairs well with</h2>
+        <p>Email keeps old customers coming back. These fill the top of the funnel.</p>
+      </div>
+      <div class="cross-links">
+        <a class="btn btn--outline" href="meta-ads.html">Meta Ads Management</a>
+        <a class="btn btn--outline" href="seo-gbp.html">SEO &amp; Google Business Profile</a>
+        <a class="btn btn--outline" href="web-design.html">Web Design</a>
+        <a class="btn btn--outline" href="creative-design.html">Ad Creative &amp; Design</a>
+      </div>
+      <div class="cross-links" style="margin-top: var(--space-md);">
+        <a class="btn btn--outline" href="window-cleaning.html">For window cleaning</a>
+        <a class="btn btn--outline" href="pressure-washing.html">For pressure washing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CLOSING CTA ======================= -->
+  <section class="close-cta wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Let me look at your <span class="serif-word">list</span>.</h2>
+        <p>Send two minutes of answers and I'll tell you honestly how many
+           jobs are probably sitting in your old customer list.</p>
+        <ul class="expect">
+          <li>Free audit, recorded personally, inside 48 hours</li>
+          <li>A straight answer, not a sales pitch</li>
+          <li>If email isn't your next move, I'll say so</li>
+        </ul>
+      </div>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal-io');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

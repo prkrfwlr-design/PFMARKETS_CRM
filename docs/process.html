@@ -1,0 +1,236 @@
+<!doctype html>
+<!--
+  PFMarkets — Process page
+  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH:
+    · (864) 000-0000 and +18640000000 — phone number
+    · https://pfmarkets.com — canonical URL
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>How We Work, First 90 Days | PFMarkets</title>
+  <meta name="description" content="What working with PFMarkets actually looks like: week-by-week first 90 days, reporting cadence, and communication norms. No ticket systems, no black boxes.">
+  <link rel="canonical" href="https://pfmarkets.com/process.html"><!-- PLACEHOLDER: confirm real domain -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .reveal-io { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .reveal-io.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+    .weeks { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-md); counter-reset: week; }
+    .weeks li { display: grid; grid-template-columns: 8rem minmax(0,1fr); gap: var(--space-lg); padding: var(--space-lg) 0; border-top: var(--rule-hair) solid var(--color-rule); }
+    .weeks li:first-child { border-top: none; }
+    .weeks .wk { font-family: var(--font-serif); color: var(--color-accent); font-size: var(--text-xl); line-height: 1; }
+    .weeks h3 { margin-bottom: var(--space-xs); }
+    .weeks p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; max-width: 40rem; }
+    @media (max-width: 45rem) { .weeks li { grid-template-columns: minmax(0,1fr); gap: var(--space-xs); } }
+
+    .cadence-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--space-lg); }
+    .cadence-card { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-xl); }
+    .cadence-card h3 { margin-bottom: var(--space-sm); }
+    .cadence-card p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.6; }
+    @media (max-width: 60rem) { .cadence-grid { grid-template-columns: minmax(0,1fr); } }
+
+    .norms { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-sm); }
+    .norms li { display: flex; gap: var(--space-sm); align-items: baseline; color: var(--color-ink-2); font-size: var(--text-base); }
+    .norms li::before { content: "→"; color: var(--color-accent); font-weight: 700; flex: none; }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero wrap">
+      <div class="hero__grid">
+        <div class="hero__copy" style="max-width:38rem;">
+          <h1>Here's what actually <span class="serif-word serif-word--accent">happens</span> after you sign.</h1>
+          <p class="hero__lede">
+            No mystery onboarding, no 40-page welcome PDF. This is the week-by-week version of
+            the first 90 days, plus how we report and how you reach us.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+            <a class="btn btn--outline" href="results.html">See how we measure results</a>
+          </div>
+          <p class="hero__note">Same process whether you're our first client this month or our fiftieth.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FIRST 90 DAYS ======================= -->
+    <section class="section wrap">
+      <div class="section__head reveal-io">
+        <h2>The first <span class="serif-word serif-word--accent">90</span> days</h2>
+        <p>Broken into weeks because "month one" hides too much. Here's the actual sequence.</p>
+      </div>
+      <ol class="weeks">
+        <li class="reveal-io">
+          <span class="wk">01</span>
+          <div>
+            <h3>Week 1, Setup</h3>
+            <p>Google Business Profile audit, ad accounts connected, tracking installed, and a
+               short call to confirm your service area, your slow season, and what "a good lead"
+               looks like for your crew.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="wk">02</span>
+          <div>
+            <h3>Week 2, Launch</h3>
+            <p>First campaigns go live. First creative crops ship. If we're building a site, wireframes
+               go out for your sign-off before anything's coded.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="wk">03–4</span>
+          <div>
+            <h3>Weeks 3–4, Calibrate</h3>
+            <p>We're watching cost per lead and lead quality daily. Targeting, budget, and creative
+               get adjusted based on what's actually converting, not left alone to "gather data"
+               for a month.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="wk">05–8</span>
+          <div>
+            <h3>Weeks 5–8, Scale what works</h3>
+            <p>Budget shifts toward the campaigns and creative pulling real bookings. New ad
+               variations refresh on a 2–3 week cycle so nothing goes stale mid-flight.</p>
+          </div>
+        </li>
+        <li class="reveal-io">
+          <span class="wk">09–12</span>
+          <div>
+            <h3>Weeks 9–12, Compound</h3>
+            <p>Local SEO starts showing up in ranking movement. Reviews are accumulating. We put
+               together a 90-day review: what worked, what didn't, and what the next quarter looks
+               like.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ======================= REPORTING CADENCE ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>Reporting <span class="serif-word serif-word--accent">cadence</span></h2>
+          <p>Frequency drops once the first-90-days calibration period is over, not because we
+             stop watching, but because weekly reports on a stable account are just noise.</p>
+        </div>
+        <div class="cadence-grid">
+          <div class="cadence-card reveal-io">
+            <h3>First 90 days: weekly</h3>
+            <p>A short update every week, leads, spend, cost per lead, and what changed. Long
+               enough to catch a bad week early, short enough that you'll actually read it.</p>
+          </div>
+          <div class="cadence-card reveal-io">
+            <h3>After 90 days: biweekly</h3>
+            <p>Once the account's calibrated, reporting moves to every two weeks. You'll still hear
+               from us the moment something's worth flagging, good or bad, outside that cadence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= COMMUNICATION NORMS ======================= -->
+    <section class="section wrap">
+      <div class="section__head reveal-io">
+        <h2>How you actually <span class="serif-word serif-word--accent">reach</span> us</h2>
+        <p>No support ticket disappearing into a queue. This is how it works day to day.</p>
+      </div>
+      <ul class="norms">
+        <li class="reveal-io">Text or call, the same number that answers your questions on day one answers them on day 200.</li>
+        <li class="reveal-io">No ticket systems. If you have to log in somewhere to ask a question, something's broken.</li>
+        <li class="reveal-io">You talk to the person running your account, not a rotating support rep reading your file for the first time.</li>
+        <li class="reveal-io">Slow-to-respond isn't a personality trait we tolerate, expect a reply the same business day.</li>
+      </ul>
+    </section>
+
+    <!-- ======================= CLOSING CTA ======================= -->
+    <section class="close-cta wrap">
+      <div class="close-cta__box reveal-io">
+        <div>
+          <h2>Ready to see this run on your business?</h2>
+          <p>Free audit first. No retainer pitch until you've seen what we'd actually do.</p>
+        </div>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  (function revealOnScroll() {
+    const els = document.querySelectorAll(".reveal-io");
+    if (!els.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el, i) => { el.style.transitionDelay = ((i % 6) * 60) + "ms"; io.observe(el); });
+  })();
+  </script>
+</body>
+</html>

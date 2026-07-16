@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | PFMarkets</title>
+  <meta name="description" content="Reach PFMarkets by phone, email, or a quick message. Based in Upstate South Carolina, working with exterior cleaning companies remotely nationwide.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .contact-hero { padding-block: calc(68px + var(--space-2xl)) var(--space-2xl); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+    .contact-info { max-width: 28rem; }
+    .contact-info__lede { margin-top: var(--space-lg); color: var(--color-ink-2); line-height: 1.55; }
+    .contact-methods { list-style: none; margin: var(--space-xl) 0 0; padding: 0; display: grid; gap: var(--space-md); }
+    .contact-methods li { display: grid; gap: 2px; }
+    .contact-methods span.label { font-size: 0.8125rem; color: var(--color-muted); }
+    .contact-methods a, .contact-methods p { font-weight: 600; text-decoration: none; }
+    .contact-methods a:hover { color: var(--color-accent); }
+    .service-note {
+      margin-top: var(--space-xl);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-paper-2);
+      border: var(--rule-hair) solid var(--color-rule-2);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-ink-2);
+    }
+    .service-note strong { color: var(--color-ink); }
+
+    .contact-card {
+      background: var(--color-paper);
+      border: var(--rule-hair) solid var(--color-rule);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 24px 60px -28px var(--color-shadow);
+      padding: clamp(var(--space-lg), 3vw, var(--space-xl));
+    }
+    .contact-card h2 { font-size: var(--text-lg); margin-bottom: var(--space-lg); }
+    .contact-card .field textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--color-rule);
+      outline: 2px solid transparent;
+      outline-offset: 1px;
+      border-radius: var(--radius-md);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      font: inherit;
+      resize: vertical;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+    .contact-card .field textarea:focus-visible { outline-color: var(--color-focus); border-color: var(--color-ink-2); }
+    .contact-success { display: none; text-align: center; padding: var(--space-lg) 0; }
+    .contact-success.is-visible { display: block; }
+    .contact-success__icon {
+      width: 56px; height: 56px; margin: 0 auto var(--space-md);
+      border-radius: 50%; background: var(--color-accent-dim); color: var(--color-accent);
+      display: grid; place-items: center; font-size: 1.5rem; font-weight: 700;
+    }
+    .contact-success p { color: var(--color-ink-2); margin-top: var(--space-sm); }
+    @media (max-width: 60rem) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
+
+    .sr { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .sr.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .sr { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <!-- PHONE PLACEHOLDER — replace number in href and text -->
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="contact-hero wrap">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h1 class="reveal" style="--i:0">Talk to an actual <span class="serif-word serif-word--accent">person</span>.</h1>
+          <p class="contact-info__lede reveal" style="--i:1">
+            No ticket system, no chatbot pretending to be a human. Call, email, or send a quick
+            message below, you'll hear back from someone who actually works here.
+          </p>
+
+          <ul class="contact-methods reveal" style="--i:2">
+            <li>
+              <span class="label">Call or text</span>
+              <!-- PHONE PLACEHOLDER — replace number in href and text -->
+              <a href="tel:+18640000000">(864) 000-0000</a>
+            </li>
+            <li>
+              <span class="label">Email</span>
+              <!-- EMAIL PLACEHOLDER: confirm hello@pfmarkets.org is live before launch -->
+              <a href="mailto:hello@pfmarkets.org">hello@pfmarkets.org</a>
+            </li>
+          </ul>
+
+          <p class="service-note reveal" style="--i:3">
+            <strong>Service area:</strong> based in Upstate South Carolina, working hands-on with
+            local exterior cleaning companies here, and running ads, SEO, and websites remotely for
+            clients nationwide. Wherever your trucks run, we can probably help.
+          </p>
+        </div>
+
+        <div class="contact-card reveal" style="--i:2">
+          <h2>Send a message</h2>
+          <form id="contact-form" novalidate>
+            <div class="field">
+              <label for="c-name">Your name</label>
+              <input type="text" id="c-name" name="contact_name" required autocomplete="name" placeholder="First and last">
+              <p class="hint" data-hint></p>
+            </div>
+            <div class="field">
+              <label for="c-phone">Phone or email</label>
+              <input type="text" id="c-phone" name="contact_method" required autocomplete="tel" placeholder="(864) 555-0134 or you@company.com">
+              <p class="hint" data-hint>Whichever's easiest to reach you at.</p>
+            </div>
+            <div class="field">
+              <label for="c-message">What's going on?</label>
+              <textarea id="c-message" name="message" required placeholder="A sentence or two is plenty."></textarea>
+              <p class="hint" data-hint></p>
+            </div>
+            <div class="form-error" id="contact-form-error" role="alert"></div>
+            <button type="submit" class="btn btn--fill" style="width:100%;">Send message</button>
+          </form>
+
+          <!-- success state — shown client-side once the form validates -->
+          <div class="contact-success" id="contact-success" aria-live="polite">
+            <div class="contact-success__icon" aria-hidden="true">✓</div>
+            <h2>Got it.</h2>
+            <p>We'll get back to you within 1 business day, usually a lot sooner.</p>
+          </div>
+
+          <!--
+            FORM BACKEND: wire to Supabase leads table, same as index.html.
+            Expected columns: contact_name, contact_method, message,
+            source (default 'pfmarkets.com/contact'), plus id/created_at.
+            On submit: insert the row, then reveal the success state only after a confirmed insert —
+            this stub currently reveals success directly with no network request.
+          -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <!-- PHONE PLACEHOLDER — same number as header -->
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  const form = document.getElementById("contact-form");
+  const formError = document.getElementById("contact-form-error");
+  const success = document.getElementById("contact-success");
+
+  function setFieldError(el, msg) {
+    el.setAttribute("aria-invalid", "true");
+    const hint = el.closest(".field")?.querySelector("[data-hint]");
+    if (hint) { hint.dataset.orig = hint.dataset.orig ?? hint.textContent; hint.textContent = msg; hint.classList.add("is-error"); }
+  }
+  function clearFieldError(el) {
+    el.removeAttribute("aria-invalid");
+    const hint = el.closest(".field")?.querySelector("[data-hint]");
+    if (hint && hint.classList.contains("is-error")) {
+      hint.textContent = hint.dataset.orig ?? "";
+      hint.classList.remove("is-error");
+    }
+  }
+  form.addEventListener("input", (e) => clearFieldError(e.target));
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let ok = true;
+    for (const el of form.querySelectorAll("input[required], textarea[required]")) {
+      if (!el.value.trim()) { setFieldError(el, "This one's required."); ok = false; }
+    }
+    if (!ok) return;
+    formError.classList.remove("is-visible");
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    const row = {
+      contact_name:    data.contact_name.trim(),
+      contact_method:  data.contact_method.trim(),
+      message:         data.message.trim(),
+      source:          "pfmarkets.com/contact",
+    };
+    // FORM BACKEND: this is where the Supabase insert into `leads` happens (see comment above).
+    // No network call is made here yet — this stub shows the success state directly.
+    console.log("Contact message (stub — not sent anywhere yet):", row);
+
+    form.hidden = true;
+    success.classList.add("is-visible");
+  });
+
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const els = document.querySelectorAll(".sr");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = (i % 6) * 60 + "ms";
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach((el) => io.observe(el));
+  } else {
+    document.querySelectorAll(".sr").forEach((el) => el.classList.add("is-visible"));
+  }
+  </script>
+</body>
+</html>

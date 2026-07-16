@@ -1,0 +1,227 @@
+<!doctype html>
+<!--
+  PFMarkets — Industries hub page
+  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH:
+    · (864) 000-0000 and +18640000000 — phone number
+    · https://pfmarkets.com — canonical / JSON-LD URLs
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Industries We Serve | PFMarkets</title>
+  <meta name="description" content="PFMarkets runs marketing for pressure washing, soft washing, and window cleaning companies. I speak your trade's numbers, and I run one of these businesses myself.">
+  <link rel="canonical" href="https://pfmarkets.com/industries.html"><!-- PLACEHOLDER: confirm real domain -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Pressure Washing Marketing", "url": "https://pfmarkets.com/pressure-washing.html" },
+      { "@type": "ListItem", "position": 2, "name": "Soft Washing Marketing", "url": "https://pfmarkets.com/soft-washing.html" },
+      { "@type": "ListItem", "position": 3, "name": "Window Cleaning Marketing", "url": "https://pfmarkets.com/window-cleaning.html" }
+    ]
+  }
+  </script>
+  <!-- JSON-LD placeholder: all pfmarkets.com URLs must be replaced with the real domain. -->
+
+  <style>
+    .reveal-io { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .reveal-io.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+    .ind-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-lg); }
+    .ind-card {
+      background: var(--color-paper);
+      border: var(--rule-hair) solid var(--color-rule);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      text-decoration: none;
+      color: inherit;
+      display: grid;
+      gap: var(--space-sm);
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .ind-card:hover { transform: translateY(-2px); box-shadow: 0 20px 46px -24px var(--color-shadow); border-color: var(--color-ink-2); }
+    }
+    .ind-card:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+    .ind-card h3 { font-size: var(--text-lg); }
+    .ind-card p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
+    .ind-card .go { margin-top: var(--space-xs); font-size: var(--text-sm); font-weight: 600; color: var(--color-accent); }
+    @media (max-width: 60rem) { .ind-grid { grid-template-columns: minmax(0,1fr); } }
+
+    .bundle-note { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-xl); display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center; justify-content: space-between; }
+    .bundle-note p { color: var(--color-ink-2); font-size: var(--text-sm); max-width: 40rem; }
+    .bundle-note h3 { margin-bottom: var(--space-xs); }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero wrap">
+      <div class="hero__grid">
+        <div class="hero__copy" style="max-width:38rem;">
+          <h1>Marketing built around your <span class="serif-word serif-word--accent">trade</span>, not a template.</h1>
+          <p class="hero__lede">
+            I focus on exterior cleaning: pressure washing, soft washing, window cleaning. Three
+            trades, three different playbooks, and I actually run one of these businesses myself.
+            Pick your trade below and see how I think about it.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= INDUSTRY CARDS ======================= -->
+    <section class="section wrap">
+      <div class="section__head reveal-io">
+        <h2>Industries I <span class="serif-word serif-word--accent">run</span></h2>
+        <p>Three trades, three different playbooks, same discipline underneath.</p>
+      </div>
+      <div class="ind-grid">
+        <a class="ind-card reveal-io" href="pressure-washing.html">
+          <h3>Pressure Washing</h3>
+          <p>Before/after is the whole ad. I build campaigns around the transformation shot,
+             not a generic service list.</p>
+          <span class="go">See the pressure washing page →</span>
+        </a>
+        <a class="ind-card reveal-io" href="soft-washing.html">
+          <h3>Soft Washing</h3>
+          <p>Education-first marketing. Most homeowners don't know their roof needs a soft wash,
+             or that high pressure can damage it, so the ad has to teach before it sells.</p>
+          <span class="go">See the soft washing page →</span>
+        </a>
+        <a class="ind-card reveal-io" href="window-cleaning.html">
+          <h3>Window Cleaning</h3>
+          <p>Recurring route work changes the math entirely. I optimize for monthly and quarterly
+             bookings, not one-off jobs.</p>
+          <span class="go">See the window cleaning page →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================= DO ALL THREE ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="bundle-note reveal-io">
+          <div>
+            <h3>Do all three? Most of my clients do.</h3>
+            <p>A lot of exterior cleaning companies run pressure washing, soft washing, and window
+               cleaning under one roof, and for good reason: it's the same crew, the same truck,
+               and a much bigger ticket per customer. If that's you, "The Works" bundle covers all
+               three trades under one plan instead of stitching together three separate ones.</p>
+          </div>
+          <a class="btn btn--outline" href="pricing.html">See The Works bundle</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= DON'T SEE YOUR TRADE ======================= -->
+    <section class="also" aria-label="Other trades">
+      <div class="wrap">
+        <p><strong>Different trade?</strong> I keep my focus narrow on purpose: pressure washing,
+           soft washing, and window cleaning. If that's not you, I'll tell you straight whether
+           I'm the right fit or point you somewhere better.</p>
+        <a class="btn btn--outline" href="free-audit.html">Ask me</a>
+      </div>
+    </section>
+
+    <!-- ======================= CLOSING CTA ======================= -->
+    <section class="close-cta wrap">
+      <div class="close-cta__box reveal-io">
+        <div>
+          <h2>Ready to see your trade's numbers?</h2>
+          <p>Free audit, built around your actual service area and job types.</p>
+        </div>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </section>
+
+  </main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var nav = document.getElementById("site-nav");
+  if (nav) {
+    var tick = false;
+    var onScroll = function () {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); tick = false; });
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  var els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

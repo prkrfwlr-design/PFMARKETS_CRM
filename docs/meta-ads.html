@@ -1,0 +1,483 @@
+<!doctype html>
+<!--
+  PFMarkets — Meta Ads Management service page.
+  PLACEHOLDERS TO REPLACE BEFORE LAUNCH: (864) 000-0000 / +18640000000 phone,
+  https://pfmarkets.com canonical/OG/JSON-LD domain, /og.jpg image.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meta Ads Management for Exterior Cleaning Companies | PFMarkets</title>
+<meta name="description" content="Meta ad campaigns built to make the phone ring for pressure washing, soft washing, and window cleaning companies. $597/mo, creative refreshed every 2 weeks, no lock-in.">
+<link rel="canonical" href="https://pfmarkets.com/meta-ads.html"><!-- PLACEHOLDER: confirm real domain -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Meta Ads Management for Exterior Cleaning Companies, PFMarkets">
+<meta property="og:description" content="Meta ad campaigns built to make the phone ring for pressure washing, soft washing, and window cleaning companies. Creative refreshed every 2 weeks, no lock-in.">
+<meta property="og:url" content="https://pfmarkets.com/meta-ads.html"><!-- PLACEHOLDER -->
+<meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Meta Ads Management",
+  "name": "Meta Ads Management for Exterior Cleaning Companies",
+  "description": "Facebook and Instagram lead-generation ad campaigns for pressure washing, soft washing, and window cleaning companies. Creative refreshed every 2 weeks, high-intent lead forms, month-to-month, $597/mo.",
+  "provider": { "@type": "ProfessionalService", "@id": "https://pfmarkets.com/#business", "name": "PFMarkets", "telephone": "+1-864-000-0000" },
+  "url": "https://pfmarkets.com/meta-ads.html",
+  "offers": { "@type": "Offer", "price": "597", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "597", "priceCurrency": "USD", "unitText": "MONTH" } }
+}
+</script>
+
+<style>
+/* page-specific styles only */
+
+/* ---- shared scroll-reveal (IntersectionObserver-driven) ---- */
+.reveal-io {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal-io.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-io { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---- mini hero (no dashboard demo — narrower right column) ---- */
+.svc-hero .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+
+/* ---- honest proof strip ---- */
+.proof-strip { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-lg); }
+.proof-badge {
+  display: flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-pill);
+  padding: var(--space-xs) var(--space-md);
+}
+.proof-badge::before { content: "✓"; color: var(--color-accent); font-weight: 700; }
+
+/* ---- deliverables grid ---- */
+.deliv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+@media (max-width: 60rem) { .deliv-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- FAQ ---- */
+.faq { display: grid; gap: var(--space-md); max-width: 44rem; }
+.faq details {
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+.faq summary {
+  cursor: pointer; font-weight: 600; font-size: var(--text-md);
+  list-style: none; display: flex; justify-content: space-between;
+  align-items: center; gap: var(--space-md);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; font-size: 1.5rem; line-height: 1; color: var(--color-accent);
+  flex: none; transition: transform var(--dur-short) var(--ease-out);
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p.faq__a { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; }
+
+/* ---- cross links ---- */
+.cross-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* ---- plus-one callout ---- */
+.plus-one {
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.plus-one p { color: var(--color-ink-2); max-width: 42rem; }
+.plus-one strong { color: var(--color-ink); }
+
+/* ---- signature animation: "ring" demo — phone icon pulsing to a lead toast, 9s loop ---- */
+.ring-demo {
+  position: relative;
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: clamp(var(--space-lg), 3vw, var(--space-xl));
+  box-shadow: 0 24px 60px -28px var(--color-shadow);
+  min-height: 20rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.ring-demo__phone { position: relative; width: 108px; height: 108px; }
+.ring-demo__ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  opacity: 0;
+  animation: ring-pulse 3s var(--ease-out) infinite;
+}
+.ring-demo__ring--2 { animation-delay: 1s; }
+.ring-demo__ring--3 { animation-delay: 2s; }
+.ring-demo__dot {
+  position: absolute; inset: 30px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  display: grid; place-items: center;
+  box-shadow: 0 0 24px var(--color-accent-dim);
+}
+.ring-demo__dot svg { width: 22px; height: 22px; stroke: var(--color-accent-ink); fill: none; stroke-width: 2; }
+.ring-demo__toast {
+  position: absolute;
+  bottom: clamp(var(--space-lg), 4vw, var(--space-xl));
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 12px 30px -12px var(--color-shadow);
+  animation: ring-toast 9s var(--ease-out) infinite;
+}
+.ring-demo__label { position: absolute; top: var(--space-lg); left: var(--space-lg); font-size: 0.75rem; color: var(--color-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+@keyframes ring-pulse {
+  0% { opacity: 0.55; transform: scale(0.6); }
+  70% { opacity: 0; transform: scale(1.6); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+@keyframes ring-toast {
+  0%, 55% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  62%, 88% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  96%, 100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring-demo__ring, .ring-demo__toast { animation: none; }
+  .ring-demo__ring { opacity: 0; }
+  .ring-demo__toast { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+      <a class="link-quiet" href="results.html">Results</a>
+      <a class="link-quiet" href="pricing.html">Pricing</a>
+      <a class="link-quiet" href="about.html">About</a>
+    </nav>
+    <div class="nav__right">
+      <!-- PHONE PLACEHOLDER — replace number in href and text -->
+      <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero svc-hero wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <h1>Meta ads built to make the phone <span class="serif-word serif-word--accent">ring</span>.</h1>
+        <p class="hero__lede">
+          I run Facebook and Instagram campaigns aimed at homeowners inside your
+          service area, built around the jobs you want more of, refreshed
+          before the creative goes stale, and tracked to the call, not the
+          click.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="#how-it-works">See how it works</a>
+        </div>
+        <p class="hero__note">Two-minute questionnaire, then a straight answer from me on whether it's a fit.</p>
+      </div>
+      <figure class="ring-demo" role="img" aria-label="Animated demo: a phone icon pulsing, then a new-lead notification appearing.">
+        <span class="ring-demo__label">Live campaign</span>
+        <div class="ring-demo__phone">
+          <div class="ring-demo__ring"></div>
+          <div class="ring-demo__ring ring-demo__ring--2"></div>
+          <div class="ring-demo__ring ring-demo__ring--3"></div>
+          <div class="ring-demo__dot">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.63 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.2a2 2 0 0 1 2.11-.45c.85.3 1.73.51 2.63.63A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ring-demo__toast">New lead · Driveway wash quote</div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ======================= PROOF STRIP ======================= -->
+  <div class="wrap reveal-io">
+    <div class="proof-strip">
+      <span class="proof-badge">Run by me, an exterior cleaning operator, not an agency</span>
+      <span class="proof-badge">Month-to-month, cancel anytime</span>
+      <!-- CASE STUDY SLOT: add real client CPL/booked-job numbers when available -->
+      <span class="proof-badge">Real numbers when I have them, never invented ones</span>
+    </div>
+  </div>
+
+  <!-- ======================= PAIN ACKNOWLEDGMENT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>You've probably already tried <span class="serif-word">boosting</span> a post</h2>
+      <p>Most pressure washing, soft washing, and window cleaning owners have.
+         It gets likes. It doesn't get calls. And if you've hired an agency
+         before, you know the drill: a report full of "impressions" and
+         "reach," and a quiet phone.</p>
+    </div>
+    <p style="max-width:40rem;color:var(--color-ink-2);">
+      Meta ads done right aren't about getting seen. They're about getting a
+      homeowner in your service area, who needs the driveway, roof, or
+      windows done this month, to fill out a form or call before they close
+      the app. That's a different set of decisions, targeting, creative, and
+      the form itself, than what most agencies default to.
+    </p>
+  </section>
+
+  <!-- ======================= WHAT WE ACTUALLY DO ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>What I actually run</h2>
+        <p>No "brand awareness" line item. Every dollar is pointed at a booked job.</p>
+      </div>
+      <div class="deliv-grid">
+        <div class="svc reveal-io" style="--i:0">
+          <h3>Higher-intent lead forms</h3>
+          <p>Instant-form ads built to filter out tire-kickers: service type,
+             rough address, and urgency, so what lands in your inbox is a real
+             quote request, not a name and a maybe.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:1">
+          <h3>Creative refreshed every 2 weeks</h3>
+          <p>Meta ads fatigue fast. The same 5 people see your ad 40 times and
+             stop clicking. I rotate in new hooks and crops on a schedule, not
+             after performance already tanked.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:2">
+          <h3>Targeting tuned to your service area</h3>
+          <p>Radius targeting around where you actually run trucks, with
+             budget pulled off zip codes that quote but never book.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:3">
+          <h3>Reporting in booked jobs, not clicks</h3>
+          <p>You get a weekly number: leads in, jobs booked, cost per booked
+             job, in your client portal (a $29/mo add-on, included free if
+             you're on The Works). If a number's bad, I say so before you ask.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PLUS-ONE CALLOUT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="plus-one">
+      <p><strong>Pick your plus-one:</strong> book Meta Ads with me and choose
+         one more service on the house, a month of SEO/GBP work, a Google
+         Business Profile optimization, or a website. Try a second service
+         before you commit to it.</p>
+      <a class="btn btn--outline" href="pricing.html">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ======================= HOW IT WORKS ======================= -->
+  <section class="section wrap" id="how-it-works">
+    <div class="section__head reveal-io">
+      <h2>How it works</h2>
+      <p>Four steps from "let's talk" to a busier calendar.</p>
+    </div>
+    <ol class="steps">
+      <li class="reveal-io" style="--i:0">
+        <span class="stage" aria-hidden="true">01</span>
+        <h3>I audit your account and market</h3>
+        <p>I look at what's running now (if anything), your service area, and
+           what jobs you actually want more of.</p>
+        <p class="steps__meta">Takes: 2–3 days</p>
+      </li>
+      <li class="reveal-io" style="--i:1">
+        <span class="stage" aria-hidden="true">02</span>
+        <h3>I build the campaign</h3>
+        <p>Creative, copy, targeting, and lead forms, built around the jobs
+           worth the most to you, not the cheapest click available.</p>
+        <p class="steps__meta">Deliverable: campaign ready to launch</p>
+      </li>
+      <li class="reveal-io" style="--i:2">
+        <span class="stage" aria-hidden="true">03</span>
+        <h3>I launch and tune weekly</h3>
+        <p>Live within days. I check in weekly on cost per lead, form
+           completion, and which creative's actually working.</p>
+        <p class="steps__meta">Cadence: weekly tuning</p>
+      </li>
+      <li class="reveal-io" style="--i:3">
+        <span class="stage" aria-hidden="true">04</span>
+        <h3>I report in booked jobs</h3>
+        <p>A plain-language number, not a dashboard full of vanity metrics.
+           You'll know exactly what your ad spend booked.</p>
+        <p class="steps__meta">Cadence: weekly or biweekly, your call</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>Fair questions, straight answers</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal-io" style="--i:0">
+          <summary>What's the minimum budget to make this work?</summary>
+          <p class="faq__a">Locally, $500 to $2,000/mo in ad spend is enough to
+             see real signal for most exterior cleaning trades. Under that,
+             the algorithm doesn't get enough data to optimize well. I'll
+             tell you honestly if your budget's too thin before I take it.</p>
+        </details>
+        <details class="reveal-io" style="--i:1">
+          <summary>Why not just run Google Ads instead?</summary>
+          <p class="faq__a">Different job. Google catches people actively
+             searching; Meta reaches people who'd want the job done but
+             haven't searched yet. In smaller (Tier-3) markets, Meta's cost
+             per lead is usually lower because you're not bidding against as
+             many advertisers for the same keyword.</p>
+        </details>
+        <details class="reveal-io" style="--i:2">
+          <summary>How fast will I see leads?</summary>
+          <p class="faq__a">Campaigns typically go live within days.
+             Meaningful volume usually shows up in the first 1 to 2 weeks,
+             though the first week is often rougher while the algorithm
+             learns.</p>
+        </details>
+        <details class="reveal-io" style="--i:3">
+          <summary>Do I need a website or pixel already set up?</summary>
+          <p class="faq__a">No, instant-form ads work without a website. If
+             you do have a site, I'll add tracking so we know which leads
+             actually turn into jobs, not just form fills.</p>
+        </details>
+        <details class="reveal-io" style="--i:4">
+          <summary>Is there a contract?</summary>
+          <p class="faq__a">No lock-in. Month-to-month, $597/mo, cancel
+             anytime. If it's not working, I'd rather you leave than keep
+             paying for nothing.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CROSS-LINKS ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>Pairs well with</h2>
+      <p>Ads bring the traffic. These make sure it doesn't leak out the bottom.</p>
+    </div>
+    <div class="cross-links">
+      <a class="btn btn--outline" href="creative-design.html">Ad Creative &amp; Design</a>
+      <a class="btn btn--outline" href="web-design.html">Web Design</a>
+      <a class="btn btn--outline" href="seo-gbp.html">SEO &amp; Google Business Profile</a>
+      <a class="btn btn--outline" href="email-marketing.html">Email Marketing</a>
+      <a class="btn btn--outline" href="pressure-washing.html">Pressure washing marketing</a>
+      <a class="btn btn--outline" href="soft-washing.html">Soft washing marketing</a>
+      <a class="btn btn--outline" href="window-cleaning.html">Window cleaning marketing</a>
+    </div>
+  </section>
+
+  <!-- ======================= CLOSING CTA ======================= -->
+  <section class="close-cta wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Ready to see what I'd <span class="serif-word">run</span>?</h2>
+        <p>A free audit of your current ads (or a plan to start from zero). No pitch deck, no pressure.</p>
+        <ul class="expect">
+          <li>I look at your market and current spend</li>
+          <li>You get a plain-language read on what's working and what isn't</li>
+          <li>If I'm not the right fit, I'll say so</li>
+        </ul>
+      </div>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var nav = document.getElementById("site-nav");
+  if (nav) {
+    var tick = false;
+    var onScroll = function () {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); tick = false; });
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  var els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<!--
+  PFMarkets — 404 page
+  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH:
+    · (864) 000-0000 and +18640000000 — phone number
+    · https://pfmarkets.com — canonical URL
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Page Not Found | PFMarkets</title>
+  <meta name="description" content="This page doesn't exist. The good news: your competitors probably don't have one either. Head back home or grab a free marketing audit.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .reveal-io { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .reveal-io.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+    .oops {
+      min-height: calc(100dvh - 68px - 200px);
+      display: grid;
+      place-items: center;
+      padding-block: var(--space-3xl);
+      text-align: center;
+    }
+    .oops__code {
+      font-family: var(--font-serif);
+      color: var(--color-accent);
+      font-size: clamp(4rem, 12vw, 8rem);
+      line-height: 1;
+      margin-bottom: var(--space-md);
+    }
+    .oops__copy { max-width: 32rem; margin-inline: auto; }
+    .oops__lede { margin-top: var(--space-md); color: var(--color-ink-2); font-size: var(--text-md); line-height: 1.55; }
+    .oops__ctas { margin-top: var(--space-xl); display: flex; flex-wrap: wrap; gap: var(--space-sm); justify-content: center; }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="oops wrap reveal-io">
+      <div class="oops__copy">
+        <p class="oops__code">404</p>
+        <h1>This page ghosted us harder than a "we'll call you back."</h1>
+        <p class="oops__lede">
+          Whatever you were looking for, it's not here. Could be a bad link, could be a page we
+          haven't built yet. Either way, your schedule's still empty and we'd rather fix that.
+        </p>
+        <div class="oops__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="index.html">Back to home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  (function revealOnScroll() {
+    const els = document.querySelectorAll(".reveal-io");
+    if (!els.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el, i) => { el.style.transitionDelay = ((i % 6) * 60) + "ms"; io.observe(el); });
+  })();
+  </script>
+</body>
+</html>

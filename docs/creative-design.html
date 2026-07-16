@@ -1,0 +1,420 @@
+<!doctype html>
+<!--
+  PFMarkets — Ad Creative & Design service page.
+  PLACEHOLDERS TO REPLACE BEFORE LAUNCH: (864) 000-0000 / +18640000000 phone,
+  https://pfmarkets.com canonical/OG/JSON-LD domain, /og.jpg image.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ad Creative &amp; Design for Exterior Cleaning Companies | PFMarkets</title>
+<meta name="description" content="Native, scroll-stopping ad creative for pressure washing, soft washing, and window cleaning companies. UGC-style clips and statics, 3 crops per concept, refreshed every 2 to 3 weeks.">
+<link rel="canonical" href="https://pfmarkets.com/creative-design.html"><!-- PLACEHOLDER: confirm real domain -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ad Creative &amp; Design for Exterior Cleaning Companies, PFMarkets">
+<meta property="og:description" content="Native, scroll-stopping creative for exterior cleaning companies. UGC-style clips and statics, refreshed before fatigue sets in.">
+<meta property="og:url" content="https://pfmarkets.com/creative-design.html"><!-- PLACEHOLDER -->
+<meta property="og:image" content="https://pfmarkets.com/og.jpg"><!-- PLACEHOLDER -->
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Ad Creative and Design",
+  "name": "Ad Creative & Design for Exterior Cleaning Companies",
+  "description": "UGC-style and static ad creative for pressure washing, soft washing, and window cleaning companies. 3 native crops per concept, hooks built for the first 2 seconds, refreshed every 2 to 3 weeks.",
+  "provider": { "@type": "ProfessionalService", "@id": "https://pfmarkets.com/#business", "name": "PFMarkets", "telephone": "+1-864-000-0000" },
+  "url": "https://pfmarkets.com/creative-design.html"
+}
+</script>
+
+<style>
+/* page-specific styles only */
+
+.reveal-io {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal-io.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+.svc-hero .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+
+.proof-strip { display: flex; flex-wrap: wrap; gap: var(--space-md); padding-block: var(--space-lg); }
+.proof-badge {
+  display: flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+  background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-pill); padding: var(--space-xs) var(--space-md);
+}
+.proof-badge::before { content: "✓"; color: var(--color-accent); font-weight: 700; }
+
+.deliv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); }
+@media (max-width: 60rem) { .deliv-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.faq { display: grid; gap: var(--space-md); max-width: 44rem; }
+.faq details { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-lg); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: var(--text-md); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.5rem; line-height: 1; color: var(--color-accent); flex: none; transition: transform var(--dur-short) var(--ease-out); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p.faq__a { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; }
+
+.cross-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* ---- plus-one callout ---- */
+.plus-one {
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.plus-one p { color: var(--color-ink-2); max-width: 42rem; }
+.plus-one strong { color: var(--color-ink); }
+
+/* ---- signature animation: three ad "crops" (1:1, 4:5, 9:16) cycling into frame, 10s loop ---- */
+.crop-demo {
+  position: relative;
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: clamp(var(--space-lg), 3vw, var(--space-xl));
+  box-shadow: 0 24px 60px -28px var(--color-shadow);
+  min-height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(var(--space-sm), 2vw, var(--space-md));
+  overflow: hidden;
+}
+.crop-demo__frame {
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  transform-origin: bottom center;
+}
+.crop-demo__frame--1 { width: 72px; height: 72px; animation: crop-rise 10s var(--ease-out) infinite; }
+.crop-demo__frame--2 { width: 84px; height: 105px; animation: crop-rise 10s var(--ease-out) infinite 0.15s; }
+.crop-demo__frame--3 { width: 68px; height: 121px; border-color: var(--color-accent); animation: crop-rise 10s var(--ease-out) infinite 0.3s; }
+.crop-demo__bar { position: absolute; left: 10%; right: 10%; height: 6px; border-radius: var(--radius-pill); background: var(--color-rule-2); }
+.crop-demo__bar--1 { top: 30%; }
+.crop-demo__bar--2 { top: 50%; width: 60%; }
+.crop-demo__frame--3 .crop-demo__bar { background: var(--color-accent-dim); }
+.crop-demo__play {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--color-accent);
+  display: grid; place-items: center;
+}
+.crop-demo__play::after { content: ""; border-style: solid; border-width: 4px 0 4px 6px; border-color: transparent transparent transparent var(--color-accent-ink); margin-left: 2px; }
+.crop-demo__label { position: absolute; top: var(--space-lg); left: var(--space-lg); font-size: 0.75rem; color: var(--color-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+@keyframes crop-rise {
+  0%, 8% { opacity: 0; transform: translateY(14px) scale(0.92); }
+  20%, 78% { opacity: 1; transform: translateY(0) scale(1); }
+  92%, 100% { opacity: 0; transform: translateY(-6px) scale(0.96); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crop-demo__frame { animation: none !important; opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+    <nav class="nav__center" aria-label="Primary">
+      <a class="link-quiet" href="services.html">Services</a>
+      <a class="link-quiet" href="industries.html">Industries</a>
+      <a class="link-quiet" href="results.html">Results</a>
+      <a class="link-quiet" href="pricing.html">Pricing</a>
+      <a class="link-quiet" href="about.html">About</a>
+    </nav>
+    <div class="nav__right">
+      <!-- PHONE PLACEHOLDER — replace number in href and text -->
+      <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero svc-hero wrap">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <h1>Ads people actually <span class="serif-word serif-word--accent">stop</span> for.</h1>
+        <p class="hero__lede">
+          The same stock-photo carousel ad every competitor's running gets
+          scrolled past in half a second. I build creative that looks like it
+          belongs in the feed, and gives your Meta campaigns something worth
+          clicking on.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+          <a class="btn btn--outline" href="#how-it-works">See how it works</a>
+        </div>
+        <p class="hero__note">I build the creative whether or not I'm running your ads.</p>
+      </div>
+      <figure class="crop-demo" role="img" aria-label="Animated demo: three ad crops in a square, portrait, and vertical video format rising into place.">
+        <span class="crop-demo__label">3 crops, 1 concept</span>
+        <div class="crop-demo__frame crop-demo__frame--1"><div class="crop-demo__bar crop-demo__bar--1"></div><div class="crop-demo__bar crop-demo__bar--2" style="top:60%;"></div></div>
+        <div class="crop-demo__frame crop-demo__frame--2"><div class="crop-demo__bar crop-demo__bar--1"></div><div class="crop-demo__bar crop-demo__bar--2" style="top:65%;"></div></div>
+        <div class="crop-demo__frame crop-demo__frame--3"><div class="crop-demo__play"></div></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ======================= PROOF STRIP ======================= -->
+  <div class="wrap reveal-io">
+    <div class="proof-strip">
+      <span class="proof-badge">Run by me, an exterior cleaning operator, not an agency</span>
+      <span class="proof-badge">Refreshed on a schedule, not after it dies</span>
+      <!-- CASE STUDY SLOT: add real client creative performance numbers when available -->
+      <span class="proof-badge">Real numbers when I have them, never invented ones</span>
+    </div>
+  </div>
+
+  <!-- ======================= PAIN ACKNOWLEDGMENT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>Your ads probably look like <span class="serif-word">ads</span></h2>
+      <p>A logo, a stock photo of a clean driveway, a headline like "Quality
+         You Can Trust." People's thumbs are trained to skip that in under a
+         second. It's the visual signature of an ad, not a business.</p>
+    </div>
+    <p style="max-width:40rem;color:var(--color-ink-2);">
+      What stops the scroll is footage that looks like it came from someone's
+      phone, not a stock library: the actual pressure washer hitting actual
+      grime, a real hook in the first two seconds, text that sounds like a
+      person talking, not a brochure.
+    </p>
+  </section>
+
+  <!-- ======================= WHAT WE ACTUALLY DO ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>What I actually make</h2>
+        <p>Built for the feed it's going to live in, not repurposed from your last brochure.</p>
+      </div>
+      <div class="deliv-grid">
+        <div class="svc reveal-io" style="--i:0">
+          <h3>3 native crops per concept</h3>
+          <p>Square, portrait, and full vertical, cut for how each placement
+             actually displays, not one image jammed into three spots.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:1">
+          <h3>UGC-style and statics, mixed</h3>
+          <p>Handheld-feel video clips next to clean before/after statics: the
+             mix that keeps a feed from looking like one long ad.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:2">
+          <h3>Hooks built for the first 2 seconds</h3>
+          <p>The line, the shot, and the text overlay that stop a thumb before
+             it decides to keep scrolling. Everything after that is earned.</p>
+        </div>
+        <div class="svc reveal-io" style="--i:3">
+          <h3>Refresh cadence, not a one-and-done set</h3>
+          <p>New creative rotated in every 2 to 3 weeks, before the same
+             audience has seen it enough times to tune it out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PLUS-ONE CALLOUT ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="plus-one">
+      <p><strong>Pick your plus-one:</strong> book any paid service and choose
+         one more on me, a free month of ad management, a Google Business
+         Profile optimization, or a website. Try a second service before you
+         commit to it.</p>
+      <a class="btn btn--outline" href="pricing.html">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ======================= HOW IT WORKS ======================= -->
+  <section class="section wrap" id="how-it-works">
+    <div class="section__head reveal-io">
+      <h2>How it works</h2>
+      <p>Three steps from raw footage to something worth running.</p>
+    </div>
+    <ol class="steps">
+      <li class="reveal-io" style="--i:0">
+        <span class="stage" aria-hidden="true">01</span>
+        <h3>I write the concept and script</h3>
+        <p>I map out what the ad needs to say and show in the first two
+           seconds, before a single frame gets shot.</p>
+        <p class="steps__meta">Takes: 2–4 days</p>
+      </li>
+      <li class="reveal-io" style="--i:1">
+        <span class="stage" aria-hidden="true">02</span>
+        <h3>I shoot, source, or edit your footage</h3>
+        <p>Send me raw job-site clips and I'll cut them, or I'll source
+           UGC-style talent to shoot fresh footage if you don't have any.</p>
+        <p class="steps__meta">Deliverable: raw and edited cuts</p>
+      </li>
+      <li class="reveal-io" style="--i:2">
+        <span class="stage" aria-hidden="true">03</span>
+        <h3>I cut 3 crops, ship, refresh</h3>
+        <p>Each concept gets crops for every placement, then a new batch
+           rotates in every 2 to 3 weeks based on what's actually performing.</p>
+        <p class="steps__meta">Cadence: refreshed every 2–3 weeks</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section class="section section--band">
+    <div class="wrap">
+      <div class="section__head reveal-io">
+        <h2>Fair questions, straight answers</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal-io" style="--i:0">
+          <summary>Do I need to film myself?</summary>
+          <p class="faq__a">No. If you've got a phone and a crew willing to
+             grab clips on a job, that's plenty. I'll tell you exactly what to
+             shoot. If not, I can source UGC-style creators to build footage
+             from scratch.</p>
+        </details>
+        <details class="reveal-io" style="--i:1">
+          <summary>How many ads do I get per month?</summary>
+          <p class="faq__a">Depends on the plan, but the baseline is a fresh
+             batch of creative every 2 to 3 weeks, enough to stay ahead of ad
+             fatigue without paying for a new shoot every week.</p>
+        </details>
+        <details class="reveal-io" style="--i:2">
+          <summary>What if a piece of creative flops?</summary>
+          <p class="faq__a">It happens, not every concept lands. I watch
+             performance and kill or replace anything underperforming instead
+             of leaving it to burn budget.</p>
+        </details>
+        <details class="reveal-io" style="--i:3">
+          <summary>Stock photos vs. custom footage, does it matter that much?</summary>
+          <p class="faq__a">For exterior cleaning, yes. People are hiring you
+             to show up at their house. Real footage of real work builds more
+             trust in three seconds than a polished stock photo ever will.</p>
+        </details>
+        <details class="reveal-io" style="--i:4">
+          <summary>Can you do creative without also running our ads?</summary>
+          <p class="faq__a">Yes, plenty of clients run their own media buying
+             and just need the creative pipeline. I'll hand off finished
+             crops ready to upload.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CROSS-LINKS ======================= -->
+  <section class="section section--tight wrap reveal-io">
+    <div class="section__head">
+      <h2>Pairs well with</h2>
+      <p>Great creative still needs somewhere good to run.</p>
+    </div>
+    <div class="cross-links">
+      <a class="btn btn--outline" href="meta-ads.html">Meta Ads Management</a>
+      <a class="btn btn--outline" href="web-design.html">Web Design</a>
+      <a class="btn btn--outline" href="seo-gbp.html">SEO &amp; Google Business Profile</a>
+      <a class="btn btn--outline" href="email-marketing.html">Email Marketing</a>
+      <a class="btn btn--outline" href="soft-washing.html">Soft washing marketing</a>
+      <a class="btn btn--outline" href="window-cleaning.html">Window cleaning marketing</a>
+    </div>
+  </section>
+
+  <!-- ======================= CLOSING CTA ======================= -->
+  <section class="close-cta wrap reveal-io">
+    <div class="close-cta__box">
+      <div>
+        <h2>Want to see what your ads could <span class="serif-word">look</span> like?</h2>
+        <p>A free audit of what's running now, plus a few concepts I'd build instead.</p>
+        <ul class="expect">
+          <li>I review your current creative (if any)</li>
+          <li>You get honest feedback on what's stopping the scroll and what isn't</li>
+          <li>If I'm not the right fit, I'll say so</li>
+        </ul>
+      </div>
+      <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="foot wrap">
+  <div class="foot__mast">
+    <div>
+      <p class="foot__brand">PF<em>Markets</em></p>
+      <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+         is a phone that <span class="serif-word">rings</span>.</p>
+    </div>
+    <div class="foot__links">
+      <!-- PHONE PLACEHOLDER — same number as header -->
+      <a href="tel:+18640000000">(864) 000-0000</a>
+      <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+      <a href="/app/">Client login</a>
+      <a href="services.html">Services</a>
+      <a href="industries.html">Industries</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="free-audit.html">Get a free audit</a>
+    </div>
+  </div>
+  <div class="foot__meta">
+    <span>PFMarkets · © 2026</span>
+    <span>Measured in booked jobs, not clicks.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var nav = document.getElementById("site-nav");
+  if (nav) {
+    var tick = false;
+    var onScroll = function () {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); tick = false; });
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  var els = document.querySelectorAll(".reveal-io, .sr");
+  if (!els.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("is-visible"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+<!--
+  PFMarkets — Window Cleaning industry page
+  TARGET KEYWORDS: window cleaning marketing, storefront window cleaning leads,
+  recurring window cleaning route, local SEO for window cleaning companies. NOTE: location
+  keywords removed by request — re-add "<service> + <city/region>" once a service area is
+  settled (title/meta/JSON-LD).
+  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH:
+    · (864) 000-0000 and +18640000000 — phone number
+    · https://pfmarkets.com — canonical / JSON-LD URLs
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Marketing for Window Cleaning Companies | PFMarkets</title>
+  <meta name="description" content="Lead-generation ads, local SEO, and email marketing built for window cleaning companies. I build the recurring route, not just one job at a time.">
+  <link rel="canonical" href="https://pfmarkets.com/window-cleaning.html"><!-- PLACEHOLDER: confirm real domain -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Window Cleaning Marketing",
+    "provider": { "@type": "ProfessionalService", "name": "PFMarkets", "url": "https://pfmarkets.com/", "telephone": "+1-864-000-0000" },
+    "description": "Lead-generation advertising, local SEO, and email marketing built for window cleaning and exterior cleaning companies.",
+    "url": "https://pfmarkets.com/window-cleaning.html"
+  }
+  </script>
+  <!-- JSON-LD placeholder: telephone and all pfmarkets.com URLs must be replaced with real values.
+       areaServed removed by request — re-add once a public service area is settled. -->
+
+  <style>
+    .reveal-io { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out); }
+    .reveal-io.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal-io { opacity: 1; transform: none; transition: none; } }
+
+    /* signature scene: a route map with recurring stops pulsing, illustrative only */
+    .scene { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-lg); padding: var(--space-lg); box-shadow: 0 24px 60px -28px var(--color-shadow); }
+    .scene__label { font-size: 0.8125rem; font-weight: 600; color: var(--color-muted); margin-bottom: var(--space-sm); }
+    .route { position: relative; height: clamp(9rem, 20vw, 12rem); border-radius: var(--radius-md); overflow: hidden; background: var(--color-paper-3); }
+    .route__line { position: absolute; left: 8%; right: 8%; top: 50%; height: 2px; background: var(--color-rule-2); }
+    .route__stop { position: absolute; top: 50%; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--color-accent); transform: translate(-50%, -50%); animation: stop-pulse 4.5s var(--ease-out) infinite; }
+    .route__stop--1 { left: 18%; animation-delay: 0s; }
+    .route__stop--2 { left: 40%; animation-delay: 0.4s; }
+    .route__stop--3 { left: 62%; animation-delay: 0.8s; }
+    .route__stop--4 { left: 84%; animation-delay: 1.2s; }
+    @keyframes stop-pulse { 0%, 100% { box-shadow: 0 0 0 0 var(--color-accent-dim); } 50% { box-shadow: 0 0 0 8px transparent; } }
+    .route__tag { position: absolute; bottom: var(--space-sm); left: var(--space-sm); font-size: 0.75rem; font-weight: 600; color: var(--color-ink-2); background: var(--color-paper); border-radius: var(--radius-pill); padding: var(--space-2xs) var(--space-sm); }
+    .route__tag--freq { left: auto; right: var(--space-sm); color: var(--color-accent); }
+    @media (prefers-reduced-motion: reduce) { .route__stop { animation: none; } }
+
+    .econ-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-lg); }
+    .econ-card { padding: var(--space-lg) 0 0; border-top: var(--rule-hair) solid var(--color-rule); }
+    .econ-card h3 { margin-bottom: var(--space-xs); }
+    .econ-card p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
+    @media (max-width: 60rem) { .econ-grid { grid-template-columns: minmax(0,1fr); } }
+
+    .faq { display: grid; gap: var(--space-sm); max-width: 44rem; }
+    .faq details { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg); }
+    .faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: var(--space-md); align-items: center; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--color-accent); font-size: 1.25rem; flex: none; transition: transform var(--dur-short) var(--ease-out); }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq p { margin-top: var(--space-sm); color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.6; }
+
+    .also-links { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-md); }
+    .also-links a { font-size: var(--text-sm); }
+
+    .plus-one { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-lg); padding: var(--space-xl); display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center; justify-content: space-between; }
+    .plus-one p { color: var(--color-ink-2); font-size: var(--text-sm); max-width: 34rem; }
+    .plus-one h3 { margin-bottom: var(--space-xs); }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="site-nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="index.html">PF<em>Markets</em></a>
+      <nav class="nav__center" aria-label="Primary">
+        <a class="link-quiet" href="services.html">Services</a>
+        <a class="link-quiet" href="industries.html">Industries</a>
+        <a class="link-quiet" href="results.html">Results</a>
+        <a class="link-quiet" href="pricing.html">Pricing</a>
+        <a class="link-quiet" href="about.html">About</a>
+      </nav>
+      <div class="nav__right">
+        <a class="nav__phone" href="tel:+18640000000"><span>(864) 000-0000</span></a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero wrap">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1>One job is fine. A recurring <span class="serif-word serif-word--accent">route</span> is the business.</h1>
+          <p class="hero__lede">
+            Window cleaning runs on frequency, not ticket size. I build the marketing to fill your
+            route with monthly and quarterly stops, both commercial storefronts and residential
+            homes, so your calendar fills itself out months in advance.
+          </p>
+          <div class="hero__ctas">
+            <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+            <a class="btn btn--outline" href="industries.html">See other trades</a>
+          </div>
+          <p class="hero__note">Run by an operator who knows a one-time job and a standing route need two different marketing plans.</p>
+        </div>
+        <figure class="scene reveal-io">
+          <p class="scene__label">Why frequency is the whole model</p>
+          <div class="route" role="img" aria-label="Animated route map with four recurring stops pulsing in sequence, illustrating a window cleaning route">
+            <div class="route__line"></div>
+            <div class="route__stop route__stop--1"></div>
+            <div class="route__stop route__stop--2"></div>
+            <div class="route__stop route__stop--3"></div>
+            <div class="route__stop route__stop--4"></div>
+            <span class="route__tag">4 stops</span>
+            <span class="route__tag route__tag--freq">Monthly route</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================= ECONOMICS ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>How I think about <span class="serif-word serif-word--accent">your</span> economics</h2>
+          <p>Window cleaning is lower ticket, but a booked route is worth far more than a single job. The marketing has to build for both.</p>
+        </div>
+        <div class="econ-grid">
+          <div class="econ-card reveal-io">
+            <h3>Frequency beats ticket size</h3>
+            <p>A $150 monthly storefront account is worth more over a year than most one-off jobs
+               twice its price. I aim campaigns at customers who'll say yes to a standing
+               schedule, not just a one-time clean.</p>
+          </div>
+          <div class="econ-card reveal-io">
+            <h3>Two different buyers, one route</h3>
+            <p>Commercial storefronts want reliability and a set day of the month. Residential
+               customers want a clean window before company comes over. Same crew, different
+               message for each.</p>
+          </div>
+          <div class="econ-card reveal-io">
+            <h3>Reviews and reminders do the heavy lifting</h3>
+            <p>Because the ticket's lower, ad spend has to work harder to pay off. Email reminders
+               and review requests keep past customers rebooking without another paid click.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= SERVICES THAT FIT ======================= -->
+    <section class="section wrap">
+      <div class="section__head reveal-io">
+        <h2>What I'd run for a window cleaning <span class="serif-word serif-word--accent">crew</span></h2>
+        <p>Not every service fits every trade. Here's what actually moves the needle for window cleaning.</p>
+      </div>
+      <div class="svc-list">
+        <div class="svc reveal-io">
+          <h3>Email marketing</h3>
+          <p>Seasonal reminders ("time for your quarterly clean before the holidays"), review
+             requests after every stop, and win-back sends for anyone who's gone quiet. This is
+             the single highest-leverage service for a route business.</p>
+          <p class="svc__for"><strong>Good for:</strong> keeping the route full without new ad spend</p>
+        </div>
+        <div class="svc reveal-io">
+          <h3>Lead-gen ads</h3>
+          <p>Campaigns split between commercial storefront outreach and residential homeowner ads,
+             each with its own offer and its own booking path.</p>
+          <p class="svc__for"><strong>Good for:</strong> filling gaps in the route</p>
+        </div>
+        <div class="svc reveal-io">
+          <h3>Local SEO</h3>
+          <p>Google Business Profile optimized for "window cleaning near me" and storefront
+             cleaning searches, plus review generation after every visit.</p>
+          <p class="svc__for"><strong>Good for:</strong> leads without ad spend</p>
+        </div>
+        <div class="svc reveal-io">
+          <h3>Add-on cross-sell to pressure washing</h3>
+          <p>If you or a sibling business already does pressure washing or soft washing, window
+             cleaning is the easiest upsell in the truck. I build the offer into the same
+             marketing so it gets asked every time.</p>
+          <p class="svc__for"><strong>Good for:</strong> bigger tickets per stop</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PLUS-ONE ======================= -->
+    <section class="section wrap">
+      <div class="plus-one reveal-io">
+        <div>
+          <h3>Pick your plus-one</h3>
+          <p>Book any one paid service and choose a second one free: a month of ad management, a
+             GBP optimization, or a website. Consider it a second service on me, so you can see
+             the whole system work before you pay for more of it.</p>
+        </div>
+        <a class="btn btn--outline" href="pricing.html">See the offer</a>
+      </div>
+    </section>
+
+    <!-- ======================= FAQ ======================= -->
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section__head reveal-io">
+          <h2>Quick <span class="serif-word serif-word--accent">questions</span></h2>
+        </div>
+        <div class="faq reveal-io">
+          <details>
+            <summary>How do you market a recurring route differently than a one-off job?</summary>
+            <p>The offer itself changes. Instead of "book a window cleaning," the ad sells "book a
+               standing quarterly clean." Once someone's on the route, email keeps them there
+               without needing another ad click.</p>
+          </details>
+          <details>
+            <summary>Should I go after commercial or residential first?</summary>
+            <p>Depends on your crew size and route density, but I usually recommend anchoring on
+               a few commercial storefront accounts first. They're steady, they refer other
+               businesses on the same street, and they fill weekday gaps.</p>
+          </details>
+          <details>
+            <summary>I already do pressure washing. Is window cleaning worth adding?</summary>
+            <p>Almost always, yes. It's a natural add-on for existing customers, and the
+               acquisition cost drops when you're upselling someone who already trusts you
+               instead of chasing a brand new lead.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= OTHER TRADES ======================= -->
+    <section class="also" aria-label="Other industries">
+      <div class="wrap">
+        <div>
+          <p><strong>Not a window cleaning business?</strong> Same discipline, different economics
+             for these sibling trades.</p>
+          <div class="also-links">
+            <a class="link-quiet" href="pressure-washing.html">Pressure washing →</a>
+            <a class="link-quiet" href="soft-washing.html">Soft washing →</a>
+          </div>
+        </div>
+        <a class="btn btn--outline" href="industries.html">See all industries</a>
+      </div>
+    </section>
+
+    <!-- ======================= CLOSING CTA ======================= -->
+    <section class="close-cta wrap">
+      <div class="close-cta__box reveal-io">
+        <div>
+          <h2>Ready to build a route that fills itself?</h2>
+          <p>Free audit of your ads, GBP, and email list, built around window cleaning specifically.</p>
+        </div>
+        <a class="btn btn--fill" href="free-audit.html">Get a free audit</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot wrap">
+    <div class="foot__mast">
+      <div>
+        <p class="foot__brand">PF<em>Markets</em></p>
+        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
+           is a phone that <span class="serif-word">rings</span>.</p>
+      </div>
+      <div class="foot__links">
+        <a href="tel:+18640000000">(864) 000-0000</a>
+        <!-- CLIENT PORTAL URL — update when CRM moves to its own subdomain -->
+        <a href="/app/">Client login</a>
+        <a href="services.html">Services</a>
+        <a href="results.html">Results</a>
+        <a href="pricing.html">Pricing</a>
+        <a class="btn btn--outline" href="free-audit.html" style="min-height:44px;padding:var(--space-xs) var(--space-md);">Get a free audit</a>
+      </div>
+    </div>
+    <div class="foot__meta">
+      <span>PFMarkets · © 2026</span>
+      <span>Measured in booked jobs, not clicks.</span>
+    </div>
+  </footer>
+
+  <script>
+  "use strict";
+  const nav = document.getElementById("site-nav");
+  let navTick = false;
+  function onScroll() {
+    if (navTick) return;
+    navTick = true;
+    requestAnimationFrame(() => { nav.classList.toggle("is-scrolled", window.scrollY > 24); navTick = false; });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  (function revealOnScroll() {
+    const els = document.querySelectorAll(".reveal-io");
+    if (!els.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el, i) => { el.style.transitionDelay = ((i % 6) * 60) + "ms"; io.observe(el); });
+  })();
+  </script>
+</body>
+</html>

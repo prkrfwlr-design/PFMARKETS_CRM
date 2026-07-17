@@ -1,11 +1,4 @@
-// ============================================================
-// Parker CRM · connection settings
-// Paste your two Supabase values here (Project Settings → API):
-//   1. Project URL        (looks like https://abcdefgh.supabase.co)
-//   2. anon / public key  (long string starting with "eyJ" — this key
-//      is designed to be public; row-level security does the protecting)
-// ============================================================
 window.CRM_CONFIG = {
-  SUPABASE_URL: 'PASTE-YOUR-PROJECT-URL-HERE',
-  SUPABASE_ANON_KEY: 'PASTE-YOUR-ANON-PUBLIC-KEY-HERE'
+    SUPABASE_URL: 'https://boagmtuqhjktxlyengls.supabase.co',
+    SUPABASE_ANON_KEY: 'sb_publishable_k2tQbi3Sd5a3F6-H8jh8Qg_2S1qZTy8'
 };

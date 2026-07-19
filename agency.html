@@ -133,10 +133,10 @@ td.num,th.num{font-variant-numeric:tabular-nums}
 /* ---------- chips ---------- */
 .chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:2.5px 9px;border-radius:20px;background:var(--paper-3);color:var(--muted);white-space:nowrap}
 .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7}
-.chip.s-Active,.chip.s-Won,.chip.s-Paid,.chip.s-Accepted,.chip.s-Done,.chip.s-Completed,.chip.s-Linked,.chip.s-Clockedin{background:var(--accent-soft);color:var(--accent-deep)}
-.chip.s-Prospect,.chip.s-New,.chip.s-Scheduled,.chip.s-Sent{background:var(--blue-soft);color:var(--blue)}
-.chip.s-Contacted,.chip.s-Quoted,.chip.s-Proposal,.chip.s-Due,.chip.s-InProgress,.chip.s-Waiting,.chip.s-Pending{background:var(--warn-soft);color:var(--warn)}
-.chip.s-Churned,.chip.s-Lost,.chip.s-Paused,.chip.s-Overdue,.chip.s-Declined,.chip.s-Terminated,.chip.s-Blocked{background:var(--danger-soft);color:var(--danger)}
+.chip.s-Active,.chip.s-Won,.chip.s-Paid,.chip.s-Accepted,.chip.s-Done,.chip.s-Completed,.chip.s-Linked,.chip.s-Clockedin,.chip.s-Replied,.chip.s-ClosedWon{background:var(--accent-soft);color:var(--accent-deep)}
+.chip.s-Prospect,.chip.s-New,.chip.s-Scheduled,.chip.s-Sent,.chip.s-Lead{background:var(--blue-soft);color:var(--blue)}
+.chip.s-Contacted,.chip.s-Quoted,.chip.s-Proposal,.chip.s-Due,.chip.s-InProgress,.chip.s-Waiting,.chip.s-Pending,.chip.s-NeedsFollow-up{background:var(--warn-soft);color:var(--warn)}
+.chip.s-Churned,.chip.s-Lost,.chip.s-Paused,.chip.s-Overdue,.chip.s-Declined,.chip.s-Terminated,.chip.s-Blocked,.chip.s-ClosedLost{background:var(--danger-soft);color:var(--danger)}
 .svc{display:inline-block;font-size:11px;padding:1.5px 7px;border-radius:5px;border:1px solid var(--rule);color:var(--muted);margin:1px 3px 1px 0;background:var(--paper)}
 .idm{font-family:var(--font-mono);font-size:11px;color:var(--neutral)}
 
@@ -303,6 +303,10 @@ const EMP_STATUSES=['Active','Paused','Terminated'];
 const PAY_TYPES=['Hourly','Salary'];
 const ASSIGN_STATUSES=['To Do','In Progress','Blocked','Done'];
 const ASSIGN_PRIORITIES=['Low','Normal','High'];
+const CAMPAIGN_STATUSES=['Draft','Active','Paused','Done'];
+const CONTACT_STATUSES=['Lead','Contacted','Replied','Needs Follow-up','Closed Won','Closed Lost'];
+// SYNC KEY: same value as the SYNC_TRIGGER_KEY secret in Supabase (see 02-CRM-System/edge/SETUP-GMASS-SYNC.md)
+const SYNC_TRIGGER_KEY='pfm_sync_M5usvmTilaCzicGvKHQEwBqjnkeXXFZ0';
 const OB=[
  {p:'Phase 0 · Close & agreement',items:['Agreement signed','First payment collected','Welcome email sent','Client record created']},
  {p:'Phase 1 · Discovery',items:['Goals + customer value captured','Ad budget confirmed','Offer + service area defined','Current lead sources documented','Brand assets collected']},
@@ -327,6 +331,7 @@ const ICONS={
 let sb=null, db=null, me=null, authMode='signin';
 let route={view:'dashboard'};
 let toastTimer=null, searchQ='';
+let emailContactFilter={status:''};
 
 /* ============ utils ============ */
 function uid(p){ return p+'-'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36); }
@@ -346,6 +351,7 @@ function entryHours(t){ return Math.max(0,(new Date(t.clock_out||Date.now())-new
 function openEntry(e){ return e.time_entries.find(t=>!t.clock_out); }
 function fmtHours(h){ return (Math.round(h*100)/100).toFixed(2)+' h'; }
 function fmtDT(s){ if(!s)return '—'; const d=new Date(s); if(isNaN(d))return esc(s); return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); }
+function timeAgo(s){ if(!s)return ''; const m=Math.round((Date.now()-new Date(s))/60000); if(isNaN(m))return ''; if(m<1)return 'just now'; if(m<60)return m+'m ago'; const hh=Math.round(m/60); if(hh<24)return hh+'h ago'; return Math.round(hh/24)+'d ago'; }
 function grossFor(e,hours){ return e.pay_type==='Salary'?Math.round(+e.pay_rate*100)/100:Math.round(hours*+e.pay_rate*100)/100; }
 function ratio(a,b){ return b>0?a/b:null; }
 function fmtRatio(v,pre,dec){ return v==null?'—':(pre||'')+v.toFixed(dec==null?2:dec); }
@@ -422,7 +428,7 @@ document.addEventListener('visibilitychange',async()=>{ if(document.visibilitySt
 
 /* ============ data layer ============ */
 async function fetchAll(){
- const [st,cl,ld,jb,qt,ad,tk,inv,pr,em,te,asn,pp]=await Promise.all([
+ const [st,cl,ld,jb,qt,ad,tk,inv,pr,em,te,asn,pp,ecmp,econ]=await Promise.all([
   sb.from('agency_settings').select('*').limit(1),
   sb.from('clients').select('*').order('created_at'),
   sb.from('leads').select('*'), sb.from('jobs').select('*'), sb.from('quotes').select('*'),
@@ -431,9 +437,11 @@ async function fetchAll(){
   sb.from('employees').select('*').order('created_at'),
   sb.from('time_entries').select('*').order('clock_in'),
   sb.from('assignments').select('*').order('created_at'),
-  sb.from('pay_periods').select('*').order('period_start')
+  sb.from('pay_periods').select('*').order('period_start'),
+  sb.from('email_campaigns').select('*').order('created_at'),
+  sb.from('email_contacts').select('*').order('created_at')
  ]);
- const bad=[st,cl,ld,jb,qt,ad,tk,inv,pr,em,te,asn,pp].find(r=>r.error);
+ const bad=[st,cl,ld,jb,qt,ad,tk,inv,pr,em,te,asn,pp,ecmp,econ].find(r=>r.error);
  if(bad){ toast('Load failed: '+bad.error.message); return false; }
  const settings=(st.data&&st.data[0])||{agency_name:'Parker',agency_email:''};
  db={agency:{name:settings.agency_name||'Parker',email:settings.agency_email||''},
@@ -443,7 +451,9 @@ async function fetchAll(){
    jobs:(jb.data||[]).filter(x=>x.client_id===c.id),
    quotes:(qt.data||[]).filter(x=>x.client_id===c.id),
    ads:(ad.data||[]).filter(x=>x.client_id===c.id),
-   invoices:(inv.data||[]).filter(x=>x.client_id===c.id)})),
+   invoices:(inv.data||[]).filter(x=>x.client_id===c.id),
+   email_campaigns:(ecmp.data||[]).filter(x=>x.client_id===c.id),
+   email_contacts:(econ.data||[]).filter(x=>x.client_id===c.id)})),
   tasks:tk.data||[], logins:pr.data||[],
   employees:(em.data||[]).map(e=>Object.assign(e,{
    time_entries:(te.data||[]).filter(x=>x.employee_id===e.id),
@@ -471,7 +481,7 @@ function clientRow(c){ return {id:c.id,business_name:c.business_name||'',industr
  status:c.status||'Prospect',services:c.services||[],contact_name:c.contact_name||'',email:c.email||'',phone:c.phone||'',
  website:c.website||'',monthly_retainer:+c.monthly_retainer||0,ad_budget_monthly:+c.ad_budget_monthly||0,
  billing_day:+c.billing_day||1,start_date:nd(c.start_date),renewal_date:nd(c.renewal_date),
- accent:c.accent||'#2e6b4f',notes:c.notes||'',onboarding:c.onboarding||{}}; }
+ accent:c.accent||'#2e6b4f',notes:c.notes||'',onboarding:c.onboarding||{},email_marketing_enabled:!!c.email_marketing_enabled}; }
 function leadRow(cid,l){ return {id:l.id,client_id:cid,name:l.name||'',email:l.email||'',phone:l.phone||'',address:l.address||'',
  stage:l.stage||'New',source:l.source||'',job_type:l.job_type||'',quote_value:+l.quote_value||0,
  date_received:nd(l.date_received),follow_up:nd(l.follow_up),notes:l.notes||''}; }
@@ -484,6 +494,12 @@ function adRow(cid,a){ return {id:a.id,client_id:cid,period:a.period||'',campaig
 function taskRow(t){ return {id:t.id,client_id:t.client_id||null,title:t.title||'',type:t.type||'Optimization',
  due:nd(t.due),recurring:t.recurring||'None',status:t.status||'To Do',notes:t.notes||''}; }
 function invRow(cid,i){ return {id:i.id,client_id:cid,period:i.period||'',amount:+i.amount||0,status:i.status||'Due',date_paid:nd(i.date_paid)}; }
+function emailCampaignRow(cid,e){ return {id:e.id,client_id:cid,name:e.name||'',status:e.status||'Draft',
+ emails_sent:+e.emails_sent||0,opens:+e.opens||0,replies:+e.replies||0,meetings_booked:+e.meetings_booked||0,
+ started_at:nd(e.started_at),notes:e.notes||'',gmass_campaign_id:e.gmass_campaign_id||null}; }
+function emailContactRow(cid,e){ return {id:e.id,client_id:cid,campaign_id:e.campaign_id||null,name:e.name||'',
+ email:e.email||'',company:e.company||'',phone:e.phone||'',status:e.status||'Lead',
+ last_contacted:nd(e.last_contacted),next_touch:nd(e.next_touch),notes:e.notes||''}; }
 function migrateV1(d){
  const out={clients:[],tasks:[]};
  (d.clients||[]).forEach(c=>{
@@ -492,10 +508,11 @@ function migrateV1(d){
    status:CLIENT_STATUSES.includes(c.status)?c.status:'Prospect',services:c.services||[],contact_name:c.contact_name||'',
    email:c.email||'',phone:c.phone||'',website:c.website||'',monthly_retainer:+c.monthly_value||0,ad_budget_monthly:0,
    billing_day:1,start_date:c.start_date||'',renewal_date:'',accent:'#2e6b4f',notes:c.notes||'',onboarding:{},
+   email_marketing_enabled:false,
    leads:(c.customers||[]).map(u=>({id:u.customer_id||uid('LD'),name:u.name||'',email:u.email||'',phone:u.phone||'',
     address:u.address||'',stage:stageMap[u.stage]||'New',source:u.source||'',job_type:u.job_type||'',
     quote_value:+u.quote_value||0,date_received:u.last_contact||'',follow_up:'',notes:u.notes||''})),
-   jobs:[],quotes:[],ads:[],invoices:[]});
+   jobs:[],quotes:[],ads:[],invoices:[],email_campaigns:[],email_contacts:[]});
  });
  return out;
 }
@@ -717,8 +734,8 @@ function portalChip(c){
 
 /* ============ client detail ============ */
 function renderClient(c){
- const tabs=[['overview','Overview'],['leads','Leads · '+c.leads.length],['jobs','Jobs · '+c.jobs.length],['quotes','Quotes · '+c.quotes.length],['ads','Ad performance'],['onboarding','Onboarding'],['portal','Portal access']];
- const body={overview:clientOverview,leads:clientLeads,jobs:clientJobs,quotes:clientQuotes,ads:clientAds,onboarding:clientOnboarding,portal:clientPortal}[route.tab]||clientOverview;
+ const tabs=[['overview','Overview'],['leads','Leads · '+c.leads.length],['jobs','Jobs · '+c.jobs.length],['quotes','Quotes · '+c.quotes.length],['ads','Ad performance'],['email','Email · '+c.email_campaigns.length],['onboarding','Onboarding'],['portal','Portal access']];
+ const body={overview:clientOverview,leads:clientLeads,jobs:clientJobs,quotes:clientQuotes,ads:clientAds,email:clientEmail,onboarding:clientOnboarding,portal:clientPortal}[route.tab]||clientOverview;
  return '<div class="page-head"><div class="grow"><h1 class="page">'+esc(c.business_name)+'</h1>'
   +'<div class="page-sub">'+esc([c.industry,c.location].filter(Boolean).join(' · '))+' &nbsp;'+chip(c.status)+'</div></div>'
   +'<button class="btn" onclick="openClientModal(\''+c.id+'\')">Edit client</button></div>'
@@ -748,7 +765,9 @@ function clientOverview(c){
   +'<div class="list-line"><span>Won business value</span><span class="when num">'+money(wonValue)+'</span></div>'
   +'<div class="list-line"><span>Jobs scheduled</span><span class="when num">'+c.jobs.filter(j=>j.status==='Scheduled').length+'</span></div>'
   +'<div class="list-line"><span>Onboarding</span><span class="when num">'+obDone+' / '+obTotal+'</span></div>'
-  +'<div class="list-line"><span>Open tasks</span><span class="when num">'+openTasks.length+'</span></div></div>'
+  +'<div class="list-line"><span>Open tasks</span><span class="when num">'+openTasks.length+'</span></div>'
+  +(c.email_marketing_enabled?'<div class="list-line"><a class="tx" href="#/client/'+c.id+'/email">Email campaigns</a><span class="when num">'+c.email_campaigns.filter(x=>x.status==='Active').length+' active · '+c.email_campaigns.reduce((s,x)=>s+(+x.replies||0),0)+' replies</span></div>':'')
+  +'</div>'
   +'<div class="panel" style="margin-top:16px"><h3>Tasks for this client <button class="btn sm" onclick="openTaskModal(null,\''+c.id+'\')">+ Task</button></h3>'
   +(openTasks.length?openTasks.slice(0,6).map(t=>'<div class="list-line"><input type="checkbox" style="width:15px;height:15px;accent-color:var(--accent);cursor:pointer" onchange="completeTask(\''+t.id+'\')"><span>'+esc(t.title)+'</span><span class="when">'+fmtDate(t.due)+'</span></div>').join('')
     :'<div class="empty">No open tasks.</div>')
@@ -813,6 +832,77 @@ function clientAds(c){
     }).join('')
    +'</tbody></table></div>'
    :'<div class="tbl-wrap"><div class="empty"><b>No performance recorded</b>Add a monthly record once campaigns are live.</div></div>');
+}
+function clientEmail(c){
+ const camps=[...c.email_campaigns].sort((a,b)=>(b.started_at||'')<(a.started_at||'')?-1:1);
+ const t=today();
+ let list=c.email_contacts;
+ if(emailContactFilter.status) list=list.filter(x=>x.status===emailContactFilter.status);
+ list=[...list].sort((a,b)=>(a.next_touch||'9999')<(b.next_touch||'9999')?-1:1);
+ const needsAttn=c.email_contacts.filter(x=>x.status==='Needs Follow-up'||(x.next_touch&&x.next_touch<=t)).length;
+ return '<div class="panel" style="margin-bottom:20px"><h3>Client portal access</h3>'
+  +'<p style="font-size:13.5px;color:var(--muted);margin-bottom:10px">Turn this on and the Email Campaigns module appears live in their portal. Off, they see the service pitch instead — nothing here is deleted either way.</p>'
+  +'<label style="display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer">'
+  +'<input type="checkbox" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer"'+(c.email_marketing_enabled?' checked':'')+' onchange="toggleEmailAccess(\''+c.id+'\',this.checked)">'
+  +'<span>Client portal access — '+(c.email_marketing_enabled?'<b>on</b>, the module is live for them':'<b>off</b>, showing the service pitch instead')+'</span></label></div>'
+  +'<h2 class="sect">Campaigns</h2>'
+  +'<div class="filters"><span style="font-size:13px;color:var(--neutral)">Linked campaigns sync from GMass hourly. Manual numbers still work for unlinked ones.</span>'
+  +'<button class="btn" id="gmassSyncBtn" onclick="syncGmass()">Sync now</button>'
+  +'<span style="flex:1"></span><button class="btn pri" onclick="openEmailCampaignModal(\''+c.id+'\')">+ Campaign</button></div>'
+  +(camps.length?'<div class="tbl-wrap" style="margin-bottom:24px"><table><thead><tr><th>Campaign</th><th>Status</th><th class="r">Sent</th><th class="r">Opens</th><th class="r">Open %</th><th class="r">Replies</th><th class="r">Reply %</th><th class="r">Meetings</th><th class="r">Started</th></tr></thead><tbody>'
+   +camps.map(x=>{
+     const sent=+x.emails_sent||0, opens=+x.opens||0, replies=+x.replies||0;
+     const openPct=sent?Math.round(opens/sent*100)+'%':'—';
+     const replyPct=sent?Math.round(replies/sent*100)+'%':'—';
+     return '<tr class="rowlink" onclick="openEmailCampaignModal(\''+c.id+'\',\''+x.id+'\')"><td><b>'+esc(x.name)+'</b><span class="sub">'+(x.gmass_campaign_id?'Auto'+(x.last_synced_at?' · synced '+esc(timeAgo(x.last_synced_at)):''):'Manual')+'</span></td><td>'+chip(x.status)+'</td>'
+      +'<td class="r num">'+sent+'</td><td class="r num">'+opens+'</td><td class="r num">'+openPct+'</td>'
+      +'<td class="r num">'+replies+'</td><td class="r num">'+replyPct+'</td><td class="r num">'+(+x.meetings_booked||0)+'</td>'
+      +'<td class="r num">'+fmtDate(x.started_at)+'</td></tr>';
+    }).join('')
+   +'</tbody></table></div>'
+   :'<div class="tbl-wrap" style="margin-bottom:24px"><div class="empty"><b>No campaigns yet</b>Add one once a GMass send goes out.</div></div>')
+  +'<h2 class="sect">Contacts <span class="sub" style="display:inline;font-weight:400">· '+(needsAttn?needsAttn+' need'+(needsAttn===1?'s':'')+' attention':'all caught up')+'</span></h2>'
+  +'<div class="filters">'
+  +'<button class="chip" style="cursor:pointer;border:1px solid '+(!emailContactFilter.status?'var(--accent)':'var(--rule)')+'" onclick="emailContactFilter.status=\'\';render()">All · '+c.email_contacts.length+'</button>'
+  +CONTACT_STATUSES.map(s=>{
+    const n=c.email_contacts.filter(x=>x.status===s).length, active=emailContactFilter.status===s;
+    return '<button class="chip '+chipClass(s)+'" style="cursor:pointer;border:1px solid '+(active?'var(--accent)':'var(--rule)')+'" onclick="emailContactFilter.status=\''+(active?'':s)+'\';render()">'+esc(s)+' · '+n+'</button>';
+   }).join('')
+  +'<span style="flex:1"></span><button class="btn pri" onclick="openEmailContactModal(\''+c.id+'\')">+ Contact</button></div>'
+  +(list.length?'<div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Company</th><th>Status</th><th class="r">Last contacted</th><th class="r">Next touch</th></tr></thead><tbody>'
+   +list.map(ct=>{
+     const attn=ct.status==='Needs Follow-up'||(ct.next_touch&&ct.next_touch<=t);
+     return '<tr class="rowlink" onclick="openEmailContactModal(\''+c.id+'\',\''+ct.id+'\')">'
+      +'<td><b>'+esc(ct.name)+'</b>'+(ct.phone?'<span class="sub">'+esc(ct.phone)+'</span>':'')+'</td>'
+      +'<td>'+esc(ct.email||'—')+'</td><td>'+esc(ct.company||'—')+'</td>'
+      +'<td onclick="event.stopPropagation()"><select onchange="quickSetContactStatus(\''+c.id+'\',\''+ct.id+'\',this.value)">'+selOpts(CONTACT_STATUSES,ct.status)+'</select></td>'
+      +'<td class="r num">'+fmtDate(ct.last_contacted)+'</td>'
+      +'<td class="r num'+(attn?' due-red':'')+'">'+fmtDate(ct.next_touch)+'</td></tr>';
+    }).join('')
+   +'</tbody></table></div>'
+   :'<div class="tbl-wrap"><div class="empty"><b>No contacts'+(emailContactFilter.status?' match this filter':' yet')+'</b>Add outreach contacts to track replies and follow-ups.</div></div>');
+}
+function toggleEmailAccess(cid,on){
+ const c=client(cid); if(!c)return;
+ c.email_marketing_enabled=on; render();
+ wr('clients',[clientRow(c)]);
+}
+async function syncGmass(){
+ if(!SYNC_TRIGGER_KEY){ toast('Sync not set up yet: paste your SYNC_TRIGGER_KEY into agency.html (see SETUP-GMASS-SYNC.md).'); return; }
+ const btn=document.getElementById('gmassSyncBtn');
+ if(btn){ btn.disabled=true; btn.textContent='Syncing…'; }
+ try{
+  const res=await fetch(CRM_CONFIG.SUPABASE_URL+'/functions/v1/gmass-sync',{method:'POST',headers:{'Content-Type':'application/json','x-sync-key':SYNC_TRIGGER_KEY},body:'{}'});
+  const out=await res.json().catch(()=>({}));
+  if(!res.ok||out.ok===false) throw new Error(out.error||('HTTP '+res.status));
+  toast('Synced '+(out.campaigns_synced||0)+' campaign'+(out.campaigns_synced===1?'':'s')+' · '+(out.replies_found||0)+' repl'+(out.replies_found===1?'y':'ies')+' found');
+  await fetchAll(); render();
+ }catch(e){ toast('Sync failed: '+(e.message||e)); }
+ finally{ if(btn){ btn.disabled=false; btn.textContent='Sync now'; } }
+}
+function quickSetContactStatus(cid,ctid,status){
+ const c=client(cid); const ct=c&&c.email_contacts.find(x=>x.id===ctid); if(!ct)return;
+ ct.status=status; render(); upd('email_contacts',{status:status},ctid);
 }
 function clientOnboarding(c){
  return '<div class="notice">Your Meta-ads onboarding SOP, tracked per client. Progress saves as you check items.</div>'
@@ -1281,7 +1371,7 @@ function openClientModal(id){
    v.business_name=v.business_name||'Untitled business';
    let target=c;
    if(c) Object.assign(c,v);
-   else { target=Object.assign({id:uid('CL'),accent:'#2e6b4f',onboarding:{},leads:[],jobs:[],quotes:[],ads:[],invoices:[]},v); db.clients.push(target); }
+   else { target=Object.assign({id:uid('CL'),accent:'#2e6b4f',onboarding:{},leads:[],jobs:[],quotes:[],ads:[],invoices:[],email_campaigns:[],email_contacts:[]},v); db.clients.push(target); }
    render(); wr('clients',[clientRow(target)]);
   },
   onDelete:c?()=>deleteClient(c.id):null});
@@ -1299,6 +1389,8 @@ function deleteClient(id){
    if(removed.quotes.length) await wr('quotes',removed.quotes.map(q=>quoteRow(removed.id,q)));
    if(removed.ads.length) await wr('ads',removed.ads.map(a=>adRow(removed.id,a)));
    if(removed.invoices.length) await wr('invoices',removed.invoices.map(i=>invRow(removed.id,i)));
+   if(removed.email_campaigns.length) await wr('email_campaigns',removed.email_campaigns.map(x=>emailCampaignRow(removed.id,x)));
+   if(removed.email_contacts.length) await wr('email_contacts',removed.email_contacts.map(x=>emailContactRow(removed.id,x)));
   }
  });
 }
@@ -1393,6 +1485,58 @@ function openAdModal(cid,aid){
   },
   onDelete:a?()=>{ const i=c.ads.indexOf(a); c.ads.splice(i,1); render(); rm('ads',a.id);
    toast('Deleted record','Undo',()=>{ c.ads.splice(i,0,a); render(); wr('ads',[adRow(c.id,a)]); }); }:null});
+}
+function openEmailCampaignModal(cid,eid){
+ const c=client(cid); if(!c)return;
+ const x=eid?c.email_campaigns.find(y=>y.id===eid):null;
+ openModal({title:x?'Edit campaign':'Add campaign',
+  fields:[
+   {k:'name',label:'Campaign name',value:x?x.name:'',full:true,placeholder:'GMass — Q3 dock owners'},
+   {k:'status',label:'Status',type:'select',options:CAMPAIGN_STATUSES,value:x?x.status:'Draft'},
+   {k:'started_at',label:'Started',type:'date',value:x?x.started_at:today()},
+   {k:'emails_sent',label:'Emails sent',type:'number',value:x?x.emails_sent:''},
+   {k:'opens',label:'Opens',type:'number',value:x?x.opens:''},
+   {k:'replies',label:'Replies',type:'number',value:x?x.replies:''},
+   {k:'meetings_booked',label:'Meetings booked',type:'number',value:x?x.meetings_booked:''},
+   {k:'gmass_campaign_id',label:'GMass campaign ID (from the GMass dashboard URL — set once, stats sync automatically)',value:x?(x.gmass_campaign_id||''):'',full:true,placeholder:'e.g. 1234567'},
+   {k:'notes',label:'Notes',type:'textarea',value:x?x.notes:'',full:true}
+  ],
+  onSave(v){
+   v.name=v.name||'Untitled campaign';
+   v.gmass_campaign_id=(v.gmass_campaign_id||'').trim()||null;
+   let target=x;
+   if(x)Object.assign(x,v); else { target=Object.assign({id:uid('EC')},v); c.email_campaigns.push(target); }
+   render(); wr('email_campaigns',[emailCampaignRow(c.id,target)]);
+  },
+  onDelete:x?()=>{ const i=c.email_campaigns.indexOf(x); c.email_campaigns.splice(i,1); render(); rm('email_campaigns',x.id);
+   toast('Deleted campaign','Undo',()=>{ c.email_campaigns.splice(i,0,x); render(); wr('email_campaigns',[emailCampaignRow(c.id,x)]); }); }:null});
+}
+function openEmailContactModal(cid,ctid){
+ const c=client(cid); if(!c)return;
+ const ct=ctid?c.email_contacts.find(y=>y.id===ctid):null;
+ const campNames=['— none —'].concat(c.email_campaigns.map(x=>x.name));
+ openModal({title:ct?'Edit contact':'Add contact',
+  fields:[
+   {k:'name',label:'Name',value:ct?ct.name:''},
+   {k:'status',label:'Status',type:'select',options:CONTACT_STATUSES,value:ct?ct.status:'Lead'},
+   {k:'email',label:'Email',value:ct?ct.email:''},
+   {k:'phone',label:'Phone',value:ct?ct.phone:''},
+   {k:'company',label:'Company',value:ct?ct.company:''},
+   {k:'campaign_id',label:'Campaign',type:'select',options:campNames,value:ct?(c.email_campaigns.find(x=>x.id===ct.campaign_id)||{name:'— none —'}).name:'— none —'},
+   {k:'last_contacted',label:'Last contacted',type:'date',value:ct?ct.last_contacted:''},
+   {k:'next_touch',label:'Next touch',type:'date',value:ct?ct.next_touch:''},
+   {k:'notes',label:'Notes',type:'textarea',value:ct?ct.notes:'',full:true}
+  ],
+  onSave(v){
+   const match=c.email_campaigns.find(x=>x.name===v.campaign_id);
+   v.campaign_id=match?match.id:null;
+   v.name=v.name||'Unnamed';
+   let target=ct;
+   if(ct)Object.assign(ct,v); else { target=Object.assign({id:uid('CT')},v); c.email_contacts.push(target); }
+   render(); wr('email_contacts',[emailContactRow(c.id,target)]);
+  },
+  onDelete:ct?()=>{ const i=c.email_contacts.indexOf(ct); c.email_contacts.splice(i,1); render(); rm('email_contacts',ct.id);
+   toast('Deleted contact','Undo',()=>{ c.email_contacts.splice(i,0,ct); render(); wr('email_contacts',[emailContactRow(c.id,ct)]); }); }:null});
 }
 function openTaskModal(id,presetClient){
  const t=id?db.tasks.find(x=>x.id===id):null;

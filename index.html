@@ -1,1705 +1,782 @@
-<!doctype html>
-<!--
-  PFMarkets — marketing site for exterior cleaning businesses
-
-  TARGET KEYWORDS this page's copy, title, and headings are optimized around:
-    · marketing for pressure washing companies
-    · home service lead generation
-    · pressure washing marketing agency
-    · local SEO for home service businesses
-    · exterior cleaning marketing
-    · window cleaning leads
-    · Google Ads for home service businesses
-  NOTE: location keywords were removed by request — when a service area is settled,
-  re-add "<service> + <city/region>" variants here and in the title/meta/JSON-LD,
-  since geo-modified keywords are what local SEO ranks on.
-
-  CONFIG / FACTUAL PLACEHOLDERS TO REPLACE BEFORE LAUNCH (search for each):
-    · SUPABASE_URL, SUPABASE_ANON_KEY, CALENDLY_URL — in the CONFIG block at the top of the <script>
-    · (864) 000-0000 and +18640000000 — phone number (header, footer, JSON-LD)
-    · https://pfmarkets.org — canonical / OG / JSON-LD URL (confirm the real domain)
-    · /og.jpg — 1200×630 Open Graph image
-    · Trust-bar logo slots, results metric cards, and the operator photo slot — real assets only
--->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Marketing for Exterior Cleaning Companies | PFMarkets</title>
-  <meta name="description" content="PFMarkets runs lead generation for pressure washing, exterior cleaning, and window cleaning companies, paid ads, local SEO, and websites built to book jobs. Run by an exterior cleaning operator, not a pitch deck.">
-  <link rel="canonical" href="https://pfmarkets.org/"><!-- PLACEHOLDER: confirm real domain -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Portal</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+/* Hallmark · macrostructure: workbench · nav: N6 masthead + tab strip · theme: custom (cool paper · client accent)
+ * pre-emit critique: P4 H4 E4 S4 R5 V4 · app-scope: white-label client portal, Supabase-backed */
+:root{
+  --paper:      oklch(97.5% 0.006 250);
+  --paper-2:    oklch(95% 0.008 250);
+  --paper-3:    oklch(92% 0.010 250);
+  --rule:       oklch(87.5% 0.010 250);
+  --rule-soft:  oklch(91.5% 0.008 250);
+  --neutral:    oklch(52% 0.014 250);
+  --muted:      oklch(40% 0.016 250);
+  --ink:        oklch(21% 0.020 250);
+  --accent:     #2e6b4f;              /* set from the business record */
+  --accent-soft:color-mix(in oklch, var(--accent) 12%, var(--paper));
+  --accent-deep:color-mix(in oklch, var(--accent) 82%, black);
+  --focus:      color-mix(in oklch, var(--accent) 70%, white);
+  --warn:       oklch(52% 0.12 70);
+  --warn-soft:  oklch(94% 0.045 85);
+  --danger:     oklch(48% 0.16 27);
+  --danger-soft:oklch(94% 0.03 27);
+  --blue:       oklch(45% 0.10 245);
+  --blue-soft:  oklch(93.5% 0.025 245);
+  --font-display:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body:  "Switzer", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:  "Geist Mono", ui-monospace, monospace;
+  --dur:140ms; --ease:cubic-bezier(.2,.7,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+body{font-family:var(--font-body);font-size:14px;line-height:1.55;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent-soft)}
 
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Marketing for Exterior Cleaning Companies | PFMarkets">
-  <meta property="og:description" content="More booked jobs, not just more clicks. Lead-gen ads, local SEO, and websites for exterior cleaning companies.">
-  <meta property="og:url" content="https://pfmarkets.org/"><!-- PLACEHOLDER: confirm real domain -->
-  <meta property="og:image" content="https://pfmarkets.org/og.jpg"><!-- PLACEHOLDER: supply 1200×630 image -->
-  <meta property="og:locale" content="en_US">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Marketing for Exterior Cleaning Companies | PFMarkets">
-  <meta name="twitter:description" content="More booked jobs, not just more clicks. Lead-gen ads, local SEO, and websites for exterior cleaning companies.">
-  <meta name="twitter:image" content="https://pfmarkets.org/og.jpg"><!-- PLACEHOLDER -->
+/* auth / setup card */
+.auth{max-width:440px;margin:10vh auto 0;padding:0 22px}
+.auth .card{border:1px solid var(--rule);border-radius:14px;background:var(--paper);padding:30px 30px 26px}
+.auth h1{font-family:var(--font-display);font-weight:800;font-size:23px;letter-spacing:-.02em;margin-bottom:6px}
+.auth p{color:var(--muted);font-size:13.5px;margin-bottom:16px}
+.auth .err{border:1px solid var(--danger);border-radius:8px;background:var(--danger-soft);color:var(--danger);padding:9px 13px;font-size:13px;margin-bottom:12px}
+.auth .swap{font-size:12.5px;color:var(--neutral);margin-top:14px}
+.auth .swap button,.auth button.linklike{font:inherit;background:none;border:none;color:var(--accent-deep);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:12.5px}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+/* masthead */
+.mast{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:30}
+.mast-in{max-width:1080px;margin:0 auto;padding:0 22px}
+.mast-top{display:flex;align-items:baseline;gap:12px;padding:16px 0 4px}
+.mast-top .biz{font-family:var(--font-display);font-weight:800;font-size:21px;letter-spacing:-.02em}
+.mast-top .by{font-size:12px;color:var(--neutral);margin-left:auto;white-space:nowrap}
+.mast-tabs{display:flex;gap:2px;overflow-x:auto}
+.mast-tabs a{font-size:13.5px;font-weight:500;color:var(--neutral);text-decoration:none;white-space:nowrap;padding:9px 13px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.mast-tabs a:hover{color:var(--ink)}
+.mast-tabs a.on{color:var(--accent-deep);border-bottom-color:var(--accent);font-weight:600}
+.mast-tabs a:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;border-radius:4px}
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "ProfessionalService",
-        "@id": "https://pfmarkets.org/#business",
-        "name": "PFMarkets",
-        "description": "Marketing agency for exterior cleaning businesses — lead-generation ads, local SEO, websites, and social content for pressure washing, exterior cleaning, and window cleaning companies.",
-        "url": "https://pfmarkets.org/",
+.wrap{max-width:1080px;margin:0 auto;padding:24px 22px 70px}
+h1.page{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-.015em}
+.page-sub{color:var(--neutral);font-size:13px;margin-top:3px}
+.page-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.page-head .grow{flex:1;min-width:200px}
+h2.sect{font-family:var(--font-display);font-weight:700;font-size:15px;margin:24px 0 10px}
+.num{font-variant-numeric:tabular-nums}
 
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Marketing services for exterior cleaning businesses",
-          "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Lead-generation advertising for exterior cleaning businesses" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Local SEO and Google Business Profile ranking" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Conversion-focused websites for exterior cleaning companies" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Social content and review reputation" } }
-          ]
-        }
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://pfmarkets.org/#org",
-        "name": "PFMarkets",
-        "url": "https://pfmarkets.org/"
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pfmarkets.org/" }
-        ]
-      }
-    ]
-  }
-  </script>
-  <!-- JSON-LD placeholders: telephone (+1-864-000-0000) and all pfmarkets.com URLs must be replaced with real values.
-       address + areaServed removed by request — re-add both once a public service area is settled;
-       ProfessionalService schema ranks much better locally with them. -->
+.btn{font:inherit;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:7px 13px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;transition:background-color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.btn:hover{background:var(--paper-2);border-color:var(--neutral)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fdfdfc}
+.btn.pri:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.btn.danger{color:var(--danger)}
+.btn.danger:hover{border-color:var(--danger);background:var(--danger-soft)}
+.btn.sm{padding:4px 9px;font-size:12px;border-radius:6px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.btn.ghost:hover{background:var(--paper-2);color:var(--ink)}
 
-  <style>
-/* Hallmark · macrostructure: Split Studio · H2 diptych knobs: ratio=7/5, right=dark dashboard panel, divider=negative space
- * theme: studied-DNA (source: https://www.chaseai.io/) · studied: yes · DNA-source: url
- * paper: oklch(98.6% 0.005 85) (source #fffcfa warm cream) · ink: oklch(22% 0.012 60) (source #1c1917)
- * accent: oklch(48% 0.14 152) — PFMarkets brand green re-anchored for light paper (source accent was terracotta #c4653a; theme drift kept the brand)
- * display: Geist 700 + Instrument Serif 400 roman accent words (source: Inter + Instrument Serif; Inter swapped — banned default)
- * nav: N1b · footer: Ft1 mast-headed (source's Ft3 index rejected — AI-footer fingerprint) · rejected: fake code-editor chrome, per-section eyebrows
- * enrichment: animated dashboard demo — re-themed light-native from the Claude Design source (project 7cd1817a…) to sit seamlessly on cream
- * motion: hero-stagger · cta-lift · modal-scale · dash-loop
- * pre-emit critique: P4 H5 E4 S5 R4 V5
- */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.stat{background:var(--paper);padding:14px 16px}
+.stat .v{font-family:var(--font-display);font-weight:800;font-size:23px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat .l{font-size:12px;color:var(--neutral);margin-top:3px}
+.stat .d{font-size:11.5px;color:var(--muted);margin-top:2px}
 
-:root {
-  /* color — studied DNA (chaseai.io): warm cream paper, warm ink, brand green re-anchored dark for light surfaces */
-  --color-paper:      oklch(98.6% 0.005 85);
-  --color-paper-2:    oklch(96.6% 0.007 85);
-  --color-paper-3:    oklch(94% 0.009 85);
-  --color-ink:        oklch(22% 0.012 60);
-  --color-ink-2:      oklch(36% 0.012 60);
-  --color-muted:      oklch(44% 0.012 60);
-  --color-rule:       oklch(87% 0.010 80);
-  --color-rule-2:     oklch(91% 0.008 80);
-  --color-accent:       oklch(48% 0.14 152);   /* brand green, darkened for cream paper */
-  --color-accent-hover: oklch(42% 0.13 152);
-  --color-accent-dim:   oklch(48% 0.14 152 / 0.10);
-  --color-brand:        oklch(78% 0.19 152);   /* raw #22E06B — brand reference (dark-surface use only) */
-  --color-accent-ink:   oklch(98.6% 0.005 85); /* cream text on accent fill */
-  --color-focus:        oklch(50% 0.17 152);
-  --color-error:        oklch(52% 0.19 25);
-  --color-error-dim:    oklch(52% 0.19 25 / 0.08);
-  --color-backdrop:     oklch(25% 0.02 60 / 0.45);
-  --color-shadow:       oklch(35% 0.03 60 / 0.14);
+.tbl-wrap{border:1px solid var(--rule);border-radius:10px;overflow:auto;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--neutral);padding:9px 14px;border-bottom:1px solid var(--rule);background:var(--paper-2);white-space:nowrap}
+th.r,td.r{text-align:right}
+td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr.rowlink{cursor:pointer;transition:background-color var(--dur) var(--ease)}
+tbody tr.rowlink:hover{background:var(--paper-2)}
+td .sub{display:block;font-size:12px;color:var(--neutral)}
+.empty{padding:34px 20px;text-align:center;color:var(--neutral);font-size:13px}
+.empty b{display:block;color:var(--muted);font-weight:600;margin-bottom:3px}
 
-  /* type */
-  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-serif:   "Instrument Serif", ui-serif, Georgia, serif;
-  --font-body:    "Geist", ui-sans-serif, system-ui, sans-serif;
-  --text-sm:   0.875rem;
-  --text-base: 1rem;
-  --text-md:   1.25rem;
-  --text-lg:   1.5625rem;
-  --text-xl:   1.9531rem;
-  --text-2xl:  2.4414rem;
-  --text-display: clamp(2.6rem, 4.5vw + 1rem, 4.9rem);
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:2.5px 9px;border-radius:20px;background:var(--paper-3);color:var(--muted);white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.7}
+.chip.s-Won,.chip.s-Accepted,.chip.s-Completed,.chip.s-Paid,.chip.s-ClosedWon,.chip.s-Active,.chip.s-Done{background:var(--accent-soft);color:var(--accent-deep)}
+.chip.s-New,.chip.s-Scheduled,.chip.s-Sent,.chip.s-Lead,.chip.s-Replied{background:var(--blue-soft);color:var(--blue)}
+.chip.s-Contacted,.chip.s-Quoted,.chip.s-NeedsFollow-up,.chip.s-Paused,.chip.s-Draft{background:var(--warn-soft);color:var(--warn)}
+.chip.s-Lost,.chip.s-Declined,.chip.s-Canceled,.chip.s-ClosedLost{background:var(--danger-soft);color:var(--danger)}
 
-  /* space (4pt) */
-  --space-2xs: 0.25rem;
-  --space-xs:  0.5rem;
-  --space-sm:  0.75rem;
-  --space-md:  1rem;
-  --space-lg:  1.5rem;
-  --space-xl:  2.5rem;
-  --space-2xl: 4rem;
-  --space-3xl: 6rem;
+.cols{display:grid;gap:16px}
+.cols.c2{grid-template-columns:1fr 1fr}
+.panel{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:16px 18px}
+.panel h3{font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.panel h3 .btn{margin-left:auto}
+.list-line{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--rule-soft);font-size:13.5px}
+.list-line:last-child{border-bottom:none}
+.list-line .when{margin-left:auto;font-size:12px;color:var(--neutral);white-space:nowrap;font-variant-numeric:tabular-nums}
+.due-red{color:var(--danger);font-weight:500}
+.due-amber{color:var(--warn);font-weight:500}
 
-  /* shape — rounded brand, no hard edges */
-  --radius-sm:   10px;
-  --radius-md:   16px;
-  --radius-lg:   22px;
-  --radius-pill: 999px;
-  --rule-hair: 1px;
+.kanban{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px;align-items:start}
+.kcol{background:var(--paper-2);border:1px solid var(--rule-soft);border-radius:10px;min-height:110px}
+.kcol.dragover{border-color:var(--accent);background:var(--accent-soft)}
+.kcol h4{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--neutral);padding:10px 12px 6px;display:flex;gap:8px;align-items:baseline}
+.kcol h4 .n{margin-left:auto;font-family:var(--font-mono);font-size:11px}
+.kcol .kbody{padding:4px 8px 10px;display:flex;flex-direction:column;gap:7px}
+.kcard{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;cursor:grab;transition:border-color var(--dur) var(--ease)}
+.kcard:hover{border-color:var(--neutral)}
+.kcard.dragging{opacity:.45}
+.kcard b{font-weight:600;font-size:13px;display:block;margin-bottom:2px}
+.kcard .meta{font-size:12px;color:var(--neutral);display:flex;justify-content:space-between;gap:8px}
 
-  /* motion */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in:  cubic-bezier(0.7, 0, 0.84, 0);
-  --dur-micro: 120ms;
-  --dur-short: 220ms;
-  --dur-long:  420ms;
+.cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.cal-head b{font-family:var(--font-display);font-size:16px;font-weight:700;min-width:150px;text-align:center}
+.cal{border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--rule)}
+.cal-dow,.cal-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px}
+.cal-dow span{background:var(--paper-2);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--neutral);padding:7px 9px}
+.cal-day{background:var(--paper);min-height:86px;padding:6px 7px;cursor:pointer;transition:background-color var(--dur) var(--ease)}
+.cal-day:hover{background:var(--paper-2)}
+.cal-day .dn{font-size:11.5px;color:var(--neutral);font-variant-numeric:tabular-nums}
+.cal-day.other{background:var(--paper-2);opacity:.55}
+.cal-day.today .dn{color:var(--accent-deep);font-weight:700}
+.cal-day.today{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.cal-job{font-size:11px;font-weight:500;background:var(--accent-soft);color:var(--accent-deep);border-radius:5px;padding:2px 6px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-job.done{background:var(--paper-3);color:var(--neutral);text-decoration:line-through}
 
-  /* z scale */
-  --z-sticky: 200;
-  --z-modal:  400;
+.modal-bg{position:fixed;inset:0;background:oklch(20% .02 250 / .45);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:48px 16px}
+.modal-bg.show{display:flex}
+.modal{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:22px;width:560px;max-width:100%;box-shadow:0 18px 50px -18px oklch(25% .03 250 / .35)}
+.modal h3{font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:16px}
+.fg{margin-bottom:12px;min-width:0}
+.fg label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px}
+input,select,textarea{font:inherit;font-size:13.5px;width:100%;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:7px 10px}
+input::placeholder{color:var(--neutral)}
+input:hover,select:hover,textarea:hover{border-color:var(--neutral)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--focus);outline-offset:-1px;border-color:var(--focus)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;align-items:center}
+.modal-actions .left{margin-right:auto}
 
-  --page-max: 72rem;
-  --page-gutter: clamp(1rem, 4vw, 2.5rem);
-}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(8px);background:var(--ink);color:var(--paper);border-radius:9px;padding:10px 16px;font-size:13px;display:flex;align-items:center;gap:14px;z-index:80;opacity:0;pointer-events:none;transition:opacity 180ms var(--ease),transform 180ms var(--ease)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.toast button{font:inherit;font-weight:600;background:none;border:none;color:var(--accent-soft);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 
-*, *::before, *::after { box-sizing: border-box; }
-[hidden] { display: none !important; }
-html { overflow-x: clip; scroll-behavior: smooth; }
-body {
-  margin: 0;
-  overflow-x: clip;
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.chart-box{border:1px solid var(--rule);border-radius:10px;background:var(--paper);padding:14px 16px 8px}
+.chart-box h3{font-family:var(--font-display);font-size:13.5px;font-weight:700;margin-bottom:6px}
+.hide{display:none!important}
 
-h1, h2, h3 {
-  font-family: var(--font-display);
-  font-style: normal;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  margin: 0;
-  overflow-wrap: anywhere;
-  min-width: 0;
-}
-h1 { font-size: var(--text-display); font-weight: 700; }
-h2 { font-size: var(--text-2xl); font-weight: 700; }
-h3 { font-size: var(--text-md); font-weight: 600; line-height: 1.25; }
-/* the studied signature: one roman serif word inside a sans headline */
-.serif-word {
-  font-family: var(--font-serif);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.08em;
-  line-height: 1;
-  letter-spacing: -0.01em;
-}
-.serif-word--accent { color: var(--color-accent); }
-p { margin: 0; }
-a { color: inherit; }
-img { max-width: 100%; height: auto; }
+.status-group{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;margin-bottom:12px;background:var(--paper)}
+.status-group h4{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.status-group h4 .n{font-family:var(--font-mono);font-size:11px;color:var(--neutral);font-weight:500}
+.status-group.win{background:var(--accent-soft);border-color:var(--accent)}
+.status-group.win h4{color:var(--accent-deep)}
+.next-touch{border:1px solid var(--warn);background:var(--warn-soft);border-radius:10px;padding:12px 14px;margin-bottom:20px}
+.next-touch h4{font-family:var(--font-display);font-weight:700;font-size:13px;margin-bottom:8px;color:var(--warn)}
+.pitch{border:1px solid var(--rule);border-radius:12px;background:var(--paper);padding:26px 28px;max-width:620px}
+.pitch h2{font-family:var(--font-display);font-weight:800;font-size:20px;letter-spacing:-.015em;margin-bottom:10px}
+.pitch ul{margin:14px 0 18px 20px}
+.pitch li{margin-bottom:7px;font-size:13.5px;color:var(--muted)}
+.pitch .price{font-family:var(--font-display);font-weight:800;font-size:26px;margin:14px 0 4px}
+.pitch .price span{font-size:13px;font-weight:500;color:var(--neutral)}
+.pitch .actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 
-.wrap {
-  max-width: var(--page-max);
-  margin-inline: auto;
-  padding-inline: var(--page-gutter);
-  position: relative;
-  z-index: 1;
-}
-
-/* ---------- buttons ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5ch;
-  min-height: 48px;
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-pill);
-  border: var(--rule-hair) solid transparent;
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color var(--dur-short) var(--ease-out),
-              border-color var(--dur-short) var(--ease-out),
-              color var(--dur-short) var(--ease-out),
-              transform 100ms var(--ease-out);
-}
-.btn:active { transform: translateY(1px); }
-.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
-.btn--fill { background: var(--color-accent); color: var(--color-accent-ink); }
-.btn--outline { background: transparent; color: var(--color-ink); border-color: var(--color-rule); }
-@media (hover: hover) and (pointer: fine) {
-  .btn--fill:hover { transform: translateY(-1.5px); background: var(--color-accent-hover); }
-  .btn--fill:hover:active { transform: translateY(1px); }
-  .btn--outline:hover { border-color: var(--color-ink-2); background: var(--color-paper-2); }
-}
-.btn[disabled] { opacity: 0.55; cursor: not-allowed; }
-.btn .spinner {
-  width: 1em; height: 1em;
-  border: 2px solid var(--color-accent-ink);
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 700ms linear infinite;
-  display: none;
-}
-.btn[data-state="loading"] .spinner { display: inline-block; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.link-quiet {
-  color: var(--color-ink-2);
-  text-decoration: none;
-  white-space: nowrap;
-  border-radius: var(--radius-sm);
-  padding: var(--space-2xs) var(--space-xs);
-}
-@media (hover: hover) { .link-quiet:hover { color: var(--color-ink); } }
-.link-quiet:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
-
-/* ---------- nav (N1b) ---------- */
-.nav {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: var(--z-sticky);
-  background: transparent;
-  border-bottom: var(--rule-hair) solid transparent;
-  transition: background-color 240ms var(--ease-out), border-color 240ms var(--ease-out);
-}
-.nav.is-scrolled {
-  background: color-mix(in oklch, var(--color-paper) 78%, transparent);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border-bottom-color: var(--color-rule-2);
-}
-.nav__inner {
-  max-width: var(--page-max);
-  margin-inline: auto;
-  padding-inline: var(--page-gutter);
-  height: 68px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-}
-.nav__brand {
-  justify-self: start;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.35rem;
-  letter-spacing: -0.02em;
-  text-decoration: none;
-  white-space: nowrap;
-  border-radius: var(--radius-sm);
-}
-.nav__brand em { font-style: normal; color: var(--color-accent); }
-.nav__brand:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
-.nav__center { justify-self: center; display: flex; gap: 0.35rem; }
-.nav__right { justify-self: end; display: flex; align-items: center; gap: var(--space-sm); }
-.nav__phone {
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-ink-2);
-  text-decoration: none;
-  white-space: nowrap;
-  border-radius: var(--radius-sm);
-  padding: var(--space-2xs) var(--space-xs);
-}
-@media (hover: hover) { .nav__phone:hover { color: var(--color-ink); } }
-.nav__phone:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
-@media (max-width: 60rem) {
-  .nav__center { display: none; }
-  .nav__inner { grid-template-columns: auto 1fr; }
-  .nav__right { justify-self: end; }
-}
-@media (max-width: 40rem) {
-  .nav__login { display: none; }
-  .nav__phone span { display: none; }        /* number hides; "Call" label remains */
-  .nav__phone::before { content: "Call"; font-weight: 600; color: var(--color-ink); }
-}
-
-/* ---------- hero ---------- */
-.hero {
-  padding-block: calc(68px + var(--space-2xl)) var(--space-3xl);
-}
-.hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-2xl);
-  align-items: center;
-}
-.hero__copy { max-width: 34rem; }
-.hero__lede {
-  margin-top: var(--space-lg);
-  font-size: var(--text-md);
-  line-height: 1.55;
-  color: var(--color-ink-2);
-  max-width: 32rem;
-}
-.hero__ctas {
-  margin-top: var(--space-xl);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  align-items: center;
-}
-.hero__note {
-  margin-top: var(--space-md);
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-}
-@media (max-width: 60rem) {
-  .hero { padding-top: calc(68px + var(--space-2xl)); }
-  .hero__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
-}
-
-/* hero dashboard demo — animated 11s loop, from the user's Claude Design handoff.
-   Three layers cycle: leads counter + climbing graph → calendar filling →
-   revenue bars. Counters are driven by JS synced to the same 11s loop. Illustrative demo, captioned as such. */
-.dash-wrap { margin: 0; min-width: 0; }
-.dash {
-  /* light-native panel — the Claude Design source (built for the old dark site) re-themed
-     onto the site's cream system so it reads as part of the page, not a leftover.
-     Only the dash-specific ramp/glow tokens are scoped; everything else inherits. */
-  --color-accent-2:    oklch(70% 0.11 152);   /* revenue bar ramp, mid */
-  --color-accent-3:    oklch(86% 0.06 152);   /* revenue bar ramp, light */
-  --color-accent-glow: oklch(48% 0.14 152 / 0.14);
-  --color-accent-halo: oklch(48% 0.14 152 / 0.4);
-  --color-flatline:    oklch(76% 0.012 80);   /* "quiet phone" line, light grey */
-  position: relative;
-  background: var(--color-paper);
-  border: var(--rule-hair) solid var(--color-rule);
-  border-radius: var(--radius-lg);
-  padding: clamp(var(--space-md), 2.4vw, var(--space-lg));
-  box-shadow: 0 24px 60px -28px var(--color-shadow);
-}
-.dash__head {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
-}
-.dash__live-dot {
-  width: 8px; height: 8px;
-  border-radius: var(--radius-pill);
-  background: var(--color-accent);
-  box-shadow: 0 0 10px var(--color-accent-halo);
-  animation: dash-live 1.8s var(--ease-out) infinite;
-  flex: none;
-}
-.dash__title { font-size: 0.8125rem; font-weight: 600; color: var(--color-ink-2); }
-.dash__tag {
-  margin-left: auto;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--color-muted);
-}
-.dash__body { position: relative; height: clamp(17rem, 38vw, 21rem); }
-.dash__layer { position: absolute; inset: 0; }
-.dash__layer--leads { animation: dash-layer-leads 11s var(--ease-out) infinite; }
-.dash__layer--cal   { animation: dash-layer-cal 11s var(--ease-out) infinite; }
-.dash__layer--rev   { display: flex; flex-direction: column; animation: dash-layer-rev 11s var(--ease-out) infinite; }
-.dash__label { font-size: 0.8125rem; font-weight: 500; color: var(--color-muted); }
-.dash__figrow { display: flex; align-items: baseline; gap: var(--space-sm); }
-.dash__num {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-ink);
-}
-.dash__num--xl { font-size: clamp(3rem, 4.5vw, 4.4rem); color: var(--color-accent); }
-.dash__num--lg { font-size: clamp(2.4rem, 3.4vw, 3.2rem); }
-.dash__unit { font-size: 0.45em; font-family: var(--font-body); font-weight: 500; color: var(--color-muted); margin-left: var(--space-2xs); }
-.dash__pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2xs);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  background: var(--color-accent-dim);
-  padding: var(--space-2xs) var(--space-sm);
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-}
-.dash__sub { font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); }
-.dash__spark {
-  position: absolute;
-  top: 0; left: -6px;
-  width: 130px; height: 130px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--color-accent-glow), transparent 70%);
-  animation: dash-spark 11s var(--ease-out) infinite;
-  pointer-events: none;
-}
-.dash__graph { position: absolute; left: 0; right: 0; bottom: 0; height: clamp(9rem, 16vw, 12.5rem); }
-.dash__graph svg { width: 100%; height: 100%; overflow: visible; display: block; }
-.dash__grid-line { stroke: var(--color-rule); stroke-width: 1; stroke-dasharray: 2 6; }
-.dash__flat { stroke: var(--color-flatline); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; animation: dash-flat-op 11s var(--ease-out) infinite; }
-.dash__area { animation: dash-area-op 11s var(--ease-out) infinite; }
-.dash__climb {
-  stroke: var(--color-accent);
-  stroke-width: 2.6;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  animation: dash-climb-op 11s var(--ease-out) infinite, dash-climb-draw 11s var(--ease-out) infinite;
-}
-.dash__dot { fill: var(--color-accent); animation: dash-dot 11s var(--ease-out) infinite; }
-.dash__dotring { fill: var(--color-accent); opacity: 0.25; transform-origin: 338px 10px; animation: dash-dotring 11s var(--ease-out) infinite; }
-.dash__cal {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: clamp(var(--space-2xs), 1vw, var(--space-xs));
-  margin-top: var(--space-md);
-}
-.dash__day { text-align: center; font-size: 0.6875rem; font-weight: 600; color: var(--color-muted); }
-.dash__cell { aspect-ratio: 1; border-radius: var(--radius-sm); background: var(--color-paper-3); }
-.dash__cell--on { background: var(--color-accent); transform-origin: center; }
-.dash__cell--a { animation: dash-cell-a 11s var(--ease-out) infinite; }
-.dash__cell--b { animation: dash-cell-b 11s var(--ease-out) infinite; }
-.dash__cell--c { animation: dash-cell-c 11s var(--ease-out) infinite; }
-.dash__bars {
-  flex: 1;
-  display: flex;
-  align-items: flex-end;
-  gap: clamp(var(--space-xs), 2vw, var(--space-md));
-  padding-top: var(--space-md);
-}
-.dash__bar-track { flex: 1; height: 100%; display: flex; align-items: flex-end; }
-.dash__bar { width: 100%; height: 100%; border-radius: var(--radius-sm) var(--radius-sm) 4px 4px; transform-origin: bottom; }
-.dash__bar--1 { background: var(--color-paper-3); animation: dash-bar-1 11s var(--ease-out) infinite; }
-.dash__bar--2 { background: var(--color-accent-3); animation: dash-bar-2 11s var(--ease-out) infinite; }
-.dash__bar--3 { background: var(--color-accent-2); animation: dash-bar-3 11s var(--ease-out) infinite; }
-.dash__bar--4 { background: var(--color-accent); animation: dash-bar-4 11s var(--ease-out) infinite; }
-.dash__toasts {
-  position: absolute;
-  top: 58px;
-  right: clamp(var(--space-md), 2vw, var(--space-lg));
-  left: clamp(60px, 30%, 160px);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  pointer-events: none;
-}
-.dash__toast {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  background: var(--color-paper);
-  border: var(--rule-hair) solid var(--color-rule);
-  border-radius: var(--radius-md);
-  padding: var(--space-xs) var(--space-sm);
-  box-shadow: 0 12px 30px -12px var(--color-shadow);
-}
-.dash__toast--1 { animation: dash-toast-1 11s var(--ease-out) infinite; }
-.dash__toast--2 { animation: dash-toast-2 11s var(--ease-out) infinite; }
-.dash__toast--3 { animation: dash-toast-3 11s var(--ease-out) infinite; }
-.dash__toast i {
-  flex: none;
-  width: 8px; height: 8px;
-  border-radius: var(--radius-pill);
-  background: var(--color-accent);
-  box-shadow: 0 0 8px var(--color-accent-halo);
-}
-.dash__toast span {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--color-ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.dash__note {
-  margin-top: var(--space-sm);
-  text-align: center;
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-}
-
-/* dashboard keyframes — one 11s loop */
-@keyframes dash-live { 0%, 100% { opacity: 0.35; transform: scale(0.75); } 50% { opacity: 1; transform: scale(1); } }
-@keyframes dash-layer-leads { 0% { opacity: 1; } 45% { opacity: 1; } 48% { opacity: 0; } 81% { opacity: 0; } 84% { opacity: 1; } 100% { opacity: 1; } }
-@keyframes dash-layer-cal { 0%, 44% { opacity: 0; } 47% { opacity: 1; } 62% { opacity: 1; } 65%, 100% { opacity: 0; } }
-@keyframes dash-layer-rev { 0%, 63% { opacity: 0; } 66% { opacity: 1; } 80% { opacity: 1; } 83%, 100% { opacity: 0; } }
-@keyframes dash-climb-draw { 0%, 16% { stroke-dashoffset: 1; } 44% { stroke-dashoffset: 0; } 91% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 1; } }
-@keyframes dash-climb-op { 0%, 17% { opacity: 0; } 21% { opacity: 1; } 90% { opacity: 1; } 96%, 100% { opacity: 0; } }
-@keyframes dash-area-op { 0%, 20% { opacity: 0; } 30% { opacity: 1; } 90% { opacity: 1; } 96%, 100% { opacity: 0; } }
-@keyframes dash-flat-op { 0% { opacity: 1; } 13% { opacity: 1; } 17% { opacity: 0; } 93% { opacity: 0; } 97%, 100% { opacity: 1; } }
-@keyframes dash-dot { 0%, 40% { opacity: 0; } 45% { opacity: 1; } 90% { opacity: 1; } 95%, 100% { opacity: 0; } }
-@keyframes dash-dotring { 0%, 42% { opacity: 0; transform: scale(0.4); } 46% { opacity: 0.7; transform: scale(1); } 60% { opacity: 0; transform: scale(2.2); } 100% { opacity: 0; transform: scale(2.2); } }
-@keyframes dash-spark { 0%, 14% { opacity: 0; transform: scale(0.4); } 18% { opacity: 0.85; transform: scale(1); } 26% { opacity: 0; transform: scale(1.8); } 100% { opacity: 0; } }
-@keyframes dash-cell-a { 0%, 47% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1); } 62% { opacity: 1; } 65%, 100% { opacity: 0; transform: scale(0.3); } }
-@keyframes dash-cell-b { 0%, 49% { opacity: 0; transform: scale(0.3); } 52% { opacity: 1; transform: scale(1); } 62% { opacity: 1; } 65%, 100% { opacity: 0; transform: scale(0.3); } }
-@keyframes dash-cell-c { 0%, 51% { opacity: 0; transform: scale(0.3); } 54% { opacity: 1; transform: scale(1); } 62% { opacity: 1; } 65%, 100% { opacity: 0; transform: scale(0.3); } }
-@keyframes dash-bar-1 { 0%, 66% { transform: scaleY(0.12); } 71% { transform: scaleY(0.42); } 80% { transform: scaleY(0.42); } 100% { transform: scaleY(0.12); } }
-@keyframes dash-bar-2 { 0%, 67% { transform: scaleY(0.12); } 72% { transform: scaleY(0.62); } 80% { transform: scaleY(0.62); } 100% { transform: scaleY(0.12); } }
-@keyframes dash-bar-3 { 0%, 68% { transform: scaleY(0.12); } 73% { transform: scaleY(0.82); } 80% { transform: scaleY(0.82); } 100% { transform: scaleY(0.12); } }
-@keyframes dash-bar-4 { 0%, 69% { transform: scaleY(0.12); } 74% { transform: scaleY(1); } 80% { transform: scaleY(1); } 100% { transform: scaleY(0.12); } }
-@keyframes dash-toast-1 { 0%, 18% { opacity: 0; transform: translateX(38px) scale(0.96); } 22% { opacity: 1; transform: none; } 44% { opacity: 1; transform: none; } 48%, 100% { opacity: 0; transform: translateX(38px) scale(0.96); } }
-@keyframes dash-toast-2 { 0%, 24% { opacity: 0; transform: translateX(38px) scale(0.96); } 28% { opacity: 1; transform: none; } 50% { opacity: 1; transform: none; } 54%, 100% { opacity: 0; transform: translateX(38px) scale(0.96); } }
-@keyframes dash-toast-3 { 0%, 30% { opacity: 0; transform: translateX(38px) scale(0.96); } 34% { opacity: 1; transform: none; } 56% { opacity: 1; transform: none; } 60%, 100% { opacity: 0; transform: translateX(38px) scale(0.96); } }
-
-/* ---------- trust bar ---------- */
-.trust { padding-block: var(--space-xl) var(--space-2xl); }
-.trust__label { font-size: var(--text-sm); color: var(--color-muted); margin-bottom: var(--space-md); }
-.trust__row {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--space-sm);
-}
-.slot {
-  border: 1px dashed var(--color-rule);
-  border-radius: var(--radius-md);
-  background: var(--color-paper-2);
-  color: var(--color-muted);
-  font-size: 0.8125rem;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: var(--space-sm);
-  min-height: 64px;
-  line-height: 1.35;
-}
-@media (max-width: 60rem) { .trust__row { grid-template-columns: repeat(3, minmax(0, 1fr)); } .trust__row .slot:nth-child(n+4) { display: none; } }
-
-/* ---------- section rhythm ---------- */
-.section { padding-block: var(--space-3xl); }
-.section--tight { padding-block: var(--space-2xl); }
-.section--band {
-  background: var(--color-paper-2);
-  border-block: var(--rule-hair) solid var(--color-rule-2);
-}
-.section__head { max-width: 40rem; margin-bottom: var(--space-xl); }
-.section__head p { margin-top: var(--space-md); color: var(--color-ink-2); }
-
-/* ---------- services cards ---------- */
-.svc-list {
-  display: grid;
-  grid-template-columns: 1.06fr 0.94fr;   /* deliberately uneven */
-  gap: var(--space-lg);
-}
-.svc {
-  background: var(--color-paper);
-  border: var(--rule-hair) solid var(--color-rule);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  display: grid;
-  gap: var(--space-sm);
-  align-content: start;
-}
-.svc p { color: var(--color-ink-2); }
-.svc__for { font-size: var(--text-sm); color: var(--color-muted); }
-.svc__for strong { color: var(--color-ink-2); font-weight: 600; }
-@media (max-width: 60rem) {
-  .svc-list { grid-template-columns: minmax(0, 1fr); }
-  .svc { padding: var(--space-lg); }
-}
-
-/* ---------- operator diptych ---------- */
-.operator {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: var(--space-2xl);
-  align-items: center;
-}
-.operator__photo { min-height: 320px; }
-.operator__copy p { color: var(--color-ink-2); margin-top: var(--space-md); max-width: 34rem; }
-.operator__copy p:first-of-type { margin-top: var(--space-lg); }
-@media (max-width: 60rem) {
-  .operator { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
-  .operator__photo { order: 2; min-height: 220px; }
-}
-
-/* ---------- steps ---------- */
-.steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1.15fr 1fr 0.9fr;   /* deliberately uneven */
-  gap: var(--space-lg);
-  counter-reset: step;
-}
-.steps li {
-  background: var(--color-paper-2);
-  border: var(--rule-hair) solid var(--color-rule-2);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-}
-.steps .stage {
-  display: block;
-  font-family: var(--font-serif);
-  font-weight: 400;
-  color: var(--color-accent);
-  font-size: var(--text-xl);
-  line-height: 1;
-  margin-bottom: var(--space-sm);
-}
-.steps h3 { margin-bottom: var(--space-xs); }
-.steps p { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
-.steps .steps__meta { color: var(--color-muted); font-size: 0.8125rem; margin-top: var(--space-sm); }
-@media (max-width: 60rem) { .steps { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- results ---------- */
-.results__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-lg);
-}
-.metric {
-  background: var(--color-paper-2);
-  border: var(--rule-hair) solid var(--color-rule-2);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  display: grid;
-  gap: var(--space-md);
-  align-content: start;
-}
-.metric__value {
-  min-height: 72px;
-  border: 1px dashed var(--color-rule);
-  border-radius: var(--radius-md);
-  display: grid;
-  place-items: center;
-  color: var(--color-muted);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--text-sm);
-  text-align: center;
-  padding: var(--space-sm);
-}
-.metric__ctx { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.5; }
-.metric .slot { aspect-ratio: 16 / 10; min-height: 0; }
-@media (max-width: 60rem) { .results__grid { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- other industries strip ---------- */
-.also {
-  background: var(--color-paper-2);
-  border-block: var(--rule-hair) solid var(--color-rule-2);
-}
-.also .wrap {
-  padding-block: var(--space-xl);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-lg);
-  align-items: center;
-}
-.also p { color: var(--color-ink-2); max-width: 46rem; }
-.also p strong { color: var(--color-ink); }
-@media (max-width: 60rem) { .also .wrap { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- closing CTA ---------- */
-.close-cta { padding-block: var(--space-3xl); }
-.close-cta__box {
-  background: var(--color-paper-2);
-  border: var(--rule-hair) solid var(--color-rule-2);
-  border-radius: var(--radius-lg);
-  padding: clamp(var(--space-xl), 5vw, var(--space-2xl));
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-xl);
-  align-items: center;
-}
-.close-cta__box p { color: var(--color-ink-2); margin-top: var(--space-md); max-width: 32rem; }
-@media (max-width: 60rem) { .close-cta__box { grid-template-columns: minmax(0, 1fr); } }
-.expect {
-  list-style: none;
-  margin: var(--space-lg) 0 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-xs);
-}
-.expect li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-xs);
-  color: var(--color-ink-2);
-  font-size: var(--text-sm);
-}
-.expect li::before {
-  content: "✓";
-  color: var(--color-accent);
-  font-weight: 700;
-  flex: none;
-}
-
-/* ---------- footer (Ft1 mast-headed) ---------- */
-.foot { padding: var(--space-3xl) 0 var(--space-xl); }
-.foot__mast {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-xl);
-  align-items: start;
-  padding-bottom: var(--space-xl);
-}
-.foot__brand {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--text-lg);
-  letter-spacing: -0.02em;
-}
-.foot__brand em { font-style: normal; color: var(--color-accent); }
-.foot__tag { margin-top: var(--space-xs); color: var(--color-muted); max-width: 38ch; font-size: var(--text-sm); }
-.foot__links { display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; }
-.foot__links a { color: var(--color-ink-2); text-decoration: none; white-space: nowrap; border-radius: var(--radius-sm); }
-@media (hover: hover) { .foot__links a:hover { color: var(--color-ink); } }
-.foot__links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
-.foot__meta {
-  border-top: var(--rule-hair) solid var(--color-rule);
-  padding-top: var(--space-lg);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-md);
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-}
-@media (max-width: 60rem) { .foot__mast { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- modal + form ---------- */
-dialog.qual {
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  width: min(92vw, 34rem);
-  max-height: min(88dvh, 46rem);
-  height: fit-content;
-  border: var(--rule-hair) solid var(--color-rule);
-  border-radius: var(--radius-lg);
-  background: var(--color-paper);
-  color: var(--color-ink);
-  padding: 0;
-  overflow: hidden auto;
-  overscroll-behavior: contain;
-  z-index: var(--z-modal);
-}
-dialog.qual::backdrop { background: var(--color-backdrop); }
-dialog.qual[open] { animation: modal-in var(--dur-long) var(--ease-out); }
-@keyframes modal-in {
-  from { opacity: 0; transform: scale(0.96); }
-  to   { opacity: 1; transform: none; }
-}
-dialog.qual.is-booking { width: min(96vw, 52rem); }
-
-.qual__inner { padding: var(--space-xl); }
-.qual__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
-}
-.qual__top h2 { font-size: var(--text-lg); }
-.qual__close {
-  flex: none;
-  width: 44px; height: 44px;
-  border-radius: var(--radius-pill);
-  border: var(--rule-hair) solid var(--color-rule);
-  background: transparent;
-  color: var(--color-ink-2);
-  font-size: 1.1rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
-}
-@media (hover: hover) { .qual__close:hover { color: var(--color-ink); border-color: var(--color-ink-2); } }
-.qual__close:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
-
-.qual__progress { margin-bottom: var(--space-lg); }
-.qual__progress-label {
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  font-variant-numeric: tabular-nums;
-  display: block;
-  margin-bottom: var(--space-xs);
-}
-.qual__bar {
-  height: 6px;
-  border-radius: var(--radius-pill);
-  background: var(--color-paper-3);
-  overflow: hidden;
-}
-.qual__bar i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--color-accent);
-  transform-origin: left;
-  transform: scaleX(0.2);   /* endowed progress — opening the form counts as the first 20% */
-  transition: transform var(--dur-short) var(--ease-out);
-}
-
-.qual fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
-.qual fieldset[hidden] { display: none; }
-.qual legend {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--text-md);
-  padding: 0;
-  margin-bottom: var(--space-lg);
-}
-.field { margin-bottom: var(--space-md); }
-.field label {
-  display: block;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  margin-bottom: var(--space-2xs);
-}
-.field input[type="text"],
-.field input[type="email"],
-.field input[type="tel"],
-.field select {
-  width: 100%;
-  min-height: 48px;
-  padding: var(--space-xs) var(--space-md);
-  border: 1px solid var(--color-rule);         /* 1px in every state — no width shift */
-  outline: 2px solid transparent;               /* reserved focus slot */
-  outline-offset: 1px;
-  border-radius: var(--radius-md);
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font: inherit;
-  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
-}
-.field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--color-muted) 50%), linear-gradient(135deg, var(--color-muted) 50%, transparent 50%); background-position: calc(100% - 1.35rem) 55%, calc(100% - 1rem) 55%; background-size: 6px 6px; background-repeat: no-repeat; }
-.field input::placeholder { color: var(--color-muted); }
-@media (hover: hover) {
-  .field input:hover, .field select:hover { background: var(--color-paper-2); }
-}
-.field input:focus-visible, .field select:focus-visible {
-  outline-color: var(--color-focus);
-  border-color: var(--color-ink-2);
-}
-.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: var(--color-error); }
-.field .hint {
-  min-height: 1lh;
-  font-size: 0.8125rem;
-  color: var(--color-muted);
-  margin-top: var(--space-2xs);
-}
-.field .hint.is-error { color: var(--color-error); }
-
-.choices { display: grid; gap: var(--space-xs); }
-.choices--2col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (max-width: 26rem) { .choices--2col { grid-template-columns: minmax(0, 1fr); } }
-.choice {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  min-height: 48px;
-  padding: var(--space-xs) var(--space-md);
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: border-color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
-  font-size: var(--text-sm);
-}
-@media (hover: hover) { .choice:hover { background: var(--color-paper-3); } }
-.choice input { accent-color: var(--color-accent); width: 1.1rem; height: 1.1rem; flex: none; margin: 0; }
-.choice:has(input:checked) { border-color: var(--color-accent); background: var(--color-accent-dim); }
-.choice:has(input:focus-visible) { outline: 2px solid var(--color-focus); outline-offset: 1px; }
-
-.qual__nav {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-sm);
-  margin-top: var(--space-lg);
-}
-.qual__nav .btn--back { border-color: transparent; color: var(--color-ink-2); }
-@media (hover: hover) { .qual__nav .btn--back:hover { color: var(--color-ink); background: var(--color-paper-3); } }
-
-.form-error {
-  display: none;
-  border: 1px solid var(--color-error);
-  border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-md);
-  margin-top: var(--space-md);
-  font-size: var(--text-sm);
-  color: var(--color-error);
-  background: var(--color-error-dim);
-}
-.form-error.is-visible { display: block; }
-
-.booking { display: none; }
-.booking.is-visible { display: block; }
-.booking__lede { color: var(--color-ink-2); margin: var(--space-sm) 0 var(--space-lg); }
-.calendly-inline-widget { min-width: 280px; height: 640px; border-radius: var(--radius-md); }
-.booking__loading { color: var(--color-muted); font-size: var(--text-sm); padding: var(--space-xl) 0; }
-
-/* ---------- load reveal (hero only — one orchestrated entrance) ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: reveal var(--dur-long) var(--ease-out) forwards;
-  animation-delay: calc(var(--i, 0) * 70ms);
-}
-@keyframes reveal { to { opacity: 1; transform: none; } }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 150ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 150ms !important;
-  }
-  .reveal { animation: reveal-reduced 150ms linear forwards; }
-  @keyframes reveal-reduced { to { opacity: 1; transform: none; } }
-  .btn .spinner { animation-duration: 700ms !important; animation-iteration-count: infinite !important; }
-
-  /* dashboard demo: freeze on the "climbed" leads view, hide cycling layers */
-  .dash *, .dash { animation: none !important; }
-  .dash__layer--cal, .dash__layer--rev, .dash__toasts, .dash__spark, .dash__flat { display: none; }
-  .dash__climb, .dash__area, .dash__dot { opacity: 1; }
-  .dash__climb { stroke-dashoffset: 0; }
-  .dash__dotring { opacity: 0; }
-  .dash__live-dot { opacity: 1; transform: none; }
-}
-  </style>
+@media(max-width:760px){
+  .cols.c2,.grid2{grid-template-columns:1fr}
+  .cal-day{min-height:64px}
+  .wrap{padding:18px 14px 60px}
+}
+</style>
 </head>
 <body>
+<!-- auth -->
+<div id="authView" class="auth hide">
+  <div class="card">
+    <h1 id="authTitle">Business portal</h1>
+    <p id="authIntro">Sign in to manage your leads, schedule and quotes — and see how your marketing is performing.</p>
+    <div id="authErr"></div>
+    <div class="fg"><label for="au_email">Email</label><input id="au_email" type="email" autocomplete="username" placeholder="you@yourbusiness.com"></div>
+    <div class="fg"><label for="au_pass">Password</label><input id="au_pass" type="password" autocomplete="current-password"></div>
+    <button class="btn pri" id="authBtn" onclick="doAuth()">Sign in</button>
+    <div class="swap" id="authSwap"></div>
+  </div>
+</div>
 
-  <header class="nav" id="site-nav">
-    <div class="nav__inner">
-      <a class="nav__brand" href="#top">PF<em>Markets</em></a>
-      <nav class="nav__center" aria-label="Primary">
-        <a class="link-quiet" href="services.html">Services</a>
-        <a class="link-quiet" href="industries.html">Industries</a>
-        <a class="link-quiet" href="results.html">Results</a>
-        <a class="link-quiet" href="pricing.html">Pricing</a>
-        <a class="link-quiet" href="about.html">About</a>
-      </nav>
-      <div class="nav__right">
-        <a class="btn btn--outline nav__login" href="/clientportal/">Client login</a>
-        <button class="btn btn--fill" data-open-qual>Book a call</button>
-      </div>
+<div id="app"></div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn danger left hide" id="modalDelete">Delete</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn pri" id="modalSave">Save</button>
     </div>
-  </header>
+  </div>
+</div>
 
-  <main id="top">
+<div class="toast" id="toast"><span id="toastMsg"></span><button id="toastAction"></button></div>
 
-    <!-- ======================= HERO ======================= -->
-    <section class="hero wrap">
-      <div class="hero__grid">
-        <div class="hero__copy">
-          <!--
-            Candidate headlines (home-services voice):
-              A. "Your phone should ring more than it does."   ← chosen: problem-led, owner-voice, 41 chars
-              B. "More booked jobs, not just more clicks."     — outcome-led, used as og:description lead instead
-              C. "We keep home-service schedules full."        — flat declarative, close second
-          -->
-          <h1 class="reveal" style="--i:0">Your phone should <span class="serif-word serif-word--accent">ring</span> more than it does.</h1>
-          <p class="hero__lede reveal" style="--i:1">
-            PFMarkets runs lead generation for pressure washing, exterior cleaning, and
-            window cleaning companies, paid ads, local SEO, and a website built to turn
-            clicks into booked jobs.
-          </p>
-          <div class="hero__ctas reveal" style="--i:2">
-            <button class="btn btn--fill" data-open-qual>Get your growth plan</button>
-            <a class="btn btn--outline" href="#services">See what we run</a>
-          </div>
-          <p class="hero__note reveal" style="--i:3">
-            Two-minute questionnaire, then pick a time on the calendar. No retainer pitch on the first call.
-          </p>
-        </div>
+<script>
+/* ============ constants ============ */
+const LEAD_STAGES=['New','Contacted','Quoted','Won','Lost'];
+const JOB_STATUSES=['Scheduled','Completed','Canceled'];
+const QUOTE_STATUSES=['Sent','Accepted','Declined'];
+const SOURCES=['Ad','Referral','Word of mouth','Google','Repeat customer','Other'];
 
-        <figure class="dash-wrap reveal" style="--i:2">
-          <div class="dash" role="img"
-               aria-label="Animated dashboard demo: leads climbing from a quiet phone, a calendar filling with booked jobs, and monthly revenue rising.">
-            <div class="dash__head">
-              <span class="dash__live-dot"></span>
-              <span class="dash__title">PFMarkets Dashboard</span>
-              <span class="dash__tag">LIVE</span>
-            </div>
-            <div class="dash__body">
-              <!-- layer 1 · leads counter + graph -->
-              <div class="dash__layer dash__layer--leads">
-                <div class="dash__spark"></div>
-                <div class="dash__label">Leads this month</div>
-                <div class="dash__figrow">
-                  <span class="dash__num dash__num--xl" id="dash-leads">12</span>
-                  <span class="dash__pill">▲ live</span>
-                </div>
-                <div class="dash__graph">
-                  <svg viewBox="0 0 340 150" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="dash-area-fill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" style="stop-color: var(--color-accent);" stop-opacity="0.18"></stop>
-                        <stop offset="100%" style="stop-color: var(--color-accent);" stop-opacity="0"></stop>
-                      </linearGradient>
-                    </defs>
-                    <line class="dash__grid-line" x1="0" y1="40" x2="340" y2="40"></line>
-                    <line class="dash__grid-line" x1="0" y1="90" x2="340" y2="90"></line>
-                    <path class="dash__flat" d="M0,120 L34,118 L68,122 L102,119 L136,121 L170,119 L204,122 L238,120 L272,121 L306,119 L340,121"></path>
-                    <path class="dash__area" d="M0,126 L34,123 L68,118 L102,110 L136,99 L170,84 L204,66 L238,46 L272,30 L306,18 L340,10 L340,150 L0,150 Z" fill="url(#dash-area-fill)"></path>
-                    <path class="dash__climb" pathLength="1" d="M0,126 L34,123 L68,118 L102,110 L136,99 L170,84 L204,66 L238,46 L272,30 L306,18 L340,10"></path>
-                    <circle class="dash__dotring" cx="338" cy="10" r="9"></circle>
-                    <circle class="dash__dot" cx="338" cy="10" r="4.5"></circle>
-                  </svg>
-                </div>
-              </div>
-              <!-- layer 2 · calendar filling -->
-              <div class="dash__layer dash__layer--cal">
-                <div class="dash__label">Jobs booked this week</div>
-                <div class="dash__figrow">
-                  <span class="dash__num dash__num--lg" id="dash-booked">4</span>
-                  <span class="dash__sub">on the calendar</span>
-                </div>
-                <div class="dash__cal">
-                  <div class="dash__day">M</div><div class="dash__day">T</div><div class="dash__day">W</div><div class="dash__day">T</div><div class="dash__day">F</div><div class="dash__day">S</div><div class="dash__day">S</div>
-                  <div class="dash__cell"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--a"></div>
-                  <div class="dash__cell"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--b"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--a"></div>
-                  <div class="dash__cell"></div>
-                  <div class="dash__cell"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--c"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--a"></div>
-                  <div class="dash__cell"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--b"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--c"></div>
-                  <div class="dash__cell dash__cell--on dash__cell--b"></div>
-                  <div class="dash__cell"></div>
-                </div>
-              </div>
-              <!-- layer 3 · revenue bars -->
-              <div class="dash__layer dash__layer--rev">
-                <div class="dash__label">Monthly revenue</div>
-                <div class="dash__figrow">
-                  <span class="dash__num dash__num--xl" style="color: var(--color-ink);"><span id="dash-rev">$6K</span><span class="dash__unit">/mo</span></span>
-                  <span class="dash__pill">▲ trending up</span>
-                </div>
-                <div class="dash__bars">
-                  <div class="dash__bar-track"><div class="dash__bar dash__bar--1"></div></div>
-                  <div class="dash__bar-track"><div class="dash__bar dash__bar--2"></div></div>
-                  <div class="dash__bar-track"><div class="dash__bar dash__bar--3"></div></div>
-                  <div class="dash__bar-track"><div class="dash__bar dash__bar--4"></div></div>
-                </div>
-              </div>
-            </div>
-            <!-- lead toasts -->
-            <div class="dash__toasts">
-              <div class="dash__toast dash__toast--1"><i></i><span>New lead · Window cleaning quote</span></div>
-              <div class="dash__toast dash__toast--2"><i></i><span>New lead · Driveway pressure wash</span></div>
-              <div class="dash__toast dash__toast--3"><i></i><span>Booked · Exterior soft wash, Fri 2pm</span></div>
-            </div>
-          </div>
-          <figcaption class="dash__note">Illustrative demo, your real client numbers drop in here.</figcaption>
-        </figure>
-      </div>
-    </section>
+/* ============ state ============ */
+let sb=null, db=null, me=null, CID=null, authMode='signin';
+let route='today', calCursor=null, toastTimer=null;
 
-    <!-- ======================= TRUST BAR ======================= -->
-    <section class="trust wrap" aria-label="Client logos and reviews">
-      <p class="trust__label">Trusted by working exterior cleaning companies</p>
-      <div class="trust__row">
-        <!-- PLACEHOLDERS: drop real client logos (monochrome SVG/PNG) and a real review badge.
-             Do not launch this bar with empty slots — hide the section until logos exist. -->
-        <div class="slot">Client logo</div>
-        <div class="slot">Client logo</div>
-        <div class="slot">Client logo</div>
-        <div class="slot">Client logo</div>
-        <div class="slot">Google review badge</div>
-      </div>
-    </section>
+/* ============ utils ============ */
+function uid(p){ return p+'-'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function money(n){ n=+n||0; return n?'$'+n.toLocaleString(undefined,{maximumFractionDigits:0}):'—'; }
+function fmtDate(s){ if(!s)return '—'; const d=new Date(s+'T00:00'); if(isNaN(d))return esc(s); return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:d.getFullYear()===new Date().getFullYear()?undefined:'numeric'}); }
+function timeAgo(s){ if(!s)return ''; const d=new Date(s); if(isNaN(d))return ''; const secs=Math.max(0,(Date.now()-d.getTime())/1000);
+ if(secs<60)return 'just now'; const mins=secs/60; if(mins<60)return Math.round(mins)+'m ago';
+ const hrs=mins/60; if(hrs<24)return Math.round(hrs)+'h ago'; const days=hrs/24; if(days<30)return Math.round(days)+'d ago';
+ const mo=days/30; if(mo<12)return Math.round(mo)+'mo ago'; return Math.round(mo/12)+'y ago'; }
+function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function today(){ return ymd(new Date()); }
+function monthKey(d){ return ymd(d||new Date()).slice(0,7); }
+function monthLabel(k){ const [y,m]=k.split('-'); return new Date(+y,+m-1,1).toLocaleDateString(undefined,{month:'short',year:'2-digit'}); }
+function monthStart(d){ return new Date(d.getFullYear(),d.getMonth(),1); }
+function daysUntil(s){ if(!s)return null; return Math.round((new Date(s+'T00:00')-new Date(today()+'T00:00'))/864e5); }
+function chip(s){ return '<span class="chip s-'+String(s||'').replace(/\s/g,'')+'">'+esc(s)+'</span>'; }
+function ratio(a,b){ return b>0?a/b:null; }
+function fmtRatio(v,pre,dec){ return v==null?'—':(pre||'')+v.toFixed(dec==null?2:dec); }
+function selOpts(list,cur){ return list.map(o=>'<option'+(o===cur?' selected':'')+'>'+esc(o)+'</option>').join(''); }
+function nd(v){ return v?v:null; }
+function toast(msg,label,fn){
+ const t=document.getElementById('toast'),a=document.getElementById('toastAction');
+ document.getElementById('toastMsg').textContent=msg;
+ if(label){a.textContent=label;a.classList.remove('hide');a.onclick=()=>{t.classList.remove('show');fn&&fn();};}
+ else a.classList.add('hide');
+ t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),6000);
+}
 
-    <!-- ======================= SERVICES ======================= -->
-    <section class="section section--band" id="services">
-      <div class="wrap">
-      <div class="section__head">
-        <h2>What we run for you</h2>
-        <p>What an exterior cleaning company actually buys. No bundles you don't need, no
-           “brand strategy” invoice.</p>
-      </div>
-      <div class="svc-list">
-        <div class="svc">
-          <h3>Lead-gen ads</h3>
-          <p>Google and Meta campaigns aimed at homeowners inside your service area ,
-             built around the jobs you want more of, tuned weekly, tracked to the call,
-             not the click.</p>
-          <p class="svc__for"><strong>Good for:</strong> filling next week's schedule</p>
-        </div>
-        <div class="svc">
-          <h3>Local SEO</h3>
-          <p>Google Business Profile, reviews, citations, and on-page work so you show up
-             when someone in your service area searches “pressure washing near me”, the
-             leads that keep coming after the ad budget stops.</p>
-          <p class="svc__for"><strong>Good for:</strong> leads without ad spend</p>
-        </div>
-        <div class="svc">
-          <h3>Website that books</h3>
-          <p>Fast, mobile-first, click-to-call, quote form above the fold. Your site's
-             one job is converting a visitor into a quote request before they hit the
-             back button.</p>
-          <p class="svc__for"><strong>Good for:</strong> turning clicks into jobs</p>
-        </div>
-        <div class="svc">
-          <h3>Social content</h3>
-          <p>Before-and-afters posted consistently, review requests that actually get
-             answered, and a feed that makes the next customer trust you before they call.</p>
-          <p class="svc__for"><strong>Good for:</strong> reputation and referrals</p>
-        </div>
-      </div>
-      </div>
-    </section>
-
-    <!-- ======================= OPERATOR CREDIBILITY ======================= -->
-    <section class="section section--tight wrap">
-      <div class="operator">
-        <div class="slot operator__photo">
-          <!-- PLACEHOLDER image · ~640×480 · subject: real PFCleans job photo —
-               exterior-cleaning work in progress. Add alt text when placed. -->
-          Photo slot, real PFCleans job in progress (640×480)
-        </div>
-        <div class="operator__copy">
-          <h2>We run an exterior cleaning business too.</h2>
-          <p>Before PFMarkets sold marketing, we bought it. PFMarkets grew out of
-             PFCleans, our own exterior-cleaning company, and the campaigns we run
-             for clients are the same ones that booked our own schedule.</p>
-          <p>That's why we won't talk to you about impressions. We know the difference
-             between a lead and a tire-kicker, what a slow February feels like, and why
-             a five-star review from a real neighborhood matters more than a thousand
-             likes from nowhere.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================= HOW IT WORKS ======================= -->
-    <section class="section wrap" id="how">
-      <div class="section__head">
-        <h2>How it works</h2>
-        <p>Three steps between here and a fuller schedule. The first one takes two minutes.</p>
-      </div>
-      <ol class="steps">
-        <li>
-          <span class="stage" aria-hidden="true">01</span>
-          <h3>Tell us about your business</h3>
-          <p>A short questionnaire, what you do, where you work, what's holding you
-             back. It's how we show up to the call already knowing your market.</p>
-          <p class="steps__meta">Takes: about two minutes</p>
-        </li>
-        <li>
-          <span class="stage" aria-hidden="true">02</span>
-          <h3>Get your growth plan</h3>
-          <p>A 30-minute call with an honest read: what we'd run, what it costs, and ,
-             if we're not the right fit, we'll say so and point you somewhere better.</p>
-          <p class="steps__meta">Deliverable: a plan and a straight answer</p>
-        </li>
-        <li>
-          <span class="stage" aria-hidden="true">03</span>
-          <h3>We launch. Your phone rings.</h3>
-          <p>Campaigns live within days. You get reported leads and booked jobs ,
-             not a dashboard of vanity clicks.</p>
-          <p class="steps__meta">Live: within days, not months</p>
-        </li>
-      </ol>
-    </section>
-
-    <!-- ======================= RESULTS ======================= -->
-    <section class="section wrap" id="results">
-      <div class="section__head">
-        <h2>Real numbers or <span class="serif-word">nothing</span></h2>
-        <p>This section holds actual client results, screenshots and figures we can
-           stand behind. We'd rather show you an empty card than a made-up percentage.</p>
-      </div>
-      <div class="results__grid">
-        <!-- PLACEHOLDERS: each card takes a real metric + context + dashboard screenshot.
-             Never publish an estimated or rounded-up number here. -->
-        <article class="metric">
-          <div class="metric__value">,  (metric to confirm)<br>e.g. booked jobs in first 90 days</div>
-          <p class="metric__ctx">Client, trade, and service area go here, with permission.</p>
-          <div class="slot">Ad-platform screenshot (1200×750)</div>
-        </article>
-        <article class="metric">
-          <div class="metric__value">,  (metric to confirm)<br>e.g. cost per qualified lead</div>
-          <p class="metric__ctx">Client, trade, and service area go here, with permission.</p>
-          <div class="slot">Ad-platform screenshot (1200×750)</div>
-        </article>
-        <article class="metric">
-          <div class="metric__value">,  (metric to confirm)<br>e.g. map-pack ranking change</div>
-          <p class="metric__ctx">Client, trade, and service area go here, with permission.</p>
-          <div class="slot">Search-ranking screenshot (1200×750)</div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======================= OTHER INDUSTRIES ======================= -->
-    <section class="also" aria-label="Other business types">
-      <div class="wrap">
-        <p><strong>Not an exterior cleaning company?</strong> The system still applies, local
-           lead generation works for dentists, gyms, restaurants, and retail too. Book a
-           call and we'll tell you honestly whether we can help.</p>
-        <button class="btn btn--outline" data-open-qual>Ask us</button>
-      </div>
-    </section>
-
-    <!-- ======================= CLOSING CTA ======================= -->
-    <section class="close-cta wrap">
-      <div class="close-cta__box">
-        <div>
-          <h2>Ready for a busier <span class="serif-word">schedule</span>?</h2>
-          <p>Answer a few questions about your business, then pick a time that works.</p>
-          <ul class="expect">
-            <li>Two-minute questionnaire, then straight to the calendar</li>
-            <li>One 30-minute call, no retainer pitch</li>
-            <li>If we can't help, we'll say so and point you somewhere better</li>
-          </ul>
-        </div>
-        <button class="btn btn--fill" data-open-qual>Get your growth plan</button>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ======================= FOOTER ======================= -->
-  <footer class="foot wrap">
-    <div class="foot__mast">
-      <div>
-        <p class="foot__brand">PF<em>Markets</em></p>
-        <p class="foot__tag">Lead generation for exterior cleaning companies. The best marketing
-           is a phone that <span class="serif-word">rings</span>.</p>
-      </div>
-      <div class="foot__links">
-      <a href="https://calendly.com/prkrfwlr/new-meeting">Book a call</a>
-        <a href="/clientportal/">Client login</a>
-        <a href="services.html">Services</a>
-        <a href="industries.html">Industries</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="faq.html">FAQ</a>
-        <a href="results.html">Results</a>
-        <button class="btn btn--outline" data-open-qual style="min-height:44px;padding:var(--space-xs) var(--space-md);">Book a call</button>
-      </div>
-    </div>
-    <div class="foot__meta">
-      <span>PFMarkets · © 2026</span>
-      <span>Measured in booked jobs, not clicks.</span>
-    </div>
-  </footer>
-
-  <!-- ======================= QUALIFY-THEN-BOOK MODAL ======================= -->
-  <dialog class="qual" id="qual-modal" aria-labelledby="qual-title">
-    <div class="qual__inner">
-      <div class="qual__top">
-        <h2 id="qual-title">Let's see what we'd run for you</h2>
-        <button class="qual__close" type="button" data-close-qual aria-label="Close">✕</button>
-      </div>
-
-      <div class="qual__progress" id="qual-progress">
-        <span class="qual__progress-label" id="qual-progress-label">Step 1 of 4 · 20% there</span>
-        <div class="qual__bar" role="progressbar" aria-labelledby="qual-progress-label"
-             aria-valuemin="0" aria-valuemax="100" aria-valuenow="20"><i id="qual-bar-fill"></i></div>
-      </div>
-
-      <form id="qual-form" novalidate>
-
-        <!-- STEP 1 · business -->
-        <fieldset data-step="1">
-          <legend>Your business</legend>
-          <div class="field">
-            <label for="f-bizname">Business name</label>
-            <input type="text" id="f-bizname" name="business_name" required autocomplete="organization" placeholder="Pro Wash Co.">
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field">
-            <label for="f-biztype">What kind of business?</label>
-            <select id="f-biztype" name="business_type" required>
-              <option value="" selected disabled>Choose one</option>
-              <option>Pressure washing</option>
-              <option>Soft washing</option>
-              <option>Window cleaning</option>
-              <option>Other exterior cleaning</option>
-              <option>Other</option>
-            </select>
-            <p class="hint" data-hint></p>
-          </div>
-        </fieldset>
-
-        <!-- STEP 2 · money + current marketing -->
-        <fieldset data-step="2" hidden>
-          <legend>Where you're at</legend>
-          <div class="field">
-            <label id="lbl-revenue">Roughly, monthly revenue</label>
-            <div class="choices choices--2col" role="radiogroup" aria-labelledby="lbl-revenue">
-              <label class="choice"><input type="radio" name="revenue_range" value="Under $10k/mo" required> Under $10k</label>
-              <label class="choice"><input type="radio" name="revenue_range" value="$10k–$25k/mo"> $10k–$25k</label>
-              <label class="choice"><input type="radio" name="revenue_range" value="$25k–$50k/mo"> $25k–$50k</label>
-              <label class="choice"><input type="radio" name="revenue_range" value="Over $50k/mo"> Over $50k</label>
-            </div>
-            <p class="hint" data-hint>Ranges only, it just shapes the plan.</p>
-          </div>
-          <div class="field">
-            <label id="lbl-ads">Running paid ads right now?</label>
-            <div class="choices choices--2col" role="radiogroup" aria-labelledby="lbl-ads">
-              <label class="choice"><input type="radio" name="running_ads" value="yes" required> Yes</label>
-              <label class="choice"><input type="radio" name="running_ads" value="no"> No</label>
-            </div>
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field" id="field-spend" hidden>
-            <label for="f-spend">About how much per month on ads?</label>
-            <select id="f-spend" name="ad_spend_range">
-              <option value="" selected disabled>Choose one</option>
-              <option>Under $500/mo</option>
-              <option>$500–$1,500/mo</option>
-              <option>$1,500–$5,000/mo</option>
-              <option>Over $5,000/mo</option>
-            </select>
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field">
-            <label id="lbl-seo">Doing anything on SEO / Google ranking?</label>
-            <div class="choices choices--2col" role="radiogroup" aria-labelledby="lbl-seo">
-              <label class="choice"><input type="radio" name="doing_seo" value="yes" required> Yes</label>
-              <label class="choice"><input type="radio" name="doing_seo" value="no"> No</label>
-            </div>
-            <p class="hint" data-hint></p>
-          </div>
-        </fieldset>
-
-        <!-- STEP 3 · area + bottleneck -->
-        <fieldset data-step="3" hidden>
-          <legend>Your market</legend>
-          <div class="field">
-            <label for="f-area">Service area</label>
-            <input type="text" id="f-area" name="service_area" required placeholder="Your city + 30 miles">
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field">
-            <label id="lbl-bottleneck">Biggest bottleneck right now</label>
-            <div class="choices" role="radiogroup" aria-labelledby="lbl-bottleneck">
-              <label class="choice"><input type="radio" name="bottleneck" value="Not enough leads" required> Not enough leads coming in</label>
-              <label class="choice"><input type="radio" name="bottleneck" value="Leads don't book"> Leads come in but don't book</label>
-              <label class="choice"><input type="radio" name="bottleneck" value="Reviews / reputation"> Reviews and reputation</label>
-              <label class="choice"><input type="radio" name="bottleneck" value="other" data-bottleneck-other> Something else</label>
-            </div>
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field" id="field-bottleneck-other" hidden>
-            <label for="f-bottleneck-other">Tell us in a sentence</label>
-            <input type="text" id="f-bottleneck-other" name="bottleneck_other" placeholder="Crew capacity, pricing, seasonality…">
-            <p class="hint" data-hint></p>
-          </div>
-        </fieldset>
-
-        <!-- STEP 4 · contact -->
-        <fieldset data-step="4" hidden>
-          <legend>Where the plan goes</legend>
-          <div class="field">
-            <label for="f-name">Your name</label>
-            <input type="text" id="f-name" name="contact_name" required autocomplete="name" placeholder="First and last">
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field">
-            <label for="f-email">Email address</label>
-            <input type="email" id="f-email" name="email" required autocomplete="email" placeholder="you@company.com">
-            <p class="hint" data-hint></p>
-          </div>
-          <div class="field">
-            <label for="f-phone">Phone</label>
-            <input type="tel" id="f-phone" name="phone" required autocomplete="tel" placeholder="(864) 555-0134">
-            <p class="hint" data-hint></p>
-          </div>
-        </fieldset>
-
-        <div class="form-error" id="form-error" role="alert"></div>
-
-        <div class="qual__nav">
-          <button type="button" class="btn btn--outline btn--back" id="qual-back" hidden>Back</button>
-          <button type="button" class="btn btn--fill" id="qual-next">Next</button>
-          <button type="submit" class="btn btn--fill" id="qual-submit" hidden>
-            <span class="spinner" aria-hidden="true"></span>
-            <span>Send &amp; pick a time</span>
-          </button>
-        </div>
-      </form>
-
-      <!-- success step — Calendly appears only after a successful Supabase insert -->
-      <div class="booking" id="booking" aria-live="polite">
-        <h2>You're in, pick a time.</h2>
-        <p class="booking__lede">Your answers are saved. Grab whichever slot works and
-           we'll show up with a plan built around them.</p>
-        <p class="booking__loading" id="booking-loading">Loading the calendar…</p>
-        <div id="calendly-slot"></div>
-      </div>
-    </div>
-  </dialog>
-
-  <script>
-  "use strict";
-
-  /* ================= CONFIG, replace all three before launch ================= */
-  const CONFIG = {
-    SUPABASE_URL:      "https://boagmtuqhjktxlyengls.supabase.co",      // e.g. "https://abcdefgh.supabase.co"
-    SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvYWdtdHVxaGprdHhseWVuZ2xzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NDkwNzMsImV4cCI6MjA5ODUyNTA3M30.bv9Rxsosa-lEqfqrNy51cH9t2KDoHvLsg7SVG9fpBIA", // the public anon key (safe to ship; RLS enforces access)
-    CALENDLY_URL:      "https://calendly.com/prkrfwlr/new-meeting",      // e.g. "https://calendly.com/pfmarkets/growth-plan"
-  };
-  /* Supabase `leads` table, columns this page inserts (create the table to match):
-       business_name    text        not null
-       business_type    text        not null
-       revenue_range    text        not null
-       running_ads      boolean     not null
-       ad_spend_range   text            null   -- only set when running_ads = true
-       doing_seo        boolean     not null
-       service_area     text        not null
-       bottleneck       text        not null   -- "other" answers stored as "Other: <text>"
-       contact_name     text        not null
-       email            text        not null
-       phone            text        not null
-       source           text        default 'pfmarkets.com'
-     plus: id uuid primary key default gen_random_uuid(), created_at timestamptz default now()
-     RLS: enable, and add ONE policy, allow INSERT to role `anon`. No select/update/delete. */
-
-  /* ---------- nav frost on scroll (rAF-throttled) ---------- */
-  const nav = document.getElementById("site-nav");
-  let navTick = false;
-  function onScroll() {
-    if (navTick) return;
-    navTick = true;
-    requestAnimationFrame(() => {
-      nav.classList.toggle("is-scrolled", window.scrollY > 24);
-      navTick = false;
-    });
+/* ============ supabase auth ============ */
+function configured(){ return window.CRM_CONFIG && !/PASTE-/.test(CRM_CONFIG.SUPABASE_URL) && !/PASTE-/.test(CRM_CONFIG.SUPABASE_ANON_KEY); }
+function showAuth(err){
+ document.getElementById('app').innerHTML='';
+ document.getElementById('authView').classList.remove('hide');
+ authError(err||'');
+ setAuthMode(authMode);
+}
+function authError(msg){ document.getElementById('authErr').innerHTML=msg?'<div class="err">'+esc(msg)+'</div>':''; }
+function setAuthMode(m){
+ authMode=m;
+ document.getElementById('authBtn').textContent=m==='signup'?'Create my account':'Sign in';
+ document.getElementById('authIntro').textContent=m==='signup'
+  ?'Use the email address your marketing partner has on file for your business — that is how your account links to your data.'
+  :'Sign in to manage your leads, schedule and quotes — and see how your marketing is performing.';
+ document.getElementById('authSwap').innerHTML=m==='signup'
+  ?'Already have an account? <button onclick="setAuthMode(\'signin\')">Sign in</button>'
+  :'First time here? <button onclick="setAuthMode(\'signup\')">Create your account</button>';
+}
+async function doAuth(){
+ const email=document.getElementById('au_email').value.trim();
+ const pass=document.getElementById('au_pass').value;
+ if(!email||!pass){ authError('Enter your email and a password.'); return; }
+ if(authMode==='signup'&&pass.length<8){ authError('Pick a password of at least 8 characters.'); return; }
+ const btn=document.getElementById('authBtn'); btn.disabled=true; authError('');
+ try{
+  let session;
+  if(authMode==='signup'){
+   const {data,error}=await sb.auth.signUp({email,password:pass});
+   if(error) throw error;
+   session=data.session;
+   if(!session){ authError('One more step — confirm the email we just sent you, then sign in here.'); setAuthMode('signin'); return; }
+  } else {
+   const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
+   if(error) throw error;
+   session=data.session;
   }
-  addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  await boot(session);
+ }catch(e){ authError(e.message||'Sign-in failed.'); }
+ finally{ btn.disabled=false; }
+}
+async function signOut(){ if(sb) await sb.auth.signOut(); location.reload(); }
+async function boot(session){
+ me=session.user;
+ const {data:p,error}=await sb.from('profiles').select('*').eq('id',me.id).maybeSingle();
+ if(error){ showAuth('Could not load your profile: '+error.message); return; }
+ if(p&&p.role==='agency'){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>You run the show</h1><p>This is the client portal — as the agency admin your workspace is the CRM.</p>'
+   +'<a class="btn pri" href="agency.html">Open the agency CRM</a> <button class="btn" onclick="signOut()">Sign out</button>';
+  return;
+ }
+ if(!p||!p.client_id){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>Almost linked</h1><p>Your account ('+esc(me.email)+') was created, but it is not yet connected to a business. '
+   +'Ask your marketing partner to add this exact email to your business record — the link happens automatically, then reload this page.</p>'
+   +'<button class="btn" onclick="location.reload()">Reload</button> <button class="btn ghost" onclick="signOut()">Sign out</button>';
+  return;
+ }
+ CID=p.client_id;
+ if(!(await fetchMine())) return;
+ document.getElementById('authView').classList.add('hide');
+ render();
+}
+async function init(){
+ if(!configured()){
+  document.getElementById('authView').classList.remove('hide');
+  document.querySelector('#authView .card').innerHTML=
+   '<h1>Almost ready</h1><p>The portal is not connected yet. Open <b>config.js</b> next to this file and paste in the Supabase project URL and anon key (see SETUP.md), then reload.</p>';
+  return;
+ }
+ sb=window.supabase.createClient(CRM_CONFIG.SUPABASE_URL,CRM_CONFIG.SUPABASE_ANON_KEY);
+ const {data:{session}}=await sb.auth.getSession();
+ if(!session){ showAuth(''); return; }
+ await boot(session);
+}
+document.addEventListener('visibilitychange',async()=>{ if(document.visibilityState==='visible'&&db&&CID){ if(await fetchMine()) render(); } });
 
-  /* ---------- hero dashboard counters (synced to the 11s CSS loop) ---------- */
-  (function dashCounters() {
-    const leadsEl = document.getElementById("dash-leads");
-    const bookedEl = document.getElementById("dash-booked");
-    const revEl = document.getElementById("dash-rev");
-    if (!leadsEl || !bookedEl || !revEl) return;
+/* ============ data layer ============ */
+async function fetchMine(){
+ const [biz,st,ld,jb,qt,ad,ec,ect]=await Promise.all([
+  sb.from('clients').select('*').eq('id',CID).maybeSingle(),
+  sb.from('agency_settings').select('agency_name').limit(1),
+  sb.from('leads').select('*').eq('client_id',CID),
+  sb.from('jobs').select('*').eq('client_id',CID),
+  sb.from('quotes').select('*').eq('client_id',CID),
+  sb.from('ads').select('*').eq('client_id',CID),
+  sb.from('email_campaigns').select('*'),
+  sb.from('email_contacts').select('*')
+ ]);
+ const bad=[biz,st,ld,jb,qt,ad,ec,ect].find(r=>r.error);
+ if(bad){ toast('Load failed: '+bad.error.message); return false; }
+ if(!biz.data){ showAuth('Your business record was not found — ask your marketing partner.'); return false; }
+ db={business:{name:biz.data.business_name,industry:biz.data.industry,location:biz.data.location,
+      accent:biz.data.accent||'#2e6b4f',agency:(st.data&&st.data[0]&&st.data[0].agency_name)||'your marketing partner',
+      emailEnabled:!!biz.data.email_marketing_enabled},
+     leads:ld.data||[], jobs:jb.data||[], quotes:qt.data||[], ads:ad.data||[],
+     emailCampaigns:ec.data||[], emailContacts:ect.data||[]};
+ return true;
+}
+async function wr(table,rows){ const {error}=await sb.from(table).upsert(rows); if(error) toast('Save failed: '+error.message); return !error; }
+async function upd(table,patch,id){ const {error}=await sb.from(table).update(patch).eq('id',id); if(error) toast('Save failed: '+error.message); return !error; }
+async function rm(table,id){ const {error}=await sb.from(table).delete().eq('id',id); if(error) toast('Delete failed: '+error.message); return !error; }
+function leadRow(l){ return {id:l.id,client_id:CID,name:l.name||'',email:l.email||'',phone:l.phone||'',address:l.address||'',
+ stage:l.stage||'New',source:l.source||'',job_type:l.job_type||'',quote_value:+l.quote_value||0,
+ date_received:nd(l.date_received),follow_up:nd(l.follow_up),notes:l.notes||''}; }
+function jobRow(j){ return {id:j.id,client_id:CID,title:j.title||'',customer:j.customer||'',date:nd(j.date),
+ price:+j.price||0,status:j.status||'Scheduled',address:j.address||'',notes:j.notes||''}; }
+function quoteRow(q){ return {id:q.id,client_id:CID,customer:q.customer||'',service:q.service||'',amount:+q.amount||0,
+ status:q.status||'Sent',date_sent:nd(q.date_sent),notes:q.notes||''}; }
 
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      leadsEl.textContent = "148";   // static frame matches the frozen "climbed" graph
-      return;
-    }
+/* ============ modal ============ */
+function openModal(cfg){
+ document.getElementById('modalTitle').textContent=cfg.title;
+ document.getElementById('modalBody').innerHTML=buildForm(cfg.fields);
+ const del=document.getElementById('modalDelete');
+ del.classList.toggle('hide',!cfg.onDelete);
+ del.onclick=()=>{ closeModal(); cfg.onDelete(); };
+ document.getElementById('modalSave').onclick=()=>{
+  const vals={};
+  cfg.fields.forEach(f=>{ const el=document.getElementById('f_'+f.k); if(!el)return; vals[f.k]=f.type==='number'?(+el.value||0):el.value.trim(); });
+  closeModal(); cfg.onSave(vals);
+ };
+ document.getElementById('modalBg').classList.add('show');
+ const first=document.querySelector('#modalBody input,#modalBody select,#modalBody textarea'); first&&first.focus();
+}
+function buildForm(fields){
+ let html='',row=[];
+ const flush=()=>{ if(!row.length)return; html+=row.length===1?row[0]:'<div class="grid2">'+row.join('')+'</div>'; row=[]; };
+ fields.forEach(f=>{
+  const v=f.value==null?'':f.value; let inner;
+  if(f.type==='select') inner='<select id="f_'+f.k+'">'+selOpts(f.options,v)+'</select>';
+  else if(f.type==='textarea') inner='<textarea id="f_'+f.k+'" rows="3">'+esc(v)+'</textarea>';
+  else if(f.type==='color') inner='<input id="f_'+f.k+'" type="color" value="'+esc(v||'#2e6b4f')+'" style="height:36px;padding:3px">';
+  else inner='<input id="f_'+f.k+'" type="'+(f.type||'text')+'" value="'+esc(v)+'"'+(f.placeholder?' placeholder="'+esc(f.placeholder)+'"':'')+'>';
+  const cell='<div class="fg"><label for="f_'+f.k+'">'+esc(f.label)+'</label>'+inner+'</div>';
+  if(f.full){ flush(); html+=cell; } else { row.push(cell); if(row.length===2)flush(); }
+ });
+ flush(); return html;
+}
+function closeModal(){ document.getElementById('modalBg').classList.remove('show'); }
+document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target.id==='modalBg')closeModal(); });
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape')closeModal();
+ if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='au_pass') doAuth();
+});
 
-    const LOOP = 11000;
-    const start = performance.now();
-    const easeOut = (x) => 1 - Math.pow(1 - x, 3);
-    const seg = (t, a, b) => (t <= a ? 0 : t >= b ? 1 : easeOut((t - a) / (b - a)));
+/* ============ render ============ */
+function go(r){ route=r; render(); window.scrollTo(0,0); }
+function render(){
+ if(!db) return;
+ if(!calCursor) calCursor=monthStart(new Date());
+ document.documentElement.style.setProperty('--accent',db.business.accent||'#2e6b4f');
+ document.title=(db.business.name||'Business')+' · Portal';
+ const tabs=[['today','Today'],['leads','Leads'],['schedule','Schedule'],['quotes','Quotes'],['results','Marketing results'],['email','Email Campaigns'],['settings','Settings']];
+ document.getElementById('app').innerHTML='<header class="mast"><div class="mast-in">'
+  +'<div class="mast-top"><span class="biz">'+esc(db.business.name||'Your business')+'</span>'
+  +'<span class="by">marketing by '+esc(db.business.agency)+'</span></div>'
+  +'<nav class="mast-tabs">'+tabs.map(t=>'<a href="#" class="'+(route===t[0]?'on':'')+'" onclick="go(\''+t[0]+'\');return false">'+t[1]+'</a>').join('')+'</nav>'
+  +'</div></header><div class="wrap">'
+  +({today:renderToday,leads:renderLeads,schedule:renderSchedule,quotes:renderQuotes,results:renderResults,email:renderEmailCampaigns,settings:renderSettings}[route]||renderToday)()
+  +'</div>';
+ bindDnD();
+}
 
-    (function tick() {
-      const t = ((performance.now() - start) % LOOP) / LOOP;
-      leadsEl.textContent = 12 + Math.round(seg(t, 0.172, 0.482) * (148 - 12));
-      bookedEl.textContent = 4 + Math.round(seg(t, 0.47, 0.636) * (32 - 4));
-      revEl.textContent = "$" + (6 + Math.round(seg(t, 0.654, 0.818) * (28 - 6))) + "K";
-      requestAnimationFrame(tick);
-    })();
-  })();
+/* ============ today ============ */
+function renderToday(){
+ const t=today(), mk=monthKey();
+ const todays=db.jobs.filter(j=>j.date===t&&j.status==='Scheduled');
+ const upcoming=db.jobs.filter(j=>j.date>t&&j.status==='Scheduled').sort((a,b)=>a.date<b.date?-1:1);
+ const overdueF=db.leads.filter(l=>l.follow_up&&!['Won','Lost'].includes(l.stage)&&daysUntil(l.follow_up)<=0)
+  .sort((a,b)=>a.follow_up<b.follow_up?-1:1);
+ const openLeads=db.leads.filter(l=>!['Won','Lost'].includes(l.stage));
+ const pipeline=openLeads.reduce((s,l)=>s+(+l.quote_value||0),0);
+ const monthRev=db.jobs.filter(j=>j.status==='Completed'&&(j.date||'').slice(0,7)===mk).reduce((s,j)=>s+(+j.price||0),0);
+ const newThisWeek=db.leads.filter(l=>l.date_received&&daysUntil(l.date_received)>=-7).length;
+ return '<div class="page-head"><div class="grow"><h1 class="page">Today</h1><div class="page-sub">'+new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})+'</div></div>'
+  +'<button class="btn" onclick="openJobModal()">+ Job</button><button class="btn pri" onclick="openLeadModal()">+ Lead</button></div>'
+  +'<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+todays.length+'</div><div class="l">Jobs today</div><div class="d">'+upcoming.length+' upcoming</div></div>'
+  +'<div class="stat"><div class="v num">'+openLeads.length+'</div><div class="l">Open leads</div><div class="d">'+newThisWeek+' new this week</div></div>'
+  +'<div class="stat"><div class="v num">'+money(pipeline)+'</div><div class="l">Quoted pipeline</div></div>'
+  +'<div class="stat"><div class="v num">'+money(monthRev)+'</div><div class="l">Completed · '+monthLabel(mk)+'</div></div>'
+  +'</div>'
+  +'<div class="cols c2" style="margin-top:16px">'
+  +'<div class="panel"><h3>On the schedule <button class="btn sm" onclick="go(\'schedule\')">Calendar</button></h3>'
+  +(todays.length||upcoming.length?
+    todays.map(j=>'<div class="list-line"><span><b>'+esc(j.title)+'</b>'+(j.customer?' · '+esc(j.customer):'')+'</span><span class="when due-amber">today · '+money(j.price)+'</span></div>').join('')
+    +upcoming.slice(0,6).map(j=>'<div class="list-line"><span><b>'+esc(j.title)+'</b>'+(j.customer?' · '+esc(j.customer):'')+'</span><span class="when">'+fmtDate(j.date)+' · '+money(j.price)+'</span></div>').join('')
+   :'<div class="empty"><b>Nothing scheduled</b>Book your next job from the Schedule tab.</div>')
+  +'</div>'
+  +'<div class="panel"><h3>Follow-ups due <button class="btn sm" onclick="go(\'leads\')">All leads</button></h3>'
+  +(overdueF.length?overdueF.slice(0,7).map(l=>{
+     const d=daysUntil(l.follow_up);
+     return '<div class="list-line"><span><b>'+esc(l.name)+'</b>'+(l.phone?' · '+esc(l.phone):'')+'</span>'+chip(l.stage)+'<span class="when '+(d<0?'due-red':'due-amber')+'">'+(d<0?Math.abs(d)+'d late':'today')+'</span></div>';
+    }).join(''):'<div class="empty"><b>All caught up</b>Set follow-up dates on leads so nobody slips.</div>')
+  +'</div></div>';
+}
 
-  /* ---------- modal open/close ---------- */
-  const modal = document.getElementById("qual-modal");
-  let supabaseLoadPromise = null;
-
-  document.querySelectorAll("[data-open-qual]").forEach((btn) =>
-    btn.addEventListener("click", () => {
-      modal.showModal();
-      loadSupabase();                      // warm the client lib while the user types
-      const first = modal.querySelector("fieldset:not([hidden]) input, fieldset:not([hidden]) select");
-      if (first) first.focus({ preventScroll: true });
-    })
-  );
-  modal.querySelector("[data-close-qual]").addEventListener("click", () => modal.close());
-  modal.addEventListener("click", (e) => {           // backdrop click closes
-    if (e.target === modal) modal.close();
+/* ============ leads ============ */
+function renderLeads(){
+ return '<div class="page-head"><div class="grow"><h1 class="page">Leads</h1><div class="page-sub">Every person who has asked about your services. Drag cards as things move.</div></div>'
+  +'<button class="btn pri" onclick="openLeadModal()">+ Lead</button></div>'
+  +'<div class="kanban" style="margin-bottom:20px">'+LEAD_STAGES.map(st=>{
+    const cards=db.leads.filter(l=>l.stage===st);
+    const val=cards.reduce((s,l)=>s+(+l.quote_value||0),0);
+    return '<div class="kcol" data-stage="'+st+'"><h4>'+st+'<span class="n">'+cards.length+(val?' · '+money(val):'')+'</span></h4><div class="kbody">'
+     +cards.map(l=>'<div class="kcard" draggable="true" data-lid="'+l.id+'" onclick="openLeadModal(\''+l.id+'\')"><b>'+esc(l.name)+'</b>'
+      +'<div class="meta"><span>'+esc(l.job_type||l.source||'')+'</span><span class="num">'+(l.quote_value?money(l.quote_value):'')+'</span></div>'
+      +(l.follow_up&&!['Won','Lost'].includes(st)?'<div class="meta" style="margin-top:4px"><span class="'+(daysUntil(l.follow_up)<0?'due-red':'due-amber')+'">follow up '+fmtDate(l.follow_up)+'</span></div>':'')
+      +'</div>').join('')+'</div></div>';
+  }).join('')+'</div>'
+  +(db.leads.length?'<div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Stage</th><th>Source</th><th>Job type</th><th class="r">Quote</th><th class="r">Received</th></tr></thead><tbody>'
+   +[...db.leads].sort((a,b)=>(b.date_received||'')<(a.date_received||'')?-1:1).map(l=>'<tr class="rowlink" onclick="openLeadModal(\''+l.id+'\')">'
+    +'<td><b>'+esc(l.name)+'</b>'+(l.address?'<span class="sub">'+esc(l.address)+'</span>':'')+'</td>'
+    +'<td>'+esc(l.email||'')+(l.phone?'<span class="sub">'+esc(l.phone)+'</span>':'')+'</td>'
+    +'<td>'+chip(l.stage)+'</td><td>'+esc(l.source||'—')+'</td><td>'+esc(l.job_type||'—')+'</td>'
+    +'<td class="r num">'+money(l.quote_value)+'</td><td class="r num">'+fmtDate(l.date_received)+'</td></tr>').join('')
+   +'</tbody></table></div>':'');
+}
+function bindDnD(){
+ document.querySelectorAll('.kcard[draggable]').forEach(el=>{
+  el.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',el.dataset.lid); el.classList.add('dragging'); });
+  el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+ });
+ document.querySelectorAll('.kcol').forEach(col=>{
+  col.addEventListener('dragover',e=>{ e.preventDefault(); col.classList.add('dragover'); });
+  col.addEventListener('dragleave',()=>col.classList.remove('dragover'));
+  col.addEventListener('drop',e=>{
+   e.preventDefault(); col.classList.remove('dragover');
+   const lid=e.dataTransfer.getData('text/plain');
+   const l=db.leads.find(x=>x.id===lid);
+   if(l&&col.dataset.stage){ l.stage=col.dataset.stage; render(); upd('leads',{stage:l.stage},l.id); }
   });
+ });
+}
 
-  /* ---------- lazy supabase-js (CDN, loaded on first modal open) ---------- */
-  function loadSupabase() {
-    if (supabaseLoadPromise) return supabaseLoadPromise;
-    supabaseLoadPromise = new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-      s.onload = resolve;
-      s.onerror = () => { supabaseLoadPromise = null; reject(new Error("supabase-js failed to load")); };
-      document.head.appendChild(s);
+/* ============ schedule ============ */
+function renderSchedule(){
+ const y=calCursor.getFullYear(), m=calCursor.getMonth();
+ const startDow=new Date(y,m,1).getDay();
+ const gridStart=new Date(y,m,1-startDow);
+ const t=today();
+ const byDate={};
+ db.jobs.forEach(j=>{ if(j.date){ (byDate[j.date]=byDate[j.date]||[]).push(j); } });
+ let weeks='';
+ for(let w=0;w<6;w++){
+  let cells='';
+  for(let d=0;d<7;d++){
+   const day=new Date(gridStart); day.setDate(gridStart.getDate()+w*7+d);
+   const key=ymd(day), other=day.getMonth()!==m, isToday=key===t;
+   const jobs=byDate[key]||[];
+   cells+='<div class="cal-day'+(other?' other':'')+(isToday?' today':'')+'" onclick="openJobModal(null,\''+key+'\')">'
+    +'<span class="dn">'+day.getDate()+'</span>'
+    +jobs.slice(0,3).map(j=>'<div class="cal-job'+(j.status==='Completed'?' done':'')+'" onclick="event.stopPropagation();openJobModal(\''+j.id+'\')" title="'+esc(j.title+(j.customer?' · '+j.customer:''))+'">'+esc(j.title)+'</div>').join('')
+    +(jobs.length>3?'<div style="font-size:10.5px;color:var(--neutral);margin-top:2px">+'+(jobs.length-3)+' more</div>':'')
+    +'</div>';
+  }
+  weeks+='<div class="cal-week">'+cells+'</div>';
+ }
+ const monthJobs=db.jobs.filter(j=>(j.date||'').slice(0,7)===monthKey(calCursor)&&j.status!=='Canceled');
+ const booked=monthJobs.reduce((s,j)=>s+(+j.price||0),0);
+ const done=monthJobs.filter(j=>j.status==='Completed').reduce((s,j)=>s+(+j.price||0),0);
+ return '<div class="page-head"><div class="grow"><h1 class="page">Schedule</h1><div class="page-sub">Click a day to book a job. '+money(booked)+' booked this month · '+money(done)+' completed.</div></div>'
+  +'<button class="btn pri" onclick="openJobModal()">+ Job</button></div>'
+  +'<div class="cal-head"><button class="btn sm" onclick="calMove(-1)" aria-label="Previous month">‹</button>'
+  +'<b>'+calCursor.toLocaleDateString(undefined,{month:'long',year:'numeric'})+'</b>'
+  +'<button class="btn sm" onclick="calMove(1)" aria-label="Next month">›</button>'
+  +'<button class="btn sm ghost" onclick="calCursor=monthStart(new Date());render()">Today</button></div>'
+  +'<div class="cal"><div class="cal-dow">'+['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>'<span>'+d+'</span>').join('')+'</div>'+weeks+'</div>';
+}
+function calMove(n){ calCursor=new Date(calCursor.getFullYear(),calCursor.getMonth()+n,1); render(); }
+
+/* ============ quotes ============ */
+function renderQuotes(){
+ const qs=[...db.quotes].sort((a,b)=>(b.date_sent||'')<(a.date_sent||'')?-1:1);
+ const sent=qs.filter(q=>q.status==='Sent'), acc=qs.filter(q=>q.status==='Accepted');
+ const winRate=qs.filter(q=>q.status!=='Sent').length?Math.round(acc.length/qs.filter(q=>q.status!=='Sent').length*100):null;
+ return '<div class="page-head"><div class="grow"><h1 class="page">Quotes</h1><div class="page-sub">What you have priced out and where it stands.</div></div>'
+  +'<button class="btn pri" onclick="openQuoteModal()">+ Quote</button></div>'
+  +'<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+sent.length+'</div><div class="l">Awaiting answer</div><div class="d">'+money(sent.reduce((s,q)=>s+(+q.amount||0),0))+' on the table</div></div>'
+  +'<div class="stat"><div class="v num">'+money(acc.reduce((s,q)=>s+(+q.amount||0),0))+'</div><div class="l">Accepted, all time</div></div>'
+  +'<div class="stat"><div class="v num">'+(winRate==null?'—':winRate+'%')+'</div><div class="l">Win rate</div><div class="d">of decided quotes</div></div>'
+  +'</div>'
+  +(qs.length?'<div class="tbl-wrap" style="margin-top:16px"><table><thead><tr><th>Sent</th><th>Customer</th><th>Service</th><th>Status</th><th class="r">Amount</th></tr></thead><tbody>'
+   +qs.map(q=>'<tr class="rowlink" onclick="openQuoteModal(\''+q.id+'\')"><td class="num">'+fmtDate(q.date_sent)+'</td><td><b>'+esc(q.customer)+'</b></td><td>'+esc(q.service||'—')+'</td><td>'+chip(q.status)+'</td><td class="r num">'+money(q.amount)+'</td></tr>').join('')
+   +'</tbody></table></div>'
+   :'<div class="tbl-wrap" style="margin-top:16px"><div class="empty"><b>No quotes yet</b>Add one when you price out a job.</div></div>');
+}
+
+/* ============ results ============ */
+function renderResults(){
+ const ads=[...db.ads].sort((a,b)=>a.period<b.period?-1:1);
+ if(!ads.length) return '<div class="page-head"><div class="grow"><h1 class="page">Marketing results</h1><div class="page-sub">Managed by '+esc(db.business.agency)+'.</div></div></div>'
+  +'<div class="tbl-wrap"><div class="empty"><b>No results yet</b>As soon as '+esc(db.business.agency)+' logs campaign performance, it appears here automatically.</div></div>';
+ const byMonth={};
+ ads.forEach(a=>{ byMonth[a.period]=byMonth[a.period]||{spend:0,leads:0,revenue:0,sales:0}; const m=byMonth[a.period];
+  m.spend+=+a.spend||0; m.leads+=+a.leads||0; m.revenue+=+a.revenue||0; m.sales+=+a.sales||0; });
+ const months=Object.keys(byMonth).sort();
+ const last=byMonth[months[months.length-1]];
+ const totSpend=months.reduce((s,m)=>s+byMonth[m].spend,0), totLeads=months.reduce((s,m)=>s+byMonth[m].leads,0);
+ return '<div class="page-head"><div class="grow"><h1 class="page">Marketing results</h1><div class="page-sub">Managed by '+esc(db.business.agency)+' · updates automatically.</div></div></div>'
+  +'<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+money(last.spend)+'</div><div class="l">Spend · '+monthLabel(months[months.length-1])+'</div></div>'
+  +'<div class="stat"><div class="v num">'+last.leads+'</div><div class="l">Leads · '+monthLabel(months[months.length-1])+'</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtRatio(ratio(last.spend,last.leads),'$',0)+'</div><div class="l">Cost per lead</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtRatio(ratio(totSpend,totLeads),'$',0)+'</div><div class="l">Cost per lead, all time</div></div>'
+  +'</div>'
+  +'<div class="cols c2" style="margin:16px 0">'
+  +'<div class="chart-box"><h3>Monthly ad spend</h3>'+barChart(months.map(m=>({label:monthLabel(m),v:byMonth[m].spend})),'$')+'</div>'
+  +'<div class="chart-box"><h3>Leads generated</h3>'+barChart(months.map(m=>({label:monthLabel(m),v:byMonth[m].leads})),'')+'</div></div>'
+  +'<div class="tbl-wrap"><table><thead><tr><th>Month</th><th>Campaign</th><th class="r">Spend</th><th class="r">Leads</th><th class="r">Cost per lead</th><th class="r">Jobs won</th><th class="r">Revenue</th></tr></thead><tbody>'
+  +ads.map(a=>'<tr><td class="num">'+esc(a.period)+'</td><td>'+esc(a.campaign||'—')+'</td><td class="r num">'+money(a.spend)+'</td><td class="r num">'+(+a.leads||'—')+'</td>'
+   +'<td class="r num">'+fmtRatio(ratio(+a.spend,+a.leads),'$',0)+'</td><td class="r num">'+(+a.sales||'—')+'</td><td class="r num">'+money(a.revenue)+'</td></tr>').join('')
+  +'</tbody></table></div>';
+}
+function barChart(series,prefix){
+ if(!series.length) return '';
+ const W=440,H=150,pad=6,bw=Math.min(46,(W-pad*2)/series.length-8);
+ const max=Math.max(...series.map(s=>s.v),1);
+ let bars='';
+ series.forEach((s,i)=>{
+  const x=pad+i*((W-pad*2)/series.length)+((W-pad*2)/series.length-bw)/2;
+  const h=Math.max(2,(s.v/max)*(H-38)), y=H-22-h;
+  bars+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="3" fill="var(--accent)" opacity="0.85"/>'
+   +'<text x="'+(x+bw/2).toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="10" fill="var(--muted)" style="font-family:var(--font-mono)">'+(prefix==='$'?'$'+Math.round(s.v).toLocaleString():Math.round(s.v))+'</text>'
+   +'<text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle" font-size="10" fill="var(--neutral)">'+esc(s.label)+'</text>';
+ });
+ return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="bar chart">'+bars+'</svg>';
+}
+
+/* ============ email campaigns ============ */
+const CONTACT_STATUSES=['Lead','Contacted','Replied','Needs Follow-up','Closed Won','Closed Lost'];
+function pct(a,b){ return b>0?(a/b*100):null; }
+function fmtPct(v){ return v==null?'—':v.toFixed(1)+'%'; }
+function renderEmailCampaigns(){
+ if(!db.business.emailEnabled) return renderEmailPitch();
+ const camps=[...db.emailCampaigns].sort((a,b)=>(b.created_at||'')<(a.created_at||'')?-1:1);
+ if(!camps.length) return '<div class="page-head"><div class="grow"><h1 class="page">Email Campaigns</h1>'
+  +'<div class="page-sub">Reaching out to your past customers by email.</div></div></div>'
+  +'<div class="tbl-wrap"><div class="empty"><b>Nothing here yet</b>Your campaigns will show up here once we launch.</div></div>';
+ const contacts=db.emailContacts||[];
+ const totSent=camps.reduce((s,c)=>s+(+c.emails_sent||0),0);
+ const totOpens=camps.reduce((s,c)=>s+(+c.opens||0),0);
+ const totReplies=camps.reduce((s,c)=>s+(+c.replies||0),0);
+ const totMeetings=camps.reduce((s,c)=>s+(+c.meetings_booked||0),0);
+ const t=today();
+ const nextUp=contacts.filter(c=>c.status==='Needs Follow-up'||(c.next_touch&&c.next_touch<=t&&!['Closed Won','Closed Lost'].includes(c.status)));
+ const lastSynced=camps.reduce((m,c)=>(c.last_synced_at&&(!m||c.last_synced_at>m))?c.last_synced_at:m,null);
+ let html='<div class="page-head"><div class="grow"><h1 class="page">Email Campaigns</h1>'
+  +'<div class="page-sub">Reaching out to your past customers by email, managed by '+esc(db.business.agency)+'.</div>'
+  +(lastSynced?'<div class="page-sub" style="opacity:.7">Data updated '+esc(timeAgo(lastSynced))+'</div>':'')
+  +'</div></div>';
+ html+='<div class="stat-row">'
+  +'<div class="stat"><div class="v num">'+totSent.toLocaleString()+'</div><div class="l">Emails sent</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtPct(pct(totOpens,totSent))+'</div><div class="l">Open rate</div></div>'
+  +'<div class="stat"><div class="v num">'+fmtPct(pct(totReplies,totSent))+'</div><div class="l">Reply rate</div></div>'
+  +'<div class="stat"><div class="v num">'+totMeetings.toLocaleString()+'</div><div class="l">Meetings booked</div></div>'
+  +'</div>';
+ html+='<h2 class="sect">Campaigns</h2><div class="cols" style="grid-template-columns:1fr">'
+  +camps.map(c=>{
+   const sent=+c.emails_sent||0, opens=+c.opens||0, replies=+c.replies||0, meetings=+c.meetings_booked||0;
+   return '<div class="panel"><h3>'+esc(c.name||'Untitled campaign')+chip(c.status)+'</h3>'
+    +'<div class="stat-row">'
+    +'<div class="stat"><div class="v num">'+sent.toLocaleString()+'</div><div class="l">Sent</div></div>'
+    +'<div class="stat"><div class="v num">'+opens.toLocaleString()+'</div><div class="l">Opens</div><div class="d">'+fmtPct(pct(opens,sent))+' open rate</div></div>'
+    +'<div class="stat"><div class="v num">'+replies.toLocaleString()+'</div><div class="l">Replies</div><div class="d">'+fmtPct(pct(replies,sent))+' reply rate</div></div>'
+    +'<div class="stat"><div class="v num">'+meetings.toLocaleString()+'</div><div class="l">Meetings booked</div></div>'
+    +'</div>'
+    +(c.started_at?'<div class="page-sub" style="margin-top:8px">Started '+fmtDate(c.started_at)+'</div>':'')
+    +(c.notes?'<div class="page-sub" style="margin-top:4px">'+esc(c.notes)+'</div>':'')
+    +'</div>';
+  }).join('')+'</div>';
+ if(nextUp.length){
+  html+='<div class="next-touch"><h4>Being reached out to next</h4>'
+   +nextUp.map(c=>'<div class="list-line"><span><b>'+esc(c.name||'Unnamed')+'</b>'+(c.company?' · '+esc(c.company):'')+'</span>'+chip(c.status)+'<span class="when">'+(c.last_contacted?'last contacted '+fmtDate(c.last_contacted):'not yet contacted')+'</span></div>').join('')
+   +'</div>';
+ }
+ html+='<h2 class="sect">Pipeline</h2>';
+ CONTACT_STATUSES.forEach(st=>{
+  const group=contacts.filter(c=>c.status===st);
+  const isWin=st==='Closed Won';
+  html+='<div class="status-group'+(isWin?' win':'')+'"><h4>'+(isWin?'Closed jobs':esc(st))+'<span class="n">'+group.length+'</span></h4>'
+   +(group.length?group.map(c=>'<div class="list-line"><span><b>'+esc(c.name||'Unnamed')+'</b>'+(c.company?' · '+esc(c.company):'')+'</span><span class="when">'+(c.last_contacted?fmtDate(c.last_contacted):'—')+'</span></div>').join('')
+    :'<div class="empty">Nobody here yet.</div>')
+   +'</div>';
+ });
+ return html;
+}
+function renderEmailPitch(){
+ const subject=encodeURIComponent('Email marketing for '+(db.business.name||'my business'));
+ return '<div class="page-head"><div class="grow"><h1 class="page">Email Campaigns</h1>'
+  +'<div class="page-sub">Not switched on yet.</div></div></div>'
+  +'<div class="pitch"><h2>Email marketing isn\'t switched on for your account yet</h2>'
+  +'<p style="color:var(--muted);font-size:13.5px">Hey, it\'s Parker. Here\'s the short version of what this does: I email your past customers on a regular schedule so you stay top of mind without lifting a finger:</p>'
+  +'<ul>'
+  +'<li>Seasonal reminders so customers come back when the timing is right, not whenever they happen to remember you</li>'
+  +'<li>Review requests sent right after a job so the good feedback actually gets asked for</li>'
+  +'<li>Referral pushes that turn happy customers into new leads</li>'
+  +'<li>Win-back emails for anyone who hasn\'t booked in a while, turning past customers into repeat bookings</li>'
+  +'</ul>'
+  +'<div class="price">$197<span>/mo</span></div>'
+  +'<div class="actions">'
+  +'<a class="btn" href="https://pfmarkets.org/email-marketing.html" target="_blank" rel="noopener">Learn more</a>'
+  +'<a class="btn pri" href="mailto:hello@pfmarkets.org?subject='+subject+'">Ask about adding it</a>'
+  +'</div></div>';
+}
+
+/* ============ settings ============ */
+function renderSettings(){
+ return '<div class="page-head"><div class="grow"><h1 class="page">Settings</h1><div class="page-sub">Signed in as '+esc(me.email)+'.</div></div></div>'
+  +'<div class="cols c2">'
+  +'<div class="panel"><h3>Your business</h3>'
+  +'<div class="fg"><label>Business name</label><input id="bz_name" value="'+esc(db.business.name)+'"></div>'
+  +'<div class="fg"><label>What you do</label><input id="bz_ind" value="'+esc(db.business.industry)+'"></div>'
+  +'<div class="fg"><label>Location</label><input id="bz_loc" value="'+esc(db.business.location)+'"></div>'
+  +'<div class="fg"><label>Accent color</label><input id="bz_acc" type="color" value="'+esc(db.business.accent||'#2e6b4f')+'" style="height:36px;padding:3px;width:90px"></div>'
+  +'<button class="btn pri" onclick="saveBusiness()">Save</button></div>'
+  +'<div class="panel"><h3>Your account</h3>'
+  +'<p style="font-size:13px;color:var(--muted);margin-bottom:12px">Your data saves automatically and is only visible to you and '+esc(db.business.agency)+'. Sign in from any device with the same email and password.</p>'
+  +'<button class="btn" onclick="signOut()">Sign out</button></div>'
+  +'</div>';
+}
+async function saveBusiness(){
+ const name=document.getElementById('bz_name').value.trim();
+ const ind=document.getElementById('bz_ind').value.trim();
+ const loc=document.getElementById('bz_loc').value.trim();
+ const acc=document.getElementById('bz_acc').value;
+ db.business.name=name||db.business.name; db.business.industry=ind; db.business.location=loc; db.business.accent=acc;
+ render(); go('settings');
+ const {error}=await sb.rpc('update_my_branding',{p_name:name,p_industry:ind,p_location:loc,p_accent:acc});
+ if(error) toast('Save failed: '+error.message); else toast('Saved');
+}
+
+/* ============ record modals ============ */
+function openLeadModal(lid){
+ const l=lid?db.leads.find(x=>x.id===lid):null;
+ openModal({title:l?'Edit lead':'Add lead',
+  fields:[
+   {k:'name',label:'Name',value:l?l.name:''},
+   {k:'stage',label:'Stage',type:'select',options:LEAD_STAGES,value:l?l.stage:'New'},
+   {k:'email',label:'Email',value:l?l.email:''},
+   {k:'phone',label:'Phone',value:l?l.phone:''},
+   {k:'source',label:'How they found you',type:'select',options:SOURCES,value:l?l.source:'Ad'},
+   {k:'job_type',label:'Job type',value:l?l.job_type:'',placeholder:'House wash, driveway…'},
+   {k:'quote_value',label:'Quote value ($)',type:'number',value:l?l.quote_value:''},
+   {k:'date_received',label:'Came in on',type:'date',value:l?l.date_received:today()},
+   {k:'follow_up',label:'Follow up on',type:'date',value:l?l.follow_up:''},
+   {k:'address',label:'Address',value:l?l.address:''},
+   {k:'notes',label:'Notes',type:'textarea',value:l?l.notes:'',full:true}
+  ],
+  onSave(v){
+   v.name=v.name||'Unnamed';
+   let target=l;
+   if(l)Object.assign(l,v); else { target=Object.assign({id:uid('LD')},v); db.leads.push(target); }
+   render(); wr('leads',[leadRow(target)]);
+  },
+  onDelete:l?()=>{ const i=db.leads.indexOf(l); db.leads.splice(i,1); render(); rm('leads',l.id);
+   toast('Deleted '+l.name,'Undo',()=>{ db.leads.splice(i,0,l); render(); wr('leads',[leadRow(l)]); }); }:null});
+}
+function openJobModal(jid,presetDate){
+ const j=jid?db.jobs.find(x=>x.id===jid):null;
+ openModal({title:j?'Edit job':'Book a job',
+  fields:[
+   {k:'title',label:'Job',value:j?j.title:'',placeholder:'House wash'},
+   {k:'status',label:'Status',type:'select',options:JOB_STATUSES,value:j?j.status:'Scheduled'},
+   {k:'customer',label:'Customer',value:j?j.customer:''},
+   {k:'date',label:'Date',type:'date',value:j?j.date:(presetDate||today())},
+   {k:'price',label:'Price ($)',type:'number',value:j?j.price:''},
+   {k:'address',label:'Address',value:j?j.address:''},
+   {k:'notes',label:'Notes',type:'textarea',value:j?j.notes:'',full:true}
+  ],
+  onSave(v){
+   v.title=v.title||'Job';
+   let target=j;
+   if(j)Object.assign(j,v); else { target=Object.assign({id:uid('JB')},v); db.jobs.push(target); }
+   render(); wr('jobs',[jobRow(target)]);
+  },
+  onDelete:j?()=>{ const i=db.jobs.indexOf(j); db.jobs.splice(i,1); render(); rm('jobs',j.id);
+   toast('Deleted job','Undo',()=>{ db.jobs.splice(i,0,j); render(); wr('jobs',[jobRow(j)]); }); }:null});
+}
+function openQuoteModal(qid){
+ const q=qid?db.quotes.find(x=>x.id===qid):null;
+ const wasAccepted=q&&q.status==='Accepted';
+ openModal({title:q?'Edit quote':'Add quote',
+  fields:[
+   {k:'customer',label:'Customer',value:q?q.customer:''},
+   {k:'status',label:'Status',type:'select',options:QUOTE_STATUSES,value:q?q.status:'Sent'},
+   {k:'service',label:'Service',value:q?q.service:''},
+   {k:'amount',label:'Amount ($)',type:'number',value:q?q.amount:''},
+   {k:'date_sent',label:'Sent on',type:'date',value:q?q.date_sent:today()},
+   {k:'notes',label:'Notes',type:'textarea',value:q?q.notes:'',full:true}
+  ],
+  onSave(v){
+   v.customer=v.customer||'Unnamed';
+   let rec=q;
+   if(q)Object.assign(q,v); else { rec=Object.assign({id:uid('QT')},v); db.quotes.push(rec); }
+   render(); wr('quotes',[quoteRow(rec)]);
+   if(rec.status==='Accepted'&&!wasAccepted){
+    toast(rec.customer+' accepted — put it on the calendar?','Book job',()=>{
+     openModal({title:'Book the job',fields:[
+      {k:'title',label:'Job',value:rec.service||'Job'},
+      {k:'date',label:'Date',type:'date',value:today()},
+      {k:'customer',label:'Customer',value:rec.customer},
+      {k:'price',label:'Price ($)',type:'number',value:rec.amount},
+      {k:'address',label:'Address',value:''},
+      {k:'notes',label:'Notes',type:'textarea',value:'',full:true}
+     ],onSave(v2){ v2.status='Scheduled'; const nj=Object.assign({id:uid('JB')},v2); db.jobs.push(nj); wr('jobs',[jobRow(nj)]); go('schedule'); }});
     });
-    return supabaseLoadPromise;
-  }
+   }
+  },
+  onDelete:q?()=>{ const i=db.quotes.indexOf(q); db.quotes.splice(i,1); render(); rm('quotes',q.id);
+   toast('Deleted quote','Undo',()=>{ db.quotes.splice(i,0,q); render(); wr('quotes',[quoteRow(q)]); }); }:null});
+}
 
-  /* ---------- multi-step logic ---------- */
-  const form = document.getElementById("qual-form");
-  const steps = [...form.querySelectorAll("fieldset[data-step]")];
-  const TOTAL = steps.length;
-  let current = 0;
-
-  const backBtn = document.getElementById("qual-back");
-  const nextBtn = document.getElementById("qual-next");
-  const submitBtn = document.getElementById("qual-submit");
-  const barFill = document.getElementById("qual-bar-fill");
-  const progressLabel = document.getElementById("qual-progress-label");
-  const progressBar = document.querySelector(".qual__bar");
-  const formError = document.getElementById("form-error");
-
-  function showStep(i) {
-    current = i;
-    steps.forEach((fs, idx) => { fs.hidden = idx !== i; });
-    backBtn.hidden = i === 0;
-    nextBtn.hidden = i === TOTAL - 1;
-    submitBtn.hidden = i !== TOTAL - 1;
-    /* goal-gradient: opening the form counts as the first 20%, so the bar
-       never sits at zero, steps land at 20 / 40 / 60 / 80, booking = 100 */
-    const pct = 20 + i * 20;
-    progressLabel.textContent = `Step ${i + 1} of ${TOTAL} · ${pct}% there`;
-    progressBar.setAttribute("aria-valuenow", String(pct));
-    barFill.style.transform = `scaleX(${pct / 100})`;
-    const first = steps[i].querySelector("input, select");
-    if (first) first.focus({ preventScroll: true });
-  }
-
-  function setFieldError(el, msg) {
-    el.setAttribute("aria-invalid", "true");
-    const hint = el.closest(".field")?.querySelector("[data-hint]");
-    if (hint) { hint.dataset.orig = hint.dataset.orig ?? hint.textContent; hint.textContent = msg; hint.classList.add("is-error"); }
-  }
-  function clearFieldError(el) {
-    el.removeAttribute("aria-invalid");
-    const hint = el.closest(".field")?.querySelector("[data-hint]");
-    if (hint && hint.classList.contains("is-error")) {
-      hint.textContent = hint.dataset.orig ?? "";
-      hint.classList.remove("is-error");
-    }
-  }
-  form.addEventListener("input", (e) => clearFieldError(e.target));
-
-  function validateStep(i) {
-    const fs = steps[i];
-    let ok = true;
-    // required radio groups
-    const groups = new Set([...fs.querySelectorAll("input[type=radio][required]")].map((r) => r.name));
-    for (const name of groups) {
-      const group = fs.querySelectorAll(`input[name="${name}"]`);
-      if (![...group].some((r) => r.checked)) {
-        ok = false;
-        const hint = group[0].closest(".field").querySelector("[data-hint]");
-        if (hint) { hint.dataset.orig = hint.dataset.orig ?? hint.textContent; hint.textContent = "Pick one to continue."; hint.classList.add("is-error"); }
-      }
-    }
-    // required text/select/email/tel
-    for (const el of fs.querySelectorAll("input[required]:not([type=radio]), select[required]")) {
-      if (el.closest("[hidden]")) continue;
-      if (!el.value.trim()) { setFieldError(el, "This one's required."); ok = false; continue; }
-      if (el.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim())) {
-        setFieldError(el, "That email doesn't look right, check the format."); ok = false;
-      }
-    }
-    // conditional ad-spend
-    const spendField = fs.querySelector("#field-spend");
-    if (spendField && !spendField.hidden) {
-      const sel = spendField.querySelector("select");
-      if (!sel.value) { setFieldError(sel, "Pick a range to continue."); ok = false; }
-    }
-    return ok;
-  }
-
-  nextBtn.addEventListener("click", () => { if (validateStep(current)) showStep(current + 1); });
-  backBtn.addEventListener("click", () => showStep(current - 1));
-
-  /* conditional reveals */
-  const yesAds = form.querySelector('input[name="running_ads"][value="yes"]');
-  form.querySelectorAll('input[name="running_ads"]').forEach((r) =>
-    r.addEventListener("change", () => {
-      document.getElementById("field-spend").hidden = !yesAds.checked;
-    })
-  );
-  form.querySelectorAll('input[name="bottleneck"]').forEach((r) =>
-    r.addEventListener("change", () => {
-      document.getElementById("field-bottleneck-other").hidden = !form.querySelector('input[data-bottleneck-other]').checked;
-    })
-  );
-
-  /* ---------- submit → Supabase → reveal Calendly ---------- */
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (!validateStep(current)) return;
-
-    formError.classList.remove("is-visible");
-    submitBtn.dataset.state = "loading";
-    submitBtn.disabled = true;
-
-    const data = Object.fromEntries(new FormData(form).entries());
-    const row = {
-      business_name:  data.business_name.trim(),
-      business_type:  data.business_type,
-      revenue_range:  data.revenue_range,
-      running_ads:    data.running_ads === "yes",
-      ad_spend_range: data.running_ads === "yes" ? (data.ad_spend_range || null) : null,
-      doing_seo:      data.doing_seo === "yes",
-      service_area:   data.service_area.trim(),
-      bottleneck:     data.bottleneck === "other"
-                        ? `Other: ${(data.bottleneck_other || "").trim()}`
-                        : data.bottleneck,
-      contact_name:   data.contact_name.trim(),
-      email:          data.email.trim(),
-      phone:          data.phone.trim(),
-      source:         "pfmarkets.org",
-    };
-
-    try {
-      await loadSupabase();
-      const client = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
-      const { error } = await client.from("leads").insert(row);
-      if (error) throw error;
-      revealBooking(row);
-    } catch (err) {
-      console.error("Lead insert failed:", err);
-      formError.textContent =
-        "Your answers didn't save, the connection to our system failed. " +
-        "Nothing was lost from the form: try Send again, or call us directly.";
-      formError.classList.add("is-visible");
-      submitBtn.dataset.state = "";
-      submitBtn.disabled = false;
-    }
-  });
-
-  /* ---------- Calendly (assets load only at the booking step) ---------- */
-  function revealBooking(row) {
-    form.hidden = true;
-    /* complete the goal-gradient: show the bar finishing rather than hiding it */
-    progressLabel.textContent = "Done · 100%";
-    progressBar.setAttribute("aria-valuenow", "100");
-    barFill.style.transform = "scaleX(1)";
-    document.getElementById("qual-title").textContent = "Step complete";
-    modal.classList.add("is-booking");
-    const booking = document.getElementById("booking");
-    booking.classList.add("is-visible");
-
-    let url;
-    try { url = new URL(CONFIG.CALENDLY_URL); } catch { url = null; }
-    if (!url) {
-      document.getElementById("booking-loading").textContent =
-        "The calendar isn't connected yet (CALENDLY_URL not set). Your answers are saved, we'll reach out to set a time.";
-      return;
-    }
-    const slot = document.getElementById("calendly-slot");
-    const div = document.createElement("div");
-    div.className = "calendly-inline-widget";
-    url.searchParams.set("name", row.contact_name);
-    url.searchParams.set("email", row.email);
-    div.dataset.url = url.toString();
-    slot.appendChild(div);
-
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = "https://assets.calendly.com/assets/external/widget.css";
-    document.head.appendChild(css);
-
-    const s = document.createElement("script");
-    s.src = "https://assets.calendly.com/assets/external/widget.js";
-    s.async = true;
-    s.onload = () => { document.getElementById("booking-loading").hidden = true; };
-    document.head.appendChild(s);
-  }
-  </script>
+init();
+</script>
 </body>
 </html>

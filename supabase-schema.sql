@@ -451,3 +451,128 @@ drop policy if exists pay_agency on public.pay_periods;
 drop policy if exists pay_self   on public.pay_periods;
 create policy pay_agency on public.pay_periods for all    using (public.is_agency()) with check (public.is_agency());
 create policy pay_self   on public.pay_periods for select using (employee_id = public.my_employee_id());
+
+-- ============================================================
+-- EMAIL CAMPAIGNS MODULE
+-- Cold/nurture email tracking per client. Aggregate stats (sends,
+-- opens, replies, meetings) are entered manually from GMass — no
+-- live send integration yet. Gated behind a per-client feature flag
+-- so clients only see this tab once Parker turns it on for them.
+-- ============================================================
+
+-- ---------- feature flag ----------
+alter table public.clients add column if not exists email_marketing_enabled boolean not null default false;
+
+-- ---------- tables ----------
+create table if not exists public.email_campaigns (
+  id               text primary key,
+  client_id        text not null references public.clients(id) on delete cascade,
+  name             text not null default '',
+  status           text not null default 'Draft',   -- Draft / Active / Paused / Done
+  emails_sent      int not null default 0,
+  opens            int not null default 0,
+  replies          int not null default 0,
+  meetings_booked  int not null default 0,
+  started_at       date,
+  notes            text not null default '',
+  created_at       timestamptz not null default now()
+);
+
+create table if not exists public.email_contacts (
+  id             text primary key,
+  client_id      text not null references public.clients(id) on delete cascade,
+  campaign_id    text references public.email_campaigns(id) on delete set null,
+  name           text not null default '',
+  email          text not null default '',
+  company        text not null default '',
+  phone          text not null default '',
+  status         text not null default 'Lead',   -- Lead / Contacted / Replied / Needs Follow-up / Closed Won / Closed Lost
+  last_contacted date,
+  next_touch     date,
+  notes          text not null default '',
+  created_at     timestamptz not null default now(),
+  updated_at     timestamptz not null default now()
+);
+
+alter table public.email_contacts drop constraint if exists email_contacts_status_check;
+alter table public.email_contacts add constraint email_contacts_status_check
+  check (status in ('Lead','Contacted','Replied','Needs Follow-up','Closed Won','Closed Lost'));
+
+create index if not exists email_campaigns_client_idx   on public.email_campaigns(client_id);
+create index if not exists email_contacts_client_idx    on public.email_contacts(client_id);
+create index if not exists email_contacts_campaign_idx  on public.email_contacts(campaign_id);
+
+-- ---------- helper: is email marketing turned on for MY client? ----------
+create or replace function public.my_email_marketing_enabled()
+returns boolean language sql stable security definer set search_path = public as
+$$ select coalesce((select email_marketing_enabled from clients where id = public.my_client_id()), false) $$;
+
+-- ---------- row-level security ----------
+alter table public.email_campaigns enable row level security;
+alter table public.email_contacts  enable row level security;
+
+-- email_campaigns: agency full control; client read-only on their own rows,
+-- and only while Parker has switched email_marketing_enabled on for them
+drop policy if exists email_campaigns_agency on public.email_campaigns;
+drop policy if exists email_campaigns_self   on public.email_campaigns;
+create policy email_campaigns_agency on public.email_campaigns for all    using (public.is_agency()) with check (public.is_agency());
+create policy email_campaigns_self   on public.email_campaigns for select using (client_id = public.my_client_id() and public.my_email_marketing_enabled());
+
+-- email_contacts: same shape — agency full control; client read-only, gated by the flag
+drop policy if exists email_contacts_agency on public.email_contacts;
+drop policy if exists email_contacts_self   on public.email_contacts;
+create policy email_contacts_agency on public.email_contacts for all    using (public.is_agency()) with check (public.is_agency());
+create policy email_contacts_self   on public.email_contacts for select using (client_id = public.my_client_id() and public.my_email_marketing_enabled());
+
+-- Employees: no policy on either table. my_employee_id() plays no part in
+-- these policies, so employee logins match neither the agency clause (not
+-- agency role) nor the client clause (client_id is null for them) — the
+-- tables are invisible to them by default, same as invoices/retainers.
+
+-- ============================================================
+-- GMASS SYNC MODULE
+-- Automated pull of live campaign stats + per-recipient activity
+-- from GMass into email_campaigns / email_contacts, via the
+-- 'gmass-sync' edge function. A row syncs only once Parker fills in
+-- its GMass Campaign ID (agency.html). An hourly pg_cron job invokes
+-- the function server-side; the function uses the service role to
+-- write, so it bypasses RLS. See edge/SETUP-GMASS-SYNC.md.
+-- ============================================================
+
+-- ---------- link + audit columns on email_campaigns ----------
+alter table public.email_campaigns add column if not exists gmass_campaign_id text;
+alter table public.email_campaigns add column if not exists last_synced_at    timestamptz;
+
+-- ---------- hourly schedule (pg_cron + pg_net) ----------
+-- Requires the pg_cron and pg_net extensions (enable them under
+-- Database → Extensions in the Supabase Dashboard, or below).
+-- PARKER: fill in <PROJECT_REF> and <SYNC_TRIGGER_KEY> before running
+-- this block. Both must match what you set in the edge function's
+-- secrets. The service role is NOT needed here — the function accepts
+-- the x-sync-key header for cron triggers.
+create extension if not exists pg_cron;
+create extension if not exists pg_net;
+
+-- Re-runnable: drop the existing schedule (if any) before re-adding it,
+-- so pasting this file twice never creates duplicate jobs.
+do $$
+begin
+  if exists (select 1 from cron.job where jobname = 'gmass-sync-hourly') then
+    perform cron.unschedule('gmass-sync-hourly');
+  end if;
+end $$;
+
+select cron.schedule(
+  'gmass-sync-hourly',
+  '0 * * * *',                       -- top of every hour
+  $$
+  select net.http_post(
+    url     := 'https://<PROJECT_REF>.supabase.co/functions/v1/gmass-sync',
+    headers := jsonb_build_object(
+      'Content-Type', 'application/json',
+      'x-sync-key',   '<SYNC_TRIGGER_KEY>'
+    ),
+    body    := '{}'::jsonb
+  );
+  $$
+);

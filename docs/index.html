@@ -54,7 +54,7 @@
         "name": "PFMarkets",
         "description": "Marketing agency for exterior cleaning businesses — lead-generation ads, local SEO, websites, and social content for pressure washing, exterior cleaning, and window cleaning companies.",
         "url": "https://pfmarkets.org/",
-        
+
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Marketing services for exterior cleaning businesses",
@@ -359,8 +359,8 @@ img { max-width: 100%; height: auto; }
 }
 
 /* hero dashboard demo — animated 11s loop, from the user's Claude Design handoff.
-   Three layers cycle: leads counter + climbing graph → calendar filling → revenue bars.
-   Counters are driven by JS synced to the same 11s loop. Illustrative demo, captioned as such. */
+   Three layers cycle: leads counter + climbing graph → calendar filling →
+   revenue bars. Counters are driven by JS synced to the same 11s loop. Illustrative demo, captioned as such. */
 .dash-wrap { margin: 0; min-width: 0; }
 .dash {
   /* light-native panel — the Claude Design source (built for the old dark site) re-themed
@@ -977,7 +977,7 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
         <a class="link-quiet" href="about.html">About</a>
       </nav>
       <div class="nav__right">
-        <a class="btn btn--outline nav__login" href="/app/">Client login</a>
+        <a class="btn btn--outline nav__login" href="/clientportal/">Client login</a>
         <button class="btn btn--fill" data-open-qual>Book a call</button>
       </div>
     </div>
@@ -1122,7 +1122,7 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
       <div class="svc-list">
         <div class="svc">
           <h3>Lead-gen ads</h3>
-          <p>Google and Meta campaigns aimed at homeowners inside your service area , 
+          <p>Google and Meta campaigns aimed at homeowners inside your service area ,
              built around the jobs you want more of, tuned weekly, tracked to the call,
              not the click.</p>
           <p class="svc__for"><strong>Good for:</strong> filling next week's schedule</p>
@@ -1189,14 +1189,14 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
         <li>
           <span class="stage" aria-hidden="true">02</span>
           <h3>Get your growth plan</h3>
-          <p>A 30-minute call with an honest read: what we'd run, what it costs, and , 
+          <p>A 30-minute call with an honest read: what we'd run, what it costs, and ,
              if we're not the right fit, we'll say so and point you somewhere better.</p>
           <p class="steps__meta">Deliverable: a plan and a straight answer</p>
         </li>
         <li>
           <span class="stage" aria-hidden="true">03</span>
           <h3>We launch. Your phone rings.</h3>
-          <p>Campaigns live within days. You get reported leads and booked jobs , 
+          <p>Campaigns live within days. You get reported leads and booked jobs ,
              not a dashboard of vanity clicks.</p>
           <p class="steps__meta">Live: within days, not months</p>
         </li>
@@ -1269,7 +1269,7 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
       </div>
       <div class="foot__links">
       <a href="https://calendly.com/prkrfwlr/new-meeting">Book a call</a>
-        <a href="/app/">Client login</a>
+        <a href="/clientportal/">Client login</a>
         <a href="services.html">Services</a>
         <a href="industries.html">Industries</a>
         <a href="pricing.html">Pricing</a>
@@ -1437,8 +1437,8 @@ dialog.qual.is-booking { width: min(96vw, 52rem); }
 
   /* ================= CONFIG, replace all three before launch ================= */
   const CONFIG = {
-    SUPABASE_URL:      "SUPABASE_URL",      // e.g. "https://abcdefgh.supabase.co"
-    SUPABASE_ANON_KEY: "SUPABASE_ANON_KEY", // the public anon key (safe to ship; RLS enforces access)
+    SUPABASE_URL:      "https://boagmtuqhjktxlyengls.supabase.co",      // e.g. "https://abcdefgh.supabase.co"
+    SUPABASE_ANON_KEY: "sb_publishable_k2tQbi3Sd5a3F6-H8jh8Qg_2S1qZTy8", // the public anon key (safe to ship; RLS enforces access)
     CALENDLY_URL:      "https://calendly.com/prkrfwlr/new-meeting",      // e.g. "https://calendly.com/pfmarkets/growth-plan"
   };
   /* Supabase `leads` table, columns this page inserts (create the table to match):
